@@ -2,9 +2,10 @@ import sys, os, pygame, Map, Menu, TowerBar
 
 # Colors
 background    = (   0,   0,   0)
-empty         = ( 160, 120, 100)
-route         = ( 180, 175, 170)
-tower         = ( 100, 105, 205)
+empty         = ( 120,  80,  40)
+route         = ( 200, 190, 170)
+tower         = ( 130, 140, 160)
+base          = ( 200,  80,  20)
 
 def main():
 
@@ -20,13 +21,16 @@ def main():
     health = 100
 
     # Set the height and width of the screen
-    size=[mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
-    screen=pygame.display.set_mode(size)
+    size = [mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
+    screen = pygame.display.set_mode(size)
 
     # Initialize the map
     map = Map.Map(mapWidth,mapHeight)
-    map.loadBasicMap()
-
+    map.loadRandomMap()
+    # map.loadBasicMap()
+    # map.loadFileMap('testmap')
+    # map.loadTestMap()
+    
     # Initialize the menu
     menu = Menu.Menu()
     
@@ -46,7 +50,7 @@ def main():
     clock = pygame.time.Clock()
         
     # -------- Main Program Loop -----------
-    while close_game==False:
+    while close_game == False:
         
         for event in pygame.event.get(): # User did something
 
@@ -106,18 +110,20 @@ def main():
                     color = route
                 if map.M[row][column] == 2:
                     color = tower
+                if map.M[row][column] == 3:
+                    color = base
 
                 # Draw tiles with Grid
                 if map.showGrid == 1:
-                    pygame.draw.rect(screen,color,\
-                    [(map.margin+tileSize)*column+map.margin,\
-                    (map.margin+tileSize)*row+map.margin,tileSize,tileSize])
+                    pygame.draw.rect(screen, color, \
+                    [(map.margin+tileSize)*column+map.margin, \
+                    (map.margin+tileSize)*row+map.margin, tileSize, tileSize])
 
                 # Draw tiles without grid
                 else:
-                    pygame.draw.rect(screen,color,\
-                    [(map.margin+tileSize)*column+map.margin,\
-                    (map.margin+tileSize)*row+map.margin,tileSize+map.margin,tileSize+map.margin])
+                    pygame.draw.rect(screen, color, \
+                    [(map.margin+tileSize)*column+map.margin, \
+                    (map.margin+tileSize)*row+map.margin, tileSize+map.margin,tileSize+map.margin])
 
                 # Draw tower on mouse over
                 if map.O[row][column] != 0:

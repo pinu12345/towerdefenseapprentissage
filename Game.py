@@ -1,4 +1,4 @@
-import sys, os, pygame, Map, Menu, TowerBar
+import sys, os, pygame, Map, Menu, TowerBar, Wave
 
 # Colors
 background    = (   0,   0,   0)
@@ -33,6 +33,9 @@ def main():
     
     # Initialize the menu
     menu = Menu.Menu()
+    
+    # Initialize the wave
+    wave = Wave.Wave()
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
@@ -137,12 +140,15 @@ def main():
 
         # Draw the tower bar
         towerBar.draw(screen)
+        
+        # Draw the wave
+        wave.draw(screen)
 
         # Draw the game information menu
         menu.draw(screen)
 
         # Limit to 20 frames per second
-        clock.tick(20)
+        clock.tick(24)
 
         # Update the screen
         pygame.display.flip()

@@ -40,7 +40,7 @@ class Map:
 					self.M[i][j] = 2
 				elif textMap[i][j] == car_base:
 					self.M[i][j] = 3
-    
+
     def loadBasicMap(self):
         self.M[5][0] = 1
         self.M[5][1] = 1
@@ -93,7 +93,7 @@ class Map:
         self.M[7][22] = 1
         self.M[7][23] = 1
         self.M[6][23] = 2
-        
+
     def loadTestMap(self):
         self.loadFileMap('testmap')
     

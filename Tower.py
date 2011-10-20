@@ -1,8 +1,32 @@
 import pygame, os
 
+NAME = 0
+VALUE = 1
+DAMAGE = 2
+DELAY = 3
+RANGE = 4
+SPLASH = 5
+
+## Tower Types
+## Nom              Value   Damage  Delay   Range   Splash
+Types = \
+    [["Mitraille",  100,    2,      0.1,    4,      0],
+    ["Sniper",      200,    200,    4,      10,     0],
+    ["Zone",        100,    20,     1,      0,      2],
+    ["Omega",       500,    200,    2,      12,     1],
+    ["Hax",         1,      1000,   0.1,    100,    5]]
+
 class Tower(pygame.sprite.Sprite):
     def __init__(self, xy, type):
         pygame.sprite.Sprite.__init__(self)
+        
+        self.name = Types[self.type][NAME]
+        self.value = Types[self.type][VALUE]
+        self.damage = Types[self.type][DAMAGE]
+        self.delay = Types[self.type][DELAY]
+        self.range = Types[self.type][RANGE]
+        self.splash = Types[self.type][SPLASH]
+        
         towerList.append(self)
 
         x, y = xy
@@ -12,50 +36,12 @@ class Tower(pygame.sprite.Sprite):
         self.loadImages()
 
         self.type = type
-
-        #Your Normal Cheap Tower
-        if self.type == 1:
-            self.image = self.imgList[0]
-            self.BASEDMG = 7
-            self.damage = self.BASEDMG
-            self.cost = 70
-            self.range = 100
-            self.reload = 15
-            self.reloadNum = 0
-            self.upcost = 50
-
-        #Strong, but slow tower
-        else:
-            self.image = self.imgList[3]
-            self.BASEDMG = 20
-            self.damage = self.BASEDMG
-            self.range = 75
-            self.reload = 60
-            self.reloadNum = 0
-            self.upcost = 80
-
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.surfx, self.surfy = self.rect.center
         self.surfx -= 100
         self.surfy -= 100
-
-    def update(self):
-        i = 1
-
-    def loadImages(self):
-        imgMaster = pygame.image.load(os.path.join ('Images', 'towers.png'))
-
-        self.imgList = []
-
-        imgSize = (25, 25)
-        offset = ((0, 0), (25,0), (50,0),(0, 25), (25,25), (50,25),(0, 50), (25,50), (50,50))
-
-        for i in range(9):
-            tmpImg = pygame.Surface(imgSize)
-            tmpImg.blit(imgMaster, (0, 0), (offset[i], imgSize))
-            self.imgList.append(tmpImg)
 
     def target(self):
         for enemy in baddieList:
@@ -67,68 +53,3 @@ class Tower(pygame.sprite.Sprite):
             elif dist((aimx,aimy),self.rect,self.range) == 1:
                 enemy.health -= self.damage
                 return (aimx,aimy)
-
-class TowerIcons(pygame.sprite.Sprite):
-    def __init__(self, x, y, type):
-        pygame.sprite.Sprite.__init__(self)
-
-        self.imgList = None
-        self.loadImages()
-
-        self.type = type
-
-        #Your Normal Cheap Tower
-        if self.type == 1:
-            self.image = self.imgList[0]
-            self.BASEDMG = 7
-            self.cost = 50
-            self.range = 100
-            self.speed = 'fast'
-
-        #Strong, but slow tower
-        else:
-            self.image = self.imgList[1]
-            self.BASEDMG = 20
-            self.cost = 75
-            self.range = 75
-            self.speed = 'Slow'
-
-        self.rect = self.image.get_rect()
-
-        self.rect.centerx = x
-        self.rect.y = y
-        self.daFont = pygame.font.SysFont("None", 20)
-
-    def loadImages(self):
-        imgMaster = pygame.image.load(os.path.join ('Images', 'towers.png'))
-
-        self.imgList = []
-
-        imgSize = (25, 25)
-        offset = ((0, 0),(0, 25),(0, 50))
-
-        for i in range(3):
-            tmpImg = pygame.Surface(imgSize)
-            tmpImg.blit(imgMaster, (0, 0), (offset[i], imgSize))
-            self.imgList.append(tmpImg)
-
-    def update(self):
-        if self.rect.collidepoint(pygame.mouse.get_pos()):
-            self.txtDraw()
-
-    def txtDraw(self):
-        tdamage = self.daFont.render("Base Damage: %d"% self.BASEDMG,1, (255,255,255))
-        if self.range != 0:
-            trange = self.daFont.render("Range: %d"% self.range,1, (255,255,255))
-        else:
-            trange = self.daFont.render("Range: Unlimited",1, (255,255,255))
-        tcost = self.daFont.render("Cost: $%d"% self.cost,1, (255,255,255))
-        tspeed = self.daFont.render("Speed: " + self.speed,1, (255,255,255))
-
-        placementx = 665
-        placementy = 230
-
-        screen.blit(tdamage,(placementx,placementy))
-        screen.blit(trange,(placementx,placementy+25))
-        screen.blit(tcost,(placementx,placementy+50))
-        screen.blit(tspeed,(placementx,placementy+75))

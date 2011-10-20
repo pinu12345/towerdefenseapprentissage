@@ -11,7 +11,7 @@ SPEED = 4
 DELAY = 5
 
 ## Enemy Types
-## Nom              Valeur  HP      Armor   Speed   Delay
+## Name             Value   HP      Armor   Speed   Delay
 Types = \
     [["Ninja",      5,      100,    0,      8,      1],
     ["Pirate",      5,      200,    0,      2,      1],

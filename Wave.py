@@ -14,10 +14,10 @@ class Wave():
         self.enemyi = Enemy.Enemy(3, self, 0, 8)
         self.enemyj = Enemy.Enemy(4, self, 0, 9)
         self.enemyk = Enemy.Enemy(0, self, 0, 10)
-        self.enemyk = Enemy.Enemy(1, self, 0, 11)
-        self.enemyk = Enemy.Enemy(2, self, 0, 12)
-        self.enemyk = Enemy.Enemy(3, self, 0, 13)
-        self.enemyk = Enemy.Enemy(4, self, 0, 14)
+        self.enemyl = Enemy.Enemy(1, self, 0, 11)
+        self.enemym = Enemy.Enemy(2, self, 0, 12)
+        self.enemyn = Enemy.Enemy(3, self, 0, 13)
+        self.enemyo = Enemy.Enemy(4, self, 0, 14)
         self.enemies = pygame.sprite.Group(self.enemya,
             self.enemyb,
             self.enemyc,
@@ -28,7 +28,11 @@ class Wave():
             self.enemyh,
             self.enemyi,
             self.enemyj,
-            self.enemyk)
+            self.enemyk,
+            self.enemyl,
+            self.enemym,
+            self.enemyn,
+            self.enemyo)
 
     def draw(self, screen):
         #Move the enemies

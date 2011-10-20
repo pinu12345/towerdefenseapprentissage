@@ -15,7 +15,7 @@ DELAY = 5
 Types = \
     [["Ninja",      5,      100,    0,      8,      1],
     ["Pirate",      5,      200,    0,      2,      1],
-    ["Singe",       1,      50,     0,      4,      0.25],
+    ["Singe",       1,      50,     0,      100,      0.25],
     ["BebeDino",    1,      200,    5,      2,      2],
     ["Dinosaure",   40,     1000,   10,     1,      4]]
 
@@ -38,7 +38,6 @@ class Enemy(pygame.sprite.Sprite):
     def move(self, varX, varY):
         if self.rect.x > 500:
             self.rect.x = 0
-            self.speed = random.randint(5,10)
         self.rect.x += varX * self.speed
 
     def update(self):

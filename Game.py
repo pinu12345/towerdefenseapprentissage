@@ -40,27 +40,27 @@ def main():
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
 
     #Loop until the user clicks the close button.
-    done=False
+    close_game = False
 
     # Used to manage how fast the screen updates
-    clock=pygame.time.Clock()
+    clock = pygame.time.Clock()
         
     # -------- Main Program Loop -----------
-    while done==False:
+    while close_game==False:
         
         for event in pygame.event.get(): # User did something
 
             # If user clicked close
             if event.type == pygame.QUIT: 
-                done=True # Flag that we are done so we exit this loop
+                close_game = True # Flag that we are done so we exit this loop
 
             # User moves over the mouse 
             if event.type == pygame.MOUSEMOTION:
                 if towerBar.selectedTower != -1:
                     pos = pygame.mouse.get_pos()
                 
-                    column=pos[0] // (tileSize+map.margin)
-                    row=pos[1] // (tileSize+map.margin)
+                    column = pos[0] // (tileSize+map.margin)
+                    row = pos[1] // (tileSize+map.margin)
 
                     # Inside Map
                     if (column < map.mapWidth) and (row < map.mapHeight):
@@ -75,8 +75,8 @@ def main():
                 pos = pygame.mouse.get_pos()
                 
                 # Change the x/y screen coordinates to grid coordinates (For the map)
-                column=pos[0] // (tileSize+map.margin)
-                row=pos[1] // (tileSize+map.margin)
+                column = pos[0] // (tileSize+map.margin)
+                row = pos[1] // (tileSize+map.margin)
 
                 # Inside Map
                 if (column < map.mapWidth) and (row < map.mapHeight):

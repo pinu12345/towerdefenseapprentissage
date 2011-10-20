@@ -27,10 +27,10 @@ class Enemy(pygame.sprite.Sprite):
         self.wave = wave
 
         # Set the enemy parameters
-        self.name = Type[self.type][NAME]
-        self.value = Type[self.type][VALUE]
+        self.name = Types[self.type][NAME]
+        self.value = Types[self.type][VALUE]
         self.hp = Types[self.type][HP]
-        self.armor = Type[self.type][ARMOR]
+        self.armor = Types[self.type][ARMOR]
         self.speed = Types[self.type][SPEED]
         
         # Required by Sprite
@@ -44,7 +44,7 @@ class Enemy(pygame.sprite.Sprite):
     def move(self, direction):
         if self.rect.x > 500:
             self.rect.x = 0
-        self.rect.x += varX * self.speed
+        self.rect.x += self.speed
 
     def update(self):
         pass

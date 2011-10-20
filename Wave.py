@@ -37,6 +37,6 @@ class Wave():
     def draw(self, screen):
         #Move the enemies
         for enemy in self.enemies:
-            enemy.move(1,1)
+            enemy.move(1)
         #Draw their new positions
         self.enemies.draw(screen)

@@ -2,6 +2,7 @@
 mapWidth = 24
 mapHeight = 16
 showGrid = 0
+tileSize = 32
 
 # carte .txt: caracteres vide, chemin, emplacement et base
 car_empty  = '-'

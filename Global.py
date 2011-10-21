@@ -12,7 +12,7 @@ car_turret = 'O'
 car_base   = 'B'
 
 # Points cardinaux
-card_N, card_S, card_W, card_E = 0, 1, 2, 3
+cardN, cardS, cardW, cardE = 0, 1, 2, 3
 
 ## Enemy Types
 EnemyNAME = 0

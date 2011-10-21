@@ -56,7 +56,7 @@ class RandomMap:
 			car_empty, car_path, car_turret, car_base
 		
 		# Points cardinaux
-		N, S, W, E = card_N, card_S, card_W, card_E
+		N, S, W, E = cardN, cardS, cardW, cardE
 		
 		# Production en serie de cartes
 		unsatisfying_map = 1

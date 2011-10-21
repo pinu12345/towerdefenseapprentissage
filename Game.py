@@ -1,4 +1,5 @@
 import sys, os, pygame, Map, Menu, TowerBar, Wave
+from Util import *
 
 # Colors
 background    = (   0,   0,   0)

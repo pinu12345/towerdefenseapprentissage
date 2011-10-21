@@ -31,7 +31,6 @@ class Map:
                 self.T[row].append(0)
     
     def loadMap(self, textMap):
-        car_empty, car_path, car_turret, car_base = '-', 'X', 'O', 'B'
         for i in range(len(textMap)):
             for j in range(len(textMap[0])):
 				if textMap[i][j] == car_path:

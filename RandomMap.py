@@ -4,15 +4,6 @@ import copy
 
 class RandomMap:
 	
-	# caracteres vide, chemin, emplacement et base
-	empty = '-'
-	path = 'X'
-	turret = 'O'
-	base = 'B'
-	
-	# Points cardinaux
-	N, S, W, E = 0, 1, 2, 3
-	
 	def __init__(self, idim = 0, jdim = 0, comp = -1, len = 0, empl = 0, prox = 0):
 		#  idim*jdim  dimensions            min 3*3, max 24*16
 		#  len        longueur du chemin    min 2, max variable
@@ -61,11 +52,10 @@ class RandomMap:
 		
 		# Caracteres de la carte
 		empty, path, turret, base = \
-			self.empty, self.path, self.turret, self.base
+			car_empty, car_path, car_turret, car_base
 		
 		# Points cardinaux
-		N, S, W, E = self.N, self.S, self.W, self.E
-		
+		N, S, W, E = card_N, card_S, card_W, card_E
 		
 		# Production en serie de cartes
 		unsatisfying_map = 1

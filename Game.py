@@ -110,11 +110,11 @@ def main():
 
                 # Identify terrain type
                 color = empty
-                if map.M[row][column] == 1:
+                if map.M[row][column] == car_path:
                     color = route
-                if map.M[row][column] == 2:
+                if map.M[row][column] == car_turret:
                     color = tower
-                if map.M[row][column] == 3:
+                if map.M[row][column] == car_base:
                     color = base
 
                 # Draw tiles with Grid
@@ -144,7 +144,10 @@ def main():
 
         # Spawn the wave
         wave.spawn()
-        
+
+        # Move the enemies
+        wave.move()
+
         # Draw the wave
         wave.draw(screen)
 
@@ -152,7 +155,7 @@ def main():
         menu.draw(screen)
 
         # Limit to 24 frames per second
-        clock.tick(24)
+        clock.tick(60)
 
         # Update the screen
         pygame.display.flip()

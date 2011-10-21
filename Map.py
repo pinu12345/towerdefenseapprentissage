@@ -1,5 +1,7 @@
 import pygame, os, RandomMap
 from Game import *
+from Util import *
+from Util import *
 import RandomMap
 
 class Map:
@@ -33,16 +35,11 @@ class Map:
                 self.T[row].append(0)
     
     def loadMap(self, textMap):
-        for i in range(len(textMap)):
-            for j in range(len(textMap[0])):
-                if textMap[i][j] == car_path:
-                    self.M[i][j] = 1
-                elif textMap[i][j] == car_turret:
-                    self.M[i][j] = 2
-                elif textMap[i][j] == car_base:
-                    self.baseX = j
-                    self.baseY = i
-                    self.M[i][j] = 3
+        self.M = textMap
+        entrance = findEntrance(self.M)
+        self.entranceY = entrance[0][0]
+        self.entranceX = entrance[0][1]
+        self.entranceDirection = entrance[1]
 
     def loadBasicMap(self):
         self.M[5][0] = 1

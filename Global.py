@@ -28,7 +28,9 @@ EnemyTypes = \
     ["Pirate",      5,      200,    0,      10,      5],
     ["Singe",       1,      50,     0,      10,     5],
     ["BebeDino",    1,      200,    5,      10,      5],
-    ["Dinosaure",   40,     1000,   10,     10,      5]]
+    ["BebeDino",    1,      200,    5,      10,      5],
+    ["BebeDino",    1,      200,    5,      1,      5],
+    ["Dinosaure",   40,     1000,   10,     100,      20]]
     
 ## Tower Types
 TowerNAME = 0

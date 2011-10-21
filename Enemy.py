@@ -1,15 +1,18 @@
 import pygame, os, random
 from Game import *
 from Global import *
+from Util import *
 
 type = 0
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, type, wave, x, y):
+    def __init__(self, type, wave, x, y, direction):
         
         # Set the enemy type
         self.type = type
         self.wave = wave
+        self.direction = direction
+        self.moveThreshold = 0.0
 
         # Set the enemy parameters
         self.name = EnemyTypes[self.type][EnemyNAME]
@@ -24,19 +27,87 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Initialize position
-        self.setPosition(x, y)
+        self.setStartPosition(x, y, direction)
 
-    def move(self, direction):
-        if self.rect.x > 800:
-            self.kill()
-        self.rect.x += self.speed
+    def move(self):
+    
+        self.moveThreshold += self.speed / 100.0
 
-    def update(self):
-        pass
+        if self.moveThreshold >= 1:
+            self.moveThreshold -= 1
+            nextX = self.rect.x
+            nextY = self.rect.y
+            if self.direction == card_N:
+                nextY -= 1
+            elif self.direction == card_S:
+                nextY += 1
+            elif self.direction == card_W:
+                nextX -= 1
+            elif self.direction == card_E:
+                nextX += 1
+            mapY = pixelToMap(nextY)
+            mapX = pixelToMap(nextX)
 
-    def setPosition(self, x, y):
+            if self.direction == card_N:
+                if (mapY > mapHeight - 1) or ((mapY > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
+                    self.rect.y -= 1
+                else:
+                    self.changeDirection()
+            elif self.direction == card_S:
+                if (mapY < 0) or ((mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path)):
+                    self.rect.y += 1
+                else:
+                    self.changeDirection()
+            elif self.direction == card_W:
+                if (mapX > mapWidth - 1) or ((mapX > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
+                    self.rect.x -= 1
+                else:
+                    self.changeDirection()
+            elif self.direction == card_E:
+                if (mapX < 0) or ((mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path)):
+                    self.rect.x += 1
+                else:
+                    self.changeDirection()
+
+    def changeDirection(self):
+        print "Change Direction"
+        if (self.direction == card_N) or (self.direction == card_S):
+            print "North South"
+            mapX = pixelToMap(self.rect.x)
+            mapY = pixelToMap(self.rect.y)
+            print "Coords : ", mapX, ",", mapY, " : ", self.rect.x, ",", self.rect.y
+            if (mapX > 0) and (self.wave.map.M[mapY][mapX-1] == car_path):
+                print "WEST"
+                self.direction = card_W
+                self.rect.x -= 1
+            elif (mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path):
+                print "EAST"
+                self.direction = card_E
+                self.rect.x += 1
+        elif (self.direction == card_W) or (self.direction == card_E):
+            print "East West"
+            mapX = pixelToMap(self.rect.x)
+            mapY = pixelToMap(self.rect.y)
+            print "Coords : ", mapX, ",", mapY, " : ", self.rect.x, ",", self.rect.y
+            mapX = pixelToMap(self.rect.x)
+            mapY = pixelToMap(self.rect.y)
+            if (mapY > 0) and (self.wave.map.M[mapY-1][mapX] == car_path):
+                print "NORTH"
+                self.direction = card_N
+                self.rect.y -= 1
+            elif (mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path):
+                print "SOUTH"
+                self.direction = card_S
+                self.rect.y += 1
+        
+    def setStartPosition(self, x, y, direction):
         self.rect.x = x * 32
         self.rect.y = y * 32
-        
-    def walkto(self, x, y):
-        pass
+        if self.direction == card_N:
+            self.rect.y += 32
+        elif self.direction == card_S:
+            self.rect.y -= 32
+        elif self.direction == card_W:
+            self.rect.x += 32
+        elif self.direction == card_E:
+            self.rect.x -= 32

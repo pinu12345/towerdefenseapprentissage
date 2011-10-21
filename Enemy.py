@@ -27,22 +27,16 @@ class Enemy(pygame.sprite.Sprite):
         self.setPosition(x, y)
 
     def move(self, direction):
-        if self.rect.x > 500:
-            self.setX(-1)
+        if self.rect.x > 800:
+            self.kill()
         self.rect.x += self.speed
 
     def update(self):
         pass
-        
-    def setX(self, x):
-        self.rect.x = x 
-    
-    def setY(self, y):
-        self.rect.y = y
-        
+
     def setPosition(self, x, y):
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = x * 32
+        self.rect.y = y * 32
         
     def walkto(self, x, y):
         pass

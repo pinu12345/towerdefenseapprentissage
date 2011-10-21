@@ -67,8 +67,8 @@ def main():
                 if towerBar.selectedTower != -1:
                     pos = pygame.mouse.get_pos()
                 
-                    column = pos[0] // (tileSize+map.margin)
-                    row = pos[1] // (tileSize+map.margin)
+                    column = pos[0] // tileSize
+                    row = pos[1] // tileSize
 
                     # Inside Map
                     if (column < map.mapWidth) and (row < map.mapHeight):
@@ -83,8 +83,8 @@ def main():
                 pos = pygame.mouse.get_pos()
                 
                 # Change the x/y screen coordinates to grid coordinates (For the map)
-                column = pos[0] // (tileSize+map.margin)
-                row = pos[1] // (tileSize+map.margin)
+                column = pos[0] // tileSize
+                row = pos[1] // tileSize
 
                 # Inside Map
                 if (column < map.mapWidth) and (row < map.mapHeight):
@@ -120,28 +120,31 @@ def main():
                 # Draw tiles with Grid
                 if map.showGrid == 1:
                     pygame.draw.rect(screen, color, \
-                    [(map.margin+tileSize)*column+map.margin, \
-                    (map.margin+tileSize)*row+map.margin, tileSize, tileSize])
+                    [tileSize*column, \
+                    tileSize*row, tileSize-gridSize, tileSize-gridSize])
 
                 # Draw tiles without grid
                 else:
                     pygame.draw.rect(screen, color, \
-                    [(map.margin+tileSize)*column+map.margin, \
-                    (map.margin+tileSize)*row+map.margin, tileSize+map.margin,tileSize+map.margin])
+                    [tileSize*column, \
+                    tileSize*row, tileSize,tileSize])
 
                 # Draw tower on mouse over
                 if map.O[row][column] != 0:
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
-                    ((map.margin+tileSize)*column+map.margin,(map.margin+tileSize)*row+map.margin),None,1)
+                    (tileSize*column,tileSize*row),None,1)
 
                 # Draw towers on map
                 if map.T[row][column] != 0:
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(map.T[row][column])+'.png')),\
-                    ((map.margin+tileSize)*column+map.margin,(map.margin+tileSize)*row+map.margin),None,0)
+                    (tileSize*column,tileSize*row),None,0)
 
         # Draw the tower bar
         towerBar.draw(screen)
 
+        # Spawn the wave
+        wave.spawn()
+        
         # Draw the wave
         wave.draw(screen)
 

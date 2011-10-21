@@ -3,6 +3,7 @@ mapWidth = 24
 mapHeight = 16
 showGrid = 0
 tileSize = 32
+gridSize = 1
 
 # carte .txt: caracteres vide, chemin, emplacement et base
 car_empty  = '-'
@@ -23,11 +24,11 @@ EnemyDELAY = 5
 
 ## Name             Value   HP      Armor   Speed   Delay
 EnemyTypes = \
-    [["Ninja",      5,      100,    0,      8,      1],
-    ["Pirate",      5,      200,    0,      2,      1],
-    ["Singe",       1,      50,     0,      10,     0.25],
-    ["BebeDino",    1,      200,    5,      2,      2],
-    ["Dinosaure",   40,     1000,   10,     1,      4]]
+    [["Ninja",      5,      100,    0,      10,      10],
+    ["Pirate",      5,      200,    0,      10,      5],
+    ["Singe",       1,      50,     0,      10,     5],
+    ["BebeDino",    1,      200,    5,      10,      5],
+    ["Dinosaure",   40,     1000,   10,     10,      5]]
     
 ## Tower Types
 TowerNAME = 0

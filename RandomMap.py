@@ -1,5 +1,6 @@
 from numpy import *
 from numpy.random import *
+from Global import *
 import copy
 
 class RandomMap:

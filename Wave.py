@@ -1,8 +1,14 @@
-import sys, os, pygame, Enemy
+import sys, os, pygame, Enemy, random
 
 class Wave():
-    def __init__(self):
+    def __init__(self, map):
         self.tileSize = 33
+        
+        self.spawnType = 0
+        self.spawnCount = 0
+        self.delay = 0
+        
+        
         self.enemyb = Enemy.Enemy(0, self, 0, 0)
         self.enemya = Enemy.Enemy(1, self, 0, 1)
         self.enemyc = Enemy.Enemy(2, self, 0, 2)
@@ -18,22 +24,16 @@ class Wave():
         self.enemym = Enemy.Enemy(2, self, 0, 12)
         self.enemyn = Enemy.Enemy(3, self, 0, 13)
         self.enemyo = Enemy.Enemy(4, self, 0, 14)
-        self.enemies = pygame.sprite.Group(self.enemya,
-            self.enemyb,
-            self.enemyc,
-            self.enemyd,
-            self.enemye,
-            self.enemyf,
-            self.enemyg,
-            self.enemyh,
-            self.enemyi,
-            self.enemyj,
-            self.enemyk,
-            self.enemyl,
-            self.enemym,
-            self.enemyn,
-            self.enemyo)
+        self.enemies = pygame.sprite.Group()
 
+    def newSpawn(self, type, count):
+        self.spawnType = type
+        self.spawnCount = count
+    
+    def spawn(self, type, count):
+        if count > 0:
+            self.enemies.add(Enemy.Enemy(type, self, map.baseX, baseY))
+        
     def draw(self, screen):
         #Move the enemies
         for enemy in self.enemies:

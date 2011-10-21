@@ -1,23 +1,8 @@
 import pygame, os, random
 from Game import *
+from Global import *
 
 type = 0
-
-NAME = 0
-VALUE = 1
-HP = 2
-ARMOR = 3
-SPEED = 4
-DELAY = 5
-
-## Enemy Types
-## Name             Value   HP      Armor   Speed   Delay
-Types = \
-    [["Ninja",      5,      100,    0,      8,      1],
-    ["Pirate",      5,      200,    0,      2,      1],
-    ["Singe",       1,      50,     0,      100,    0.25],
-    ["BebeDino",    1,      200,    5,      2,      2],
-    ["Dinosaure",   40,     1000,   10,     1,      4]]
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, type, wave, x, y):
@@ -27,11 +12,11 @@ class Enemy(pygame.sprite.Sprite):
         self.wave = wave
 
         # Set the enemy parameters
-        self.name = Types[self.type][NAME]
-        self.value = Types[self.type][VALUE]
-        self.hp = Types[self.type][HP]
-        self.armor = Types[self.type][ARMOR]
-        self.speed = Types[self.type][SPEED]
+        self.name = EnemyTypes[self.type][EnemyNAME]
+        self.value = EnemyTypes[self.type][EnemyVALUE]
+        self.hp = EnemyTypes[self.type][EnemyHP]
+        self.armor = EnemyTypes[self.type][EnemyARMOR]
+        self.speed = EnemyTypes[self.type][EnemySPEED]
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)
@@ -43,15 +28,21 @@ class Enemy(pygame.sprite.Sprite):
 
     def move(self, direction):
         if self.rect.x > 500:
-            self.rect.x = 0
+            self.setX(-1)
         self.rect.x += self.speed
 
     def update(self):
         pass
         
+    def setX(self, x):
+        self.rect.x = x 
+    
+    def setY(self, y):
+        self.rect.y = y
+        
     def setPosition(self, x, y):
-        self.rect.x = self.wave.tileSize * x + 1
-        self.rect.y = self.wave.tileSize * y + 1
+        self.rect.x = x
+        self.rect.y = y
         
     def walkto(self, x, y):
         pass

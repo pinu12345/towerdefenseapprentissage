@@ -1,31 +1,16 @@
 import pygame, os
-
-NAME = 0
-VALUE = 1
-DAMAGE = 2
-DELAY = 3
-RANGE = 4
-SPLASH = 5
-
-## Tower Types
-## Nom              Value   Damage  Delay   Range   Splash
-Types = \
-    [["Mitraille",  100,    2,      0.1,    4,      0],
-    ["Sniper",      200,    200,    4,      10,     0],
-    ["Zone",        100,    20,     1,      0,      2],
-    ["Omega",       500,    200,    2,      12,     1],
-    ["Hax",         1,      1000,   0.1,    100,    5]]
+from Global import *
 
 class Tower(pygame.sprite.Sprite):
     def __init__(self, xy, type):
         pygame.sprite.Sprite.__init__(self)
         
-        self.name = Types[self.type][NAME]
-        self.value = Types[self.type][VALUE]
-        self.damage = Types[self.type][DAMAGE]
-        self.delay = Types[self.type][DELAY]
-        self.range = Types[self.type][RANGE]
-        self.splash = Types[self.type][SPLASH]
+        self.name = TowerTypes[self.type][TowerNAME]
+        self.value = TowerTypes[self.type][TowerVALUE]
+        self.damage = TowerTypes[self.type][TowerDAMAGE]
+        self.delay = TowerTypes[self.type][TowerDELAY]
+        self.range = TowerTypes[self.type][TowerRANGE]
+        self.splash = TowerTypes[self.type][TowerSPLASH]
         
         towerList.append(self)
 

@@ -19,6 +19,8 @@ class Map:
         self.T = []
         self.currentOX = 0
         self.currentOY = 0
+        self.baseX = 0
+        self.baseY = 0
 
         for row in range(self.mapHeight):
             # Add an empty array that will hold each cell in this row
@@ -33,12 +35,14 @@ class Map:
     def loadMap(self, textMap):
         for i in range(len(textMap)):
             for j in range(len(textMap[0])):
-				if textMap[i][j] == car_path:
-					self.M[i][j] = 1
-				elif textMap[i][j] == car_turret:
-					self.M[i][j] = 2
-				elif textMap[i][j] == car_base:
-					self.M[i][j] = 3
+                if textMap[i][j] == car_path:
+                    self.M[i][j] = 1
+                elif textMap[i][j] == car_turret:
+                    self.M[i][j] = 2
+                elif textMap[i][j] == car_base:
+                    self.baseX = j
+                    self.baseY = i
+                    self.M[i][j] = 3
 
     def loadBasicMap(self):
         self.M[5][0] = 1

@@ -35,17 +35,17 @@ def findEntrance(M):
     # N
     for x in range(1, mapWidth-1):
         if M[0][x] == car_path:
-            return [[0, x], card_S]
+            return [[0, x], cardS]
     # S
     for x in range(1, mapWidth-1):
         if M[mapHeight-1][x] == car_path:
-            return [[mapHeight-1, x], card_N]
+            return [[mapHeight-1, x], cardN]
     # W
     for y in range(1, mapHeight-1):
         if M[y][0] == car_path:
-            return [[y, 0], card_E]
+            return [[y, 0], cardE]
     # E
     for y in range(1, mapHeight-1):
         if M[y][mapWidth-1] == car_path:
-            return [[y, mapWidth-1], card_W]
+            return [[y, mapWidth-1], cardW]
 

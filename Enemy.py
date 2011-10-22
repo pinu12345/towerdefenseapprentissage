@@ -37,54 +37,54 @@ class Enemy(pygame.sprite.Sprite):
             self.moveThreshold -= 1
             nextX = self.rect.x
             nextY = self.rect.y
-            if self.direction == card_N:
+            if self.direction == cardN:
                 nextY -= 1
-            elif self.direction == card_S:
-                nextY += 1
-            elif self.direction == card_W:
+            elif self.direction == cardS:
+                nextY += 32
+            elif self.direction == cardW:
                 nextX -= 1
-            elif self.direction == card_E:
-                nextX += 1
+            elif self.direction == cardE:
+                nextX += 32
             mapY = pixelToMap(nextY)
             mapX = pixelToMap(nextX)
 
-            if self.direction == card_N:
+            if self.direction == cardN:
                 if (mapY > mapHeight - 1) or ((mapY > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
                     self.rect.y -= 1
                 else:
                     self.changeDirection()
-            elif self.direction == card_S:
-                if (mapY < 0) or ((mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path)):
+            elif self.direction == cardS:
+                if (mapY < 0) or ((mapY < mapHeight - 1) and (self.wave.map.M[mapY][mapX] == car_path)):
                     self.rect.y += 1
                 else:
                     self.changeDirection()
-            elif self.direction == card_W:
+            elif self.direction == cardW:
                 if (mapX > mapWidth - 1) or ((mapX > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
                     self.rect.x -= 1
                 else:
                     self.changeDirection()
-            elif self.direction == card_E:
-                if (mapX < 0) or ((mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path)):
+            elif self.direction == cardE:
+                if (mapX < 0) or ((mapX < mapWidth - 1) and (self.wave.map.M[mapY][mapX] == car_path)):
                     self.rect.x += 1
                 else:
                     self.changeDirection()
 
     def changeDirection(self):
         print "Change Direction"
-        if (self.direction == card_N) or (self.direction == card_S):
+        if (self.direction == cardN) or (self.direction == cardS):
             print "North South"
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
             print "Coords : ", mapX, ",", mapY, " : ", self.rect.x, ",", self.rect.y
             if (mapX > 0) and (self.wave.map.M[mapY][mapX-1] == car_path):
                 print "WEST"
-                self.direction = card_W
+                self.direction = cardW
                 self.rect.x -= 1
             elif (mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path):
                 print "EAST"
-                self.direction = card_E
+                self.direction = cardE
                 self.rect.x += 1
-        elif (self.direction == card_W) or (self.direction == card_E):
+        elif (self.direction == cardW) or (self.direction == cardE):
             print "East West"
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
@@ -93,21 +93,21 @@ class Enemy(pygame.sprite.Sprite):
             mapY = pixelToMap(self.rect.y)
             if (mapY > 0) and (self.wave.map.M[mapY-1][mapX] == car_path):
                 print "NORTH"
-                self.direction = card_N
+                self.direction = cardN
                 self.rect.y -= 1
             elif (mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path):
                 print "SOUTH"
-                self.direction = card_S
+                self.direction = cardS
                 self.rect.y += 1
         
     def setStartPosition(self, x, y, direction):
         self.rect.x = x * 32
         self.rect.y = y * 32
-        if self.direction == card_N:
+        if self.direction == cardN:
             self.rect.y += 32
-        elif self.direction == card_S:
+        elif self.direction == cardS:
             self.rect.y -= 32
-        elif self.direction == card_W:
+        elif self.direction == cardW:
             self.rect.x += 32
-        elif self.direction == card_E:
+        elif self.direction == cardE:
             self.rect.x -= 32

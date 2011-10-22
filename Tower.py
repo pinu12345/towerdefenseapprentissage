@@ -27,14 +27,36 @@ class Tower(pygame.sprite.Sprite):
         self.surfx, self.surfy = self.rect.center
         self.surfx -= 100
         self.surfy -= 100
-
+    
     def target(self):
-        for enemy in baddieList:
-            aimx = enemy.rect.centerx
-            aimy = enemy.rect.bottom - 13
-            if self.range == 0:
-                enemy.health -= self.damage
-                return (aimx,aimy)
-            elif dist((aimx,aimy),self.rect,self.range) == 1:
-                enemy.health -= self.damage
-                return (aimx,aimy)
+        if self.range == 0:
+            # juste splash
+            for enemy in enemyList:
+                if dist_pixel(self.coords, enemy.coords) <= self.range:
+                    self.fire(self.coords)
+                    return None
+        else:
+            if self.splash > 0:
+                # distance, splash
+                extended_range = self.range + self.splash
+                enemy_found = 0
+                for enemy in enemyList:
+                    if dist_pixel(self.coords, enemy.coords) <= extended_range:
+                        enemy_found = 1
+                        break
+                if enemy_found:
+                    validPixelList = findValidPixels()
+                    max_damage = 0
+                    for pixel in validPixelList:
+                        # calcule dégâts totaux
+                        pass
+            else:
+                # distance, 1 ennemi
+                validEnemyList = []
+                for enemy in enemyList:
+                    if dist_pixel(self.coords, enemy.coords) <= self.range:
+                        validEnemyList.append(enemy)
+                max_damage = 0
+                for enemy in validEnemyList:
+                    pass
+                

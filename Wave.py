@@ -12,7 +12,7 @@ class Wave():
         self.spawnTimer = 0
         self.spawnDelay = 0
         self.map = map
-        self.newSpawn(6, 1)
+        self.newSpawn(randint(0,4), randint(5,10))
         self.enemies = pygame.sprite.Group()
 
     def newSpawn(self, type, count):

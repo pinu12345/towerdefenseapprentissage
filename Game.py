@@ -155,7 +155,7 @@ def main():
         menu.draw(screen)
 
         # Limit to 24 frames per second
-        clock.tick(60)
+        clock.tick(24)
 
         # Update the screen
         pygame.display.flip()

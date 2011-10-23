@@ -70,33 +70,24 @@ class Enemy(pygame.sprite.Sprite):
                     self.changeDirection()
 
     def changeDirection(self):
-        print "Change Direction"
         if (self.direction == cardN) or (self.direction == cardS):
-            print "North South"
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
-            print "Coords : ", mapX, ",", mapY, " : ", self.rect.x, ",", self.rect.y
             if (mapX > 0) and (self.wave.map.M[mapY][mapX-1] == car_path):
-                print "WEST"
                 self.direction = cardW
                 self.rect.x -= 1
             elif (mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path):
-                print "EAST"
                 self.direction = cardE
                 self.rect.x += 1
         elif (self.direction == cardW) or (self.direction == cardE):
-            print "East West"
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
-            print "Coords : ", mapX, ",", mapY, " : ", self.rect.x, ",", self.rect.y
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
             if (mapY > 0) and (self.wave.map.M[mapY-1][mapX] == car_path):
-                print "NORTH"
                 self.direction = cardN
                 self.rect.y -= 1
             elif (mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path):
-                print "SOUTH"
                 self.direction = cardS
                 self.rect.y += 1
         

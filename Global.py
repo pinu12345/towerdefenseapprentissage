@@ -24,13 +24,13 @@ EnemyDELAY = 5
 
 ## Name             Value   HP      Armor   Speed   Delay
 EnemyTypes = \
-    [["Ninja",      5,      100,    0,      100,    100],
-    ["Pirate",      5,      200,    0,      100,    50],
-    ["Singe",       1,      50,     0,      100,    50],
-    ["BebeDino",    1,      200,    5,      100,    50],
-    ["BebeDino",    1,      200,    5,      100,    50],
-    ["BebeDino",    1,      200,    5,      100,    50],
-    ["Dinosaure",   40,     1000,   10,     100,    200]]
+    [["Ninja",      5,      100,    0,      100,    8],
+    ["Pirate",      5,      200,    0,      100,    32],
+    ["Singe",       1,      50,     0,      100,    16],
+    ["BebeDino",    1,      200,    5,      100,    32],
+    ["BebeDino",    1,      200,    5,      100,    32],
+    ["BebeDino",    1,      200,    5,      100,    32],
+    ["Dinosaure",   40,     1000,   10,     100,    32]]
     
 ## Tower Types
 TowerNAME = 0

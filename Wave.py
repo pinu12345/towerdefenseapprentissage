@@ -19,7 +19,7 @@ class Wave():
         self.spawnType = type
         self.spawnCount = count
         self.spawnDelay = EnemyTypes[self.spawnType][EnemyDELAY]
-    
+
     def spawn(self):
         self.spawnTimer += 1
         if self.spawnTimer == self.spawnDelay:
@@ -28,7 +28,7 @@ class Wave():
                 self.spawnCount = self.spawnCount - 1
                 self.enemies.add(Enemy.Enemy(self.spawnType, self, self.map.entranceX, self.map.entranceY, self.map.entranceDirection))
             else:
-                #self.newSpawn(randint(0,4), randint(5,10))
+                self.newSpawn(randint(0,4), randint(5,10))
                 pass
 
     def move(self):

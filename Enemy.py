@@ -76,9 +76,11 @@ class Enemy(pygame.sprite.Sprite):
             if (mapX > 0) and (self.wave.map.M[mapY][mapX-1] == car_path):
                 self.direction = cardW
                 self.rect.x -= 1
+                return
             elif (mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path):
                 self.direction = cardE
                 self.rect.x += 1
+                return
         elif (self.direction == cardW) or (self.direction == cardE):
             mapX = pixelToMap(self.rect.x)
             mapY = pixelToMap(self.rect.y)
@@ -87,9 +89,12 @@ class Enemy(pygame.sprite.Sprite):
             if (mapY > 0) and (self.wave.map.M[mapY-1][mapX] == car_path):
                 self.direction = cardN
                 self.rect.y -= 1
+                return
             elif (mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path):
                 self.direction = cardS
                 self.rect.y += 1
+                return
+        self.kill()
         
     def setStartPosition(self, x, y, direction):
         self.rect.x = x * 32

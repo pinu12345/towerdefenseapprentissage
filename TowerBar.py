@@ -20,10 +20,8 @@ class TowerBar():
             screen.blit(self.towers[i], (self.origX + i * (self.towerSize + self.space), self.origY))
 
     def onClick(self, pos):
-        print("Coords:",pos[0],",",pos[1])
         if (pos[1] > self.origY) and (pos[1] <= self.origY + self.towerSize):
             x = (pos[0] - self.origX) // (self.towerSize + self.space)
             if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (self.towerSize + self.space) < self.towerSize):
-                print("Tower selected : ", x+1)
                 self.selectedTower = x+1
                 self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))

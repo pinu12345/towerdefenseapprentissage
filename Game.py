@@ -131,7 +131,6 @@ def main():
 
                 # Draw tower on mouse over
                 if map.O[row][column] != 0:
-                    print("tower : ", row ,",", column," : ", map.O[row][column])
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
                     (tileSize*column,tileSize*row),None,1)
 

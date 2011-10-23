@@ -71,9 +71,9 @@ def main():
                     row = pos[1] // tileSize
 
                     # Inside Map
-                    if (column < map.mapWidth) and (row < map.mapHeight):
+                    if (column < mapWidth) and (row < mapHeight):
                         map.O[map.currentOY][map.currentOX] = 0
-                        if (map.M[row][column] == 2) and (map.T[row][column] == 0):
+                        if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
                             map.currentOY = row
                             map.currentOX = column
                             map.O[row][column] = towerBar.selectedTower
@@ -87,14 +87,14 @@ def main():
                 row = pos[1] // tileSize
 
                 # Inside Map
-                if (column < map.mapWidth) and (row < map.mapHeight):
-                    if map.M[row][column] == 2:
+                if (column < mapWidth) and (row < mapHeight):
+                    if map.M[row][column] == car_turret:
                         if map.T[row][column] == 0:
                             #TODO : money check
                             map.T[row][column] = towerBar.selectedTower
 
                 # Inside Menu
-                elif column >= map.mapWidth:
+                elif column >= mapWidth:
                     menu.onClick(pos, map)
 
                 # Inside Tower Bar
@@ -105,8 +105,8 @@ def main():
         screen.fill(background)
 
         # Draw the map
-        for row in range(map.mapHeight):
-            for column in range(map.mapWidth):
+        for row in range(mapHeight):
+            for column in range(mapWidth):
 
                 # Identify terrain type
                 color = empty
@@ -131,6 +131,7 @@ def main():
 
                 # Draw tower on mouse over
                 if map.O[row][column] != 0:
+                    print("tower : ", row ,",", column," : ", map.O[row][column])
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
                     (tileSize*column,tileSize*row),None,1)
 

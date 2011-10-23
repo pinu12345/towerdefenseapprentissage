@@ -1,4 +1,5 @@
 import pygame, Map, os
+from Global import *
 
 class TowerBar():
     def __init__(self, origX, origY):
@@ -9,7 +10,7 @@ class TowerBar():
                        pygame.image.load(os.path.join ('Images\Towers', '5.png'))]
         self.origX = origX
         self.origY = origY
-        self.towerSize = 32
+        self.towerSize = tileSize
         self.space = 16
         self.towerCount = len(self.towers)
         self.selectedTower = 0
@@ -23,5 +24,6 @@ class TowerBar():
         if (pos[1] > self.origY) and (pos[1] <= self.origY + self.towerSize):
             x = (pos[0] - self.origX) // (self.towerSize + self.space)
             if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (self.towerSize + self.space) < self.towerSize):
+                print("Tower selected : ", x+1)
                 self.selectedTower = x+1
                 self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))

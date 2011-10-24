@@ -138,11 +138,6 @@ def main():
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
                     (tileSize*column,tileSize*row),None,1)
 
-                # Draw towers on map
-                #if map.T[row][column] != 0:
-                #    screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(map.T[row][column])+'.png')),\
-                #    (tileSize*column,tileSize*row),None,0)
-
         # Draw the tower bar
         towerBar.draw(screen)
         

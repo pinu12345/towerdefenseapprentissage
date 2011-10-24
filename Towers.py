@@ -4,9 +4,10 @@ from random import *
 from Util import *
 
 class Towers():
-    def __init__(self, map):
+    def __init__(self, map, wave):
         self.map = map
         self.towers = pygame.sprite.Group()
+        self.wave = wave
 
     def placeTower(self, map, towerType, row, column):
         map.T[row][column] = towerType
@@ -18,6 +19,9 @@ class Towers():
         tower.kill()
         #Refund the price
         pass
+
+    def target(self):
+        self.towers.target()
 
     def draw(self, screen):
         self.towers.draw(screen)

@@ -39,7 +39,7 @@ def main():
     wave = Wave.Wave(map)
     
     # Initialize the Towers class
-    towers = Towers.Towers(map)
+    towers = Towers.Towers(map, wave)
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)

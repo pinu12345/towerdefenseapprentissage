@@ -143,8 +143,8 @@ def main():
         
         # Draw the towers
         towers.draw(screen)
-        
-        # Spawn the wave
+
+        # Spawn any new enemy in the wave queue
         wave.spawn()
 
         # Move the enemies
@@ -152,6 +152,9 @@ def main():
 
         # Draw the wave
         wave.draw(screen)
+        
+        # Towers Target
+        towers.target()
 
         # Draw the game information menu
         menu.draw(screen)

@@ -12,18 +12,16 @@ class Tower(pygame.sprite.Sprite):
         self.delay = TowerTypes[self.type][TowerDELAY]
         self.range = TowerTypes[self.type][TowerRANGE]
         self.splash = TowerTypes[self.type][TowerSPLASH]
-
-        self.level = 1
         
         self.image = pygame.image.load(os.path.join ('Images\Towers', str(type+1)+'.png'))
         self.rect = self.image.get_rect()
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize
     
-    def target(self):
+    def target(self, enemies):
         if self.range == 0:
             # juste splash
-            for enemy in enemyList:
+            for enemy in enemies:
                 if dist_pixel(self.coords, enemy.coords) <= self.range:
                     self.fire(self.coords)
                     return None
@@ -32,7 +30,7 @@ class Tower(pygame.sprite.Sprite):
                 # distance, splash
                 extended_range = self.range + self.splash
                 enemy_found = 0
-                for enemy in enemyList:
+                for enemy in enemies:
                     if dist_pixel(self.coords, enemy.coords) <= extended_range:
                         enemy_found = 1
                         break
@@ -45,10 +43,12 @@ class Tower(pygame.sprite.Sprite):
             else:
                 # distance, 1 ennemi
                 validEnemyList = []
-                for enemy in enemyList:
+                for enemy in enemies:
                     if dist_pixel(self.coords, enemy.coords) <= self.range:
                         validEnemyList.append(enemy)
                 max_damage = 0
                 for enemy in validEnemyList:
                     pass
-                
+
+    def fire(self, coords):
+        pass

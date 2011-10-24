@@ -5,14 +5,12 @@ from Util import *
 
 class Wave():
     def __init__(self, map):
-        self.tileSize = 33
-        
         self.spawnType = 0
         self.spawnCount = 0
         self.spawnTimer = 0
         self.spawnDelay = 0
         self.map = map
-        self.newSpawn(randint(0,4), randint(5,10))
+        self.newSpawn(randint(0,4), randint(20,30))
         self.enemies = pygame.sprite.Group()
 
     def newSpawn(self, type, count):
@@ -28,7 +26,7 @@ class Wave():
                 self.spawnCount = self.spawnCount - 1
                 self.enemies.add(Enemy.Enemy(self.spawnType, self, self.map.entranceX, self.map.entranceY, self.map.entranceDirection))
             else:
-                self.newSpawn(randint(0,4), randint(5,10))
+                self.newSpawn(randint(0,4), randint(5,100))
                 pass
 
     def move(self):

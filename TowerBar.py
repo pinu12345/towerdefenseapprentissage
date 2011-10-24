@@ -1,6 +1,9 @@
 import pygame, Map, os
 from Global import *
 
+# Colors
+selected    = (  205,   149,   12)
+
 class TowerBar():
     def __init__(self, origX, origY):
         self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1.png')),\
@@ -10,18 +13,21 @@ class TowerBar():
                        pygame.image.load(os.path.join ('Images\Towers', '5.png'))]
         self.origX = origX
         self.origY = origY
-        self.towerSize = tileSize
         self.space = 16
         self.towerCount = len(self.towers)
         self.selectedTower = 0
     
     def draw(self, screen):
         for i in range(self.towerCount):
-            screen.blit(self.towers[i], (self.origX + i * (self.towerSize + self.space), self.origY))
+            if i == self.selectedTower-1:
+                screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
+                screen.blit(self.towers[i], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
+            else:
+                screen.blit(self.towers[i], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
 
     def onClick(self, pos):
-        if (pos[1] > self.origY) and (pos[1] <= self.origY + self.towerSize):
-            x = (pos[0] - self.origX) // (self.towerSize + self.space)
-            if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (self.towerSize + self.space) < self.towerSize):
+        if (pos[1] > self.origY) and (pos[1] <= self.origY + tileSize):
+            x = (pos[0] - self.origX) // (tileSize + self.space)
+            if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (tileSize + self.space) < tileSize):
                 self.selectedTower = x+1
                 self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))

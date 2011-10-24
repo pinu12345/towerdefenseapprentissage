@@ -141,7 +141,10 @@ def main():
 
         # Draw the tower bar
         towerBar.draw(screen)
-
+        
+        # Draw the towers
+        #Tower.draw()
+        
         # Spawn the wave
         wave.spawn()
 
@@ -155,7 +158,7 @@ def main():
         menu.draw(screen)
 
         # Limit to 24 frames per second
-        clock.tick(60)
+        clock.tick_busy_loop()
 
         # Update the screen
         pygame.display.flip()

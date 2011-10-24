@@ -1,4 +1,4 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers
 from Global import *
 
 # Colors
@@ -37,6 +37,9 @@ def main():
     
     # Initialize the wave
     wave = Wave.Wave(map)
+    
+    # Initialize the Towers class
+    towers = Towers.Towers(map)
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
@@ -88,10 +91,11 @@ def main():
 
                 # Inside Map
                 if (column < mapWidth) and (row < mapHeight):
-                    if map.M[row][column] == car_turret:
-                        if map.T[row][column] == 0:
-                            #TODO : money check
-                            map.T[row][column] = towerBar.selectedTower
+                    if towerBar.selectedTower != 0:
+                        if map.M[row][column] == car_turret:
+                            if map.T[row][column] == 0:
+                                #TODO : money check
+                                towers.placeTower(map, towerBar.selectedTower, row, column)
 
                 # Inside Menu
                 elif column >= mapWidth:
@@ -135,15 +139,15 @@ def main():
                     (tileSize*column,tileSize*row),None,1)
 
                 # Draw towers on map
-                if map.T[row][column] != 0:
-                    screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(map.T[row][column])+'.png')),\
-                    (tileSize*column,tileSize*row),None,0)
+                #if map.T[row][column] != 0:
+                #    screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(map.T[row][column])+'.png')),\
+                #    (tileSize*column,tileSize*row),None,0)
 
         # Draw the tower bar
         towerBar.draw(screen)
         
         # Draw the towers
-        #Tower.draw()
+        towers.draw(screen)
         
         # Spawn the wave
         wave.spawn()

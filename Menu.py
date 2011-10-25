@@ -1,10 +1,13 @@
 import sys, os, pygame
 
 class Menu():
-    def __init__(self):
+    def __init__(self, map, wave, towers):
         self.btnGrid = GridButton(850,250)
         self.btnStart = StartButton(850,300)
         self.btnExit = ExitButton(850,350)
+        self.map = map
+        self.wave = wave
+        self.towers = towers
         self.menu = pygame.sprite.Group(self.btnGrid, self.btnStart, self.btnExit)
 
     def draw(self, screen):
@@ -18,7 +21,8 @@ class Menu():
                 map.showGrid = 1
 
         if self.btnStart.rect.collidepoint(pos):
-            pass
+            self.wave.clear()
+            self.wave.newRandomSpawn()
 
         if self.btnExit.rect.collidepoint(pos):
             pygame.quit()

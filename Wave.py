@@ -10,8 +10,8 @@ class Wave():
         self.spawnTimer = 0
         self.spawnDelay = 0
         self.map = map
-        self.newSpawn(randint(0,4), randint(20,30))
-        self.enemies = pygame.sprite.Group()
+        self.enemies = pygame.sprite.OrderedUpdates()
+        self.newRandomSpawn()
 
     def newSpawn(self, type, count):
         self.spawnType = type
@@ -24,9 +24,8 @@ class Wave():
             self.spawnTimer = 0
             if self.spawnCount > 0:
                 self.spawnCount = self.spawnCount - 1
-                self.enemies.add(Enemy.Enemy(self.spawnType, self, self.map.entranceX, self.map.entranceY, self.map.entranceDirection))
+                self.enemies.add(Enemy.Enemy(self.spawnType, self, self.map.entranceX, self.map.entranceY, self.map.entranceDirection, self.spawnCount))
             else:
-                self.newSpawn(randint(0,4), randint(5,100))
                 pass
 
     def move(self):
@@ -36,4 +35,15 @@ class Wave():
 
     def draw(self, screen):
         #Draw their new positions
-        self.enemies.draw(screen)
+        for enemy in self.enemies:
+            enemy.draw(screen)
+    
+    def newRandomSpawn(self):
+        self.newSpawn(randint(0,4), randint(5, 20))
+        
+    def clear(self):
+        self.enemies.empty()
+        self.spawnTimer = 0
+        self.spawnCount = 0
+        self.spawnType = 0
+        self.spawnDelay = 0

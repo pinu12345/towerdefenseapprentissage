@@ -14,7 +14,8 @@ class Towers():
         self.towers.add(Tower.Tower(row, column, towerType-1))
 
     def target(self):
-        self.towers.target(self.wave.enemies)
+        for tower in self.towers:
+            tower.basicShoot(self.wave.enemies)
 
     def draw(self, screen):
         self.towers.draw(screen)

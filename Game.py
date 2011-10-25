@@ -31,10 +31,7 @@ def main():
     # map.loadBasicMap()
     # map.loadFileMap('testmap')
     # map.loadTestMap()
-    
-    # Initialize the menu
-    menu = Menu.Menu()
-    
+
     # Initialize the wave
     wave = Wave.Wave(map)
     
@@ -43,6 +40,9 @@ def main():
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
+
+    # Initialize the menu
+    menu = Menu.Menu(map, wave, towers)
 
     # Initialize pygame
     pygame.init()

@@ -5,9 +5,14 @@ from Util import *
 
 type = 0
 
+# Colors
+red    = ( 255,   20,   20)
+green  = (   0, 255,   0)
+
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, type, wave, x, y, direction):
+    def __init__(self, type, wave, x, y, direction, id):
         
+        self.id = id
         # Set the enemy type
         self.type = type
         self.wave = wave
@@ -18,6 +23,7 @@ class Enemy(pygame.sprite.Sprite):
         self.name = EnemyTypes[self.type][EnemyNAME]
         self.value = EnemyTypes[self.type][EnemyVALUE]
         self.hp = EnemyTypes[self.type][EnemyHP]
+        self.maxHp = self.hp
         self.armor = EnemyTypes[self.type][EnemyARMOR]
         self.speed = EnemyTypes[self.type][EnemySPEED]
         
@@ -28,11 +34,17 @@ class Enemy(pygame.sprite.Sprite):
 
         # Initialize position
         self.setStartPosition(x, y, direction)
-
-    def move(self):
     
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+        # Health bar
+        health_bar_x = self.rect.x
+        health_bar_y = self.rect.y + 4
+        screen.fill(red,(health_bar_x, health_bar_y, 32, 4))
+        screen.fill(green,(health_bar_x, health_bar_y, (32*self.hp/self.maxHp), 4))
+    
+    def move(self):
         self.moveThreshold += self.speed / 100.0
-
         if self.moveThreshold >= 1:
             self.moveThreshold -= 1
             nextX = self.rect.x
@@ -107,3 +119,9 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.x += 32
         elif self.direction == cardE:
             self.rect.x -= 32
+    
+    def damage(self, damage):
+        print "I'm hurt : ", self.id
+        self.hp = max(0, self.hp - damage)
+        if self.hp == 0:
+            self.kill()

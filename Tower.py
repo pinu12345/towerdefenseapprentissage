@@ -1,5 +1,6 @@
 import pygame, os
 from Global import *
+from Util import *
 
 class Tower(pygame.sprite.Sprite):
     def __init__(self, row, column, type):
@@ -18,6 +19,12 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize
     
+    def basicShoot(self, enemies):
+        for enemy in enemies:
+            if distPixel(self.rect.y, self.rect.x, enemy.rect.y, enemy.rect.x) <= self.range * tileSize :
+                enemy.damage(self.damage)
+                return
+
     def target(self, enemies):
         if self.range == 0:
             # juste splash

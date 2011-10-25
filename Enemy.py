@@ -121,6 +121,7 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.x -= 32
     
     def damage(self, damage):
+        damage = max(1, damage-self.armor)
         self.hp = max(0, self.hp - damage)
         if self.hp == 0:
             self.kill()

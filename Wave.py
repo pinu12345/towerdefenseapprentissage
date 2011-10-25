@@ -39,7 +39,7 @@ class Wave():
             enemy.draw(screen)
     
     def newRandomSpawn(self):
-        self.newSpawn(randint(0,4), randint(5, 20))
+        self.newSpawn(randint(0,4), randint(75, 100))
         
     def clear(self):
         self.enemies.empty()

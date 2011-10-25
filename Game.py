@@ -1,12 +1,5 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot
 from Global import *
-
-# Colors
-background    = (   0,   0,   0)
-empty         = ( 120,  80,  40)
-route         = ( 200, 190, 170)
-tower         = ( 130, 140, 160)
-base          = ( 200,  80,  20)
 
 def main():
 
@@ -37,6 +30,9 @@ def main():
     
     # Initialize the Towers class
     towers = Towers.Towers(map, wave)
+    
+    # Initialize the shot graphics
+    shots = []
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
@@ -124,8 +120,8 @@ def main():
                 # Draw tiles with Grid
                 if map.showGrid == 1:
                     pygame.draw.rect(screen, color, \
-                    [tileSize*column, \
-                    tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                    [tileSize*column, tileSize*row, \
+                    tileSize-gridSize, tileSize-gridSize])
 
                 # Draw tiles without grid
                 else:
@@ -154,8 +150,10 @@ def main():
         wave.draw(screen)
         
         # Towers Target
-        towers.target(screen)
-
+        towers.target(screen, shots)
+        for shot in shots:
+            shot.draw(screen)
+        
         # Draw the game information menu
         menu.draw(screen)
 

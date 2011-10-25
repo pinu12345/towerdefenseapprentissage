@@ -1,4 +1,4 @@
-import pygame, os, Game
+import pygame, os, Game, Shot
 from Global import *
 from Util import *
 
@@ -19,20 +19,27 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize
     
-    def basicShoot(self, enemies, screen):
+    def basicShoot(self, enemies, screen, shots):
         for enemy in enemies:
             if distPixel(self.rect.y, self.rect.x, enemy.rect.y, enemy.rect.x) <= self.range * tileSize :
                 enemy.damage(self.damage)
-                pygame.draw.aaline(screen, (255, 255, 220), (self.rect.x + tileSize/2, self.rect.y + tileSize/2), (enemy.rect.x + tileSize/2, enemy.rect.y + tileSize/2), 1)
+                shots.append(Shot.Shot( \
+                    self.rect.x, self.rect.y, enemy.rect.x, enemy.rect.y, \
+                    self.type))
                 return
 
-    def target(self, enemies):
+    def target(self, enemies, screen, shots):
         if self.range == 0:
             # juste splash
+            enemy_in_range = 0
             for enemy in enemies:
                 if dist_pixel(self.coords, enemy.coords) <= self.range:
-                    self.fire(self.coords)
-                    return None
+                    enemy_in_range = 1
+                    enemy.damage(self.damage)
+            if enemy_in_range = 1:
+                shots.append(Shot.Shot( \
+                    self.rect.x, self.rect.y, enemy.rect.x, enemy.rect.y, \
+                    self.type))
         else:
             if self.splash > 0:
                 # distance, splash
@@ -56,7 +63,11 @@ class Tower(pygame.sprite.Sprite):
                         validEnemyList.append(enemy)
                 max_damage = 0
                 for enemy in validEnemyList:
-                    pass
+                    damage_done = 
+                    if damage_done > max_damage:
+                        chosen_enemy = enemy
+                        max_damage = damage_done
+                     
 
     def fire(self, coords):
         pass

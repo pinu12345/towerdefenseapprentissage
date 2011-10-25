@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, Game
 from Global import *
 from Util import *
 
@@ -19,10 +19,11 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize
     
-    def basicShoot(self, enemies):
+    def basicShoot(self, enemies, screen):
         for enemy in enemies:
             if distPixel(self.rect.y, self.rect.x, enemy.rect.y, enemy.rect.x) <= self.range * tileSize :
                 enemy.damage(self.damage)
+                pygame.draw.aaline(screen, (255, 255, 220), (self.rect.x + tileSize/2, self.rect.y + tileSize/2), (enemy.rect.x + tileSize/2, enemy.rect.y + tileSize/2), 1)
                 return
 
     def target(self, enemies):
@@ -59,3 +60,4 @@ class Tower(pygame.sprite.Sprite):
 
     def fire(self, coords):
         pass
+    

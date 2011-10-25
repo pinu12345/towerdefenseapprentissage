@@ -154,7 +154,7 @@ def main():
         wave.draw(screen)
         
         # Towers Target
-        towers.target()
+        towers.target(screen)
 
         # Draw the game information menu
         menu.draw(screen)

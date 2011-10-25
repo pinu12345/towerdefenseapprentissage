@@ -22,11 +22,11 @@ def pixelToMap(y, x = -1):
     else:
         return ([pixelToMap(y), pixelToMap(x)])
         
-def distPixel(a, b, c = -1, d = -1, map = 0):
+def distPixel(a, b, c = -1000, d = -1000, map = 0):
     # accepte a et b chacun vecteur [y, x]
     # ou a = y1, b = x1, c = y2, d = x2
     # input et output en pixels
-    if d < 0:
+    if c == -1000 or d == -1000:
         return sqrt((a[0]-b[0])**2+(a[1]-b[1])**2)
     else:
         return sqrt((a-c)**2+(b-d)**2)

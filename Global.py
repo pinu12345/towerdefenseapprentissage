@@ -31,13 +31,11 @@ EnemyDELAY = 5
 
 ## Name             Value   HP      Armor   Speed   Delay
 EnemyTypes = \
-    [["Ninja",      5,      1000,   0,      100,    16],
-    ["Pirate",      5,      2000,   0,      100,    32],
-    ["Singe",       1,      1500,   0,      100,    8],
-    ["BebeDino",    1,      2000,   5,      100,    32],
-    ["BebeDino",    1,      2000,   20,     100,    32],
-    ["BebeDino",    1,      2000,   5,      100,    32],
-    ["Dinosaure",   40,     1000,   10,     100,    32]]
+    [["Ninja",      5,      100,    0,      500,   20],
+    ["Pirate",      5,      200,    0,      150,    20],
+    ["Singe",       1,      50,     0,      250,    10],
+    ["BebeDino",    15,     500,    5,      150,    50],
+    ["Dinosaure",   40,     1000,   10,     100,    100]]
     
 ## Tower Types
 TowerNAME = 0
@@ -49,11 +47,11 @@ TowerSPLASH = 5
 
 ## Nom              Value   Damage  Delay   Range   Splash
 TowerTypes = \
-    [["Mitraille",  100,    5,      0.1,    5,      0],
-    ["Sniper",      200,    20,     4,      10,     0],
-    ["Zone",        100,    20,     1,      0,      2],
-    ["Omega",       500,    200,    2,      3,      1],
-    ["Hax",         1,      1000,   0.1,    2,      5]]
+    [["Mitraille",  100,    5,      5,      5,      0],
+    ["Sniper",      200,    200,    100,    10,     0],
+    ["Zone",        100,    10,     20,     0,      2],
+    ["Omega",       500,    200,    50,     3,      1],
+    ["Hax",         1,      1000,   1,      100,    5]]
     
 ##     Shot Color         Dur  Width  Zone Color         Dur
 TowerShotGraphs = \

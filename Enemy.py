@@ -6,7 +6,7 @@ from Util import *
 type = 0
 
 # Colors
-red    = ( 255,   20,   20)
+red    = ( 255,  20,  20)
 green  = (   0, 255,   0)
 
 class Enemy(pygame.sprite.Sprite):
@@ -22,8 +22,8 @@ class Enemy(pygame.sprite.Sprite):
         # Set the enemy parameters
         self.name = EnemyTypes[self.type][EnemyNAME]
         self.value = EnemyTypes[self.type][EnemyVALUE]
-        self.hp = EnemyTypes[self.type][EnemyHP]
-        self.maxHp = self.hp
+        self.maxHP = EnemyTypes[self.type][EnemyHP]
+        self.HP = self.maxHP
         self.armor = EnemyTypes[self.type][EnemyARMOR]
         self.speed = EnemyTypes[self.type][EnemySPEED]
         
@@ -39,9 +39,9 @@ class Enemy(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
         # Health bar
         health_bar_x = self.rect.x
-        health_bar_y = self.rect.y + 4
+        health_bar_y = self.rect.y + tileSize
         screen.fill(red,(health_bar_x, health_bar_y, 32, 4))
-        screen.fill(green,(health_bar_x, health_bar_y, (32*self.hp/self.maxHp), 4))
+        screen.fill(green,(health_bar_x, health_bar_y, (32*self.HP/self.maxHP), 4))
     
     def move(self):
         self.moveThreshold += self.speed / 100.0
@@ -120,8 +120,8 @@ class Enemy(pygame.sprite.Sprite):
         elif self.direction == cardE:
             self.rect.x -= 32
     
-    def damage(self, damage):
-        damage = max(1, damage-self.armor)
-        self.hp = max(0, self.hp - damage)
-        if self.hp == 0:
+    def takeDamage(self, damage):
+        damage = max(damage/2, damage-self.armor)
+        self.HP = max(0, self.HP - damage)
+        if self.HP <= 0:
             self.kill()

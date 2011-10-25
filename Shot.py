@@ -28,26 +28,34 @@ class Shot:
         
     def draw(self, screen):
         if self.projAlpha <= 0 and self.zoneAlpha <= 0:
-            # remove shot?
+            # remove shot
             pass
         if self.projAlpha > 0:
             self.projColorAlpha = ( \
                 self.projColor[0], self.projColor[1], self.projColor[2], \
                 self.projAlpha)
-            pygame.draw.aaline(screen, \
+            pygame.draw.line(screen, \
+                self.projColorAlpha, \
+                (self.xi + tileSize/2-1, self.yi + tileSize/2-1), \
+                (self.xt + tileSize/2-1, self.yt + tileSize/2-1), \
+                self.projWidth)
+            pygame.draw.circle(screen, \
                 self.projColorAlpha, \
                 (self.xi + tileSize/2, self.yi + tileSize/2), \
+                self.projWidth*2 + 2)
+            pygame.draw.circle(screen, \
+                self.projColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
-                200)
-            #self.projAlpha -= self.projDecay
+                self.projWidth*2 + 2)
+            self.projAlpha -= self.projDecay
             self.projAlpha -= 1000
         if self.zoneAlpha > 0:
             self.zoneColorAlpha = ( \
                 self.zoneColor[0], self.zoneColor[1], self.zoneColor[2], \
                 self.zoneAlpha)
             pygame.draw.circle(screen, \
-                self.projColorAlpha, \
+                self.zoneColorAlpha, \
                 (self.xi + tileSize/2, self.yi + tileSize/2), \
-                self.zoneRadius)
+                self.zoneRadius * tileSize + 4)
             #self.zoneAlpha -= self.zoneDecay
-            self.zoneAplha -= 1000
+            self.zoneAlpha -= 1000

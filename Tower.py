@@ -64,7 +64,7 @@ class Tower(pygame.sprite.Sprite):
                         max_damage = 0
                         max_distance = 0
                         #####
-                        print "\n Evaluating valid pixels..."
+                        # print "\n Evaluating valid pixels..."
                         validPixels_num = 0
                         #####
                         for pixel in validPixels:
@@ -90,7 +90,7 @@ class Tower(pygame.sprite.Sprite):
                                     self.rect.x, self.rect.y)
                         # on attaque le pixel trouve
                         #####
-                        print " Verified", validPixels_num, "pixels."
+                        # print " Verified", validPixels_num, "pixels."
                         #####
                         shots.append(Shot.Shot(self.rect.x, self.rect.y, \
                             target_pixel[0], target_pixel[1], self.type))
@@ -123,7 +123,7 @@ class Tower(pygame.sprite.Sprite):
         
     def findValidPixels(self):
         #####
-        print "\n Finding valid pixels..."
+        # print "\n Finding valid pixels..."
         validPixels_num = 0
         #####
         validPixels = []
@@ -138,7 +138,7 @@ class Tower(pygame.sprite.Sprite):
                     validPixels.append([i, j])
                     #####
                     validPixels_num += 1
-        print " Returning", validPixels_num, "pixels."
+        # print " Returning", validPixels_num, "pixels."
         #####
         return validPixels
         

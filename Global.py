@@ -4,6 +4,7 @@ empty         = ( 120,  80,  40)
 route         = ( 200, 190, 170)
 tower         = ( 130, 140, 160)
 base          = ( 200,  80,  20)
+rangeCircle   = (  20, 100,  20, 10)
 
 # dimensions de carte
 mapWidth = 24
@@ -51,8 +52,8 @@ TowerTypes = \
     [["Mitraille",  100,    2,      5,      5,      0],
     ["Sniper",      200,    80,     100,    10,     0],
     ["Zone",        100,    4,      20,     0,      2],
-    ["Omega",       500,    200,    100,    12,      1],
-    ["Hax",         1,      1000,   1,      100,    5]]
+    ["Omega",       500,    200,    100,    12,     1],
+    ["Hax",         1,      1000,   1,      4,      1]]
     
 ##     Shot Color         Dur  Width  Zone Color         Dur
 TowerShotGraphs = \

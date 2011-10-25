@@ -129,8 +129,14 @@ def main():
                     [tileSize*column, \
                     tileSize*row, tileSize,tileSize])
 
-                # Draw tower on mouse over
-                if map.O[row][column] != 0:
+        # Draw tower on mouse over
+        for row in range(mapHeight):
+            for column in range(mapWidth):
+                if (map.T[row][column] == 0) and (map.O[row][column] > 0):
+                    if TowerTypes[towerBar.selectedTower-1][TowerRANGE] == 0:
+                        pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
+                    else:
+                        pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
                     screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
                     (tileSize*column,tileSize*row),None,1)
 
@@ -158,7 +164,7 @@ def main():
         menu.draw(screen)
 
         # Limit to 24 frames per second
-        clock.tick_busy_loop()
+        clock.tick_busy_loop(30)
 
         # Update the screen
         pygame.display.flip()

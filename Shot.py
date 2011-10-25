@@ -55,7 +55,7 @@ class Shot:
                 self.zoneAlpha)
             pygame.draw.circle(screen, \
                 self.zoneColorAlpha, \
-                (self.xi + tileSize/2, self.yi + tileSize/2), \
+                (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.zoneRadius * tileSize + 4)
             #self.zoneAlpha -= self.zoneDecay
             self.zoneAlpha -= 1000

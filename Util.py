@@ -29,7 +29,7 @@ def distPixel(a, b, c = -1000, d = -1000, map = 0):
     if c == -1000 or d == -1000:
         return sqrt((a[0]-b[0])**2+(a[1]-b[1])**2) - .1*tileSize
     else:
-        return sqrt((a-c)**2+(b-d)**2) - tileSize/32
+        return sqrt((a-c)**2+(b-d)**2) - .5
 
 def findEntrance(M):
     # N

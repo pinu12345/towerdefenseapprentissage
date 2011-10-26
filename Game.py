@@ -127,7 +127,7 @@ def main():
                 else:
                     pygame.draw.rect(screen, color, \
                     [tileSize*column, \
-                    tileSize*row, tileSize,tileSize])
+                    tileSize*row, tileSize, tileSize])
 
         # Draw tower on mouse over
         for row in range(mapHeight):
@@ -137,9 +137,16 @@ def main():
                         pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
                     else:
                         pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
-                    screen.blit(pygame.image.load(os.path.join ('Images\Towers', str(towerBar.selectedTower)+'.png')),\
-                    (tileSize*column,tileSize*row),None,1)
-
+                    screen.blit(pygame.image.load(os.path.join( \
+                        'Images\Towers', str(towerBar.selectedTower)+'.png')), \
+                        (tileSize*column,tileSize*row), None, 1)
+                    pygame.draw.circle(screen, \
+                        TowerShotGraphs[towerBar.selectedTower-1][0], \
+                        (tileSize*column+tileSize/2, tileSize*row+tileSize/2), \
+                        (TowerTypes[towerBar.selectedTower-1][TowerRANGE] + \
+                        TowerTypes[towerBar.selectedTower-1][TowerSPLASH]) \
+                        * tileSize, tileSize/16)
+                    
         # Draw the tower bar
         towerBar.draw(screen)
         

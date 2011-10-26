@@ -6,10 +6,10 @@ selected    = (  205,   149,   12)
 
 class TowerBar():
     def __init__(self, origX, origY):
-        self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1.png')),\
-                       pygame.image.load(os.path.join ('Images\Towers', '2.png')),\
-                       pygame.image.load(os.path.join ('Images\Towers', '3.png')),\
-                       pygame.image.load(os.path.join ('Images\Towers', '4.png')),\
+        self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1.png')), \
+                       pygame.image.load(os.path.join ('Images\Towers', '2.png')), \
+                       pygame.image.load(os.path.join ('Images\Towers', '3.png')), \
+                       pygame.image.load(os.path.join ('Images\Towers', '4.png')), \
                        pygame.image.load(os.path.join ('Images\Towers', '5.png'))]
         self.origX = origX
         self.origY = origY

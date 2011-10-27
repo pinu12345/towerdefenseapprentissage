@@ -17,8 +17,7 @@ def main():
     # Set the height and width of the screen
     size = [mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
     screen = pygame.display.set_mode(size)
-    layer1 = 
-    
+
     # Initialize the map
     map = Map.Map(mapWidth,mapHeight)
     map.loadRandomMap()
@@ -139,7 +138,7 @@ def main():
                     else:
                         pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
                     screen.blit(pygame.image.load(os.path.join( \
-                        'Images\Towers', str(towerBar.selectedTower)+'.png')).convert(), \
+                        'Images\Towers', str(towerBar.selectedTower)+'.png')), \
                         (tileSize*column,tileSize*row), None, 1)
                     pygame.draw.circle(screen, \
                         TowerShotGraphs[towerBar.selectedTower-1][0], \

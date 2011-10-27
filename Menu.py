@@ -15,6 +15,7 @@ class Menu():
 
     def onClick(self, pos, map):
         if self.btnGrid.rect.collidepoint(pos):
+            drawMap = True
             if map.showGrid == 1:
                 map.showGrid = 0
             else:

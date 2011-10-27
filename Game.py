@@ -204,8 +204,7 @@ def main():
         pygame.display.flip()
 
         # Limit to 24 frames per second
-        clock.tick_busy_loop(30)
-
+        clock.tick_busy_loop()
 
     pygame.quit ()
 

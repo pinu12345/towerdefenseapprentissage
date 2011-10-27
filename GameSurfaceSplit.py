@@ -27,6 +27,7 @@ def main():
     layer1.set_colorkey(TRANSPARENT)
     layer2.fill(TRANSPARENT)
     layer2.set_colorkey(TRANSPARENT)
+    layer2.set_alpha(50)
     layer3.fill(TRANSPARENT)
     layer3.set_colorkey(TRANSPARENT)
     
@@ -113,6 +114,10 @@ def main():
                 else:
                     towerBar.onClick(pos)
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    close_game = True
+                    
         # Set the screen background
         screen.fill(background)
 

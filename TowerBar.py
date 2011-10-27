@@ -29,5 +29,8 @@ class TowerBar():
         if (pos[1] > self.origY) and (pos[1] <= self.origY + tileSize):
             x = (pos[0] - self.origX) // (tileSize + self.space)
             if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (tileSize + self.space) < tileSize):
-                self.selectedTower = x+1
-                self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))
+                self.selectTower(x+1)
+
+    def selectTower(self, tower):
+        self.selectedTower = tower
+        self.towers[tower-1] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))

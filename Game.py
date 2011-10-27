@@ -100,7 +100,21 @@ def main():
                 # Inside Tower Bar
                 else:
                     towerBar.onClick(pos)
-
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    close_game = True
+                elif event.key == pygame.K_1:
+                    towerBar.selectTower(1)
+                elif event.key == pygame.K_2:
+                    towerBar.selectTower(2)
+                elif event.key == pygame.K_3:
+                    towerBar.selectTower(3)
+                elif event.key == pygame.K_4:
+                    towerBar.selectTower(4)
+                elif event.key == pygame.K_5:
+                    towerBar.selectTower(5)
+                    
         # Set the screen background
         screen.fill(background)
 

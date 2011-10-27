@@ -6,11 +6,11 @@ selected    = (  205,   149,   12)
 
 class TowerBar():
     def __init__(self, origX, origY):
-        self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1.png')), \
-                       pygame.image.load(os.path.join ('Images\Towers', '2.png')), \
-                       pygame.image.load(os.path.join ('Images\Towers', '3.png')), \
-                       pygame.image.load(os.path.join ('Images\Towers', '4.png')), \
-                       pygame.image.load(os.path.join ('Images\Towers', '5.png'))]
+        self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1.png')).convert(), \
+                       pygame.image.load(os.path.join ('Images\Towers', '2.png')).convert(), \
+                       pygame.image.load(os.path.join ('Images\Towers', '3.png')).convert(), \
+                       pygame.image.load(os.path.join ('Images\Towers', '4.png')).convert(), \
+                       pygame.image.load(os.path.join ('Images\Towers', '5.png')).convert()]
         self.origX = origX
         self.origY = origY
         self.space = 16
@@ -30,4 +30,4 @@ class TowerBar():
             x = (pos[0] - self.origX) // (tileSize + self.space)
             if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (tileSize + self.space) < tileSize):
                 self.selectedTower = x+1
-                self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png'))
+                self.towers[x] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+'.png')).convert()

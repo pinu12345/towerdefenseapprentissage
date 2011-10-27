@@ -16,7 +16,7 @@ class Tower(pygame.sprite.Sprite):
         self.splash = TowerTypes[self.type][TowerSPLASH] *tileSize
         self.cooldown = 0.0
         
-        self.image = pygame.image.load(os.path.join ('Images\Towers', str(type+1)+'.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Towers', str(type+1)+'.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize

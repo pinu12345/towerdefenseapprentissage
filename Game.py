@@ -17,7 +17,14 @@ def main():
     # Set the height and width of the screen
     size = [mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
     screen = pygame.display.set_mode(size)
-
+    layer1 = pygame.Surface(size)
+    layer2 = pygame.Surface(size)
+    layer3 = pygame.Surface(size)
+    layer1.set_colorkey(background)
+    layer2.set_colorkey(background)
+    layer3.set_colorkey(background)
+    layer2.set_alpha(150)
+    
     # Initialize the map
     map = Map.Map(mapWidth,mapHeight)
     map.loadRandomMap()
@@ -100,7 +107,7 @@ def main():
                 # Inside Tower Bar
                 else:
                     towerBar.onClick(pos)
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     close_game = True
@@ -117,6 +124,9 @@ def main():
                     
         # Set the screen background
         screen.fill(background)
+        layer1.fill(background)
+        layer2.fill(background)
+        layer3.fill(background)
 
         # Draw the map
         for row in range(mapHeight):
@@ -133,13 +143,13 @@ def main():
 
                 # Draw tiles with Grid
                 if map.showGrid == 1:
-                    pygame.draw.rect(screen, color, \
+                    pygame.draw.rect(layer1, color, \
                     [tileSize*column, tileSize*row, \
                     tileSize-gridSize, tileSize-gridSize])
 
                 # Draw tiles without grid
                 else:
-                    pygame.draw.rect(screen, color, \
+                    pygame.draw.rect(layer1, color, \
                     [tileSize*column, \
                     tileSize*row, tileSize, tileSize])
 
@@ -148,13 +158,13 @@ def main():
             for column in range(mapWidth):
                 if (map.T[row][column] == 0) and (map.O[row][column] > 0):
                     if TowerTypes[towerBar.selectedTower-1][TowerRANGE] == 0:
-                        pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
+                        pygame.draw.circle(layer2, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
                     else:
-                        pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
-                    screen.blit(pygame.image.load(os.path.join( \
-                        'Images\Towers', str(towerBar.selectedTower)+'.png')), \
+                        pygame.draw.circle(layer2, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
+                    layer2.blit(pygame.image.load(os.path.join( \
+                        'Images\Towers', str(towerBar.selectedTower)+'.png')).convert(), \
                         (tileSize*column,tileSize*row), None, 1)
-                    pygame.draw.circle(screen, \
+                    pygame.draw.circle(layer2, \
                         TowerShotGraphs[towerBar.selectedTower-1][0], \
                         (tileSize*column+tileSize/2, tileSize*row+tileSize/2), \
                         (TowerTypes[towerBar.selectedTower-1][TowerRANGE] + \
@@ -162,10 +172,10 @@ def main():
                         * tileSize, tileSize/16)
                     
         # Draw the tower bar
-        towerBar.draw(screen)
+        towerBar.draw(layer3)
         
         # Draw the towers
-        towers.draw(screen)
+        towers.draw(layer3)
 
         # Spawn any new enemy in the wave queue
         wave.spawn()
@@ -174,21 +184,28 @@ def main():
         wave.move()
 
         # Draw the wave
-        wave.draw(screen)
+        wave.draw(layer3)
         
         # Towers Target
-        towers.target(screen, shots)
+        towers.target(layer3, shots)
         for shot in shots:
-            shot.draw(screen)
+            shot.draw(layer3)
         
         # Draw the game information menu
-        menu.draw(screen)
+        menu.draw(layer3)
+
+        # Draw the layers
+        
+        screen.blit(layer1, (0,0))
+        screen.blit(layer2, (0,0))
+        screen.blit(layer3, (0,0))
+
+        # Update the screen
+        pygame.display.flip()
 
         # Limit to 24 frames per second
         clock.tick_busy_loop(30)
 
-        # Update the screen
-        pygame.display.flip()
 
     pygame.quit ()
 

@@ -19,3 +19,6 @@ class Towers():
 
     def draw(self, screen):
         self.towers.draw(screen)
+    
+    def clear(self):
+        self.towers.empty()

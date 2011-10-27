@@ -2,13 +2,24 @@ import sys, os, pygame
 
 class Menu():
     def __init__(self, map, wave, towers):
-        self.btnGrid = GridButton(850,250)
-        self.btnStart = StartButton(850,300)
-        self.btnExit = ExitButton(850,350)
+        self.btnGrid = GridButton(775,50)
+        self.btnStart = StartButton(775,100)
+        self.btnDino1 = BtnDino1(775,150)
+        self.btnDino10 = BtnDino10(875,150)
+        self.btnDinoJr2 = BtnDinoJr2(775,200)
+        self.btnDinoJr20 = BtnDinoJr20(875,200)
+        self.btnNinja5 = BtnNinja5(775,250)
+        self.btnNinja50 = BtnNinja50(875,250)
+        self.btnPirate5 = BtnPirate5(775,300)
+        self.btnPirate50 = BtnPirate50(875,300)
+        self.btnSinge10 = BtnSinge10(775,350)
+        self.btnSinge100 = BtnSinge100(875,350)
+        self.btnExit = ExitButton(775,400)
         self.map = map
         self.wave = wave
         self.towers = towers
         self.menu = pygame.sprite.Group(self.btnGrid, self.btnStart, self.btnExit)
+        self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
 
     def draw(self, screen):
         self.menu.draw(screen)
@@ -19,18 +30,48 @@ class Menu():
                 map.showGrid = 0
             else:
                 map.showGrid = 1
-
-        if self.btnStart.rect.collidepoint(pos):
+        elif self.btnStart.rect.collidepoint(pos):
             self.wave.clear()
+            self.towers.clear()
+            map.loadRandomMap()
             self.wave.newRandomSpawn()
-
-        if self.btnExit.rect.collidepoint(pos):
+        elif self.btnDino1.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(4, 1)
+        elif self.btnDino10.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(4, 10)
+        elif self.btnDinoJr2.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(3, 2)
+        elif self.btnDinoJr20.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(3, 20)
+        elif self.btnNinja5.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(0, 5)
+        elif self.btnNinja50.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(0, 50)
+        elif self.btnPirate5.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(1, 5)
+        elif self.btnPirate50.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(1, 50)
+        elif self.btnSinge10.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(2, 10)
+        elif self.btnSinge100.rect.collidepoint(pos):
+            self.wave.clear()
+            self.wave.newSpawn(2, 100)
+        elif self.btnExit.rect.collidepoint(pos):
             pygame.quit()
 
 class GridButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images', 'ok.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Grille.png'))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -38,7 +79,87 @@ class GridButton(pygame.sprite.Sprite):
 class StartButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images', 'ok.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'ok.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+ 
+class BtnDino1(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino1.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+ 
+class BtnDino10(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino10.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnDinoJr2(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr2.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnDinoJr20(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr20.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnNinja5(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja5.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnNinja50(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja50.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnPirate5(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate5.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnPirate50(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate50.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnSinge10(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe10.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class BtnSinge100(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe100.png'))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -46,7 +167,7 @@ class StartButton(pygame.sprite.Sprite):
 class ExitButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images', 'ok.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Quitter.png'))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

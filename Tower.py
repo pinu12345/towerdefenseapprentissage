@@ -49,55 +49,46 @@ class Tower(pygame.sprite.Sprite):
             else:
                 
                 ## distance, splash
-                if self.splash > 0:
+                if self.splash > 0:                   
                     # y a-t-il au moins un ennemi a portee?
-                    extended_range = self.range + self.splash
                     enemy_in_range = 0
                     for enemy in enemies:
                         if distPixel(self.rect.x, self.rect.y, \
-                            enemy.rect.x, enemy.rect.y) <= extended_range:
+                            enemy.rect.x, enemy.rect.y) <= self.range:
                             enemy_in_range = 1
                             break
-                    # si oui, on trouve quel pixel attaquer pour maximiser les dommages
+                    # si oui, on trouve quel ennemi attaquer pour maximiser les dommages
                     if enemy_in_range:
-                        validPixels = self.findValidPixels()
-                        max_damage = 0
-                        max_distance = 0
-                        #####
-                        # print "\n Evaluating valid pixels..."
-                        validPixels_num = 0
-                        #####
-                        for pixel in validPixels:
-                            #####
-                            validPixels_num += 1
-                            #####
-                            potential_damage = 0
-                            for enemy in enemies:
-                                if distPixel(pixel[0], pixel[1], \
-                                    enemy.rect.x, enemy.rect.y) <= self.splash:
-                                    potential_damage += min(max(self.damage/2, \
-                                        self.damage - enemy.armor), enemy.HP)
-                            if potential_damage > max_damage:
-                                target_pixel = pixel
-                                max_damage = potential_damage
-                                max_distance = distPixel(pixel[0], pixel[1], \
-                                    self.rect.x, self.rect.y)
-                            elif potential_damage == max_damage and \
-                                distPixel(pixel[0], pixel[1], \
-                                self.rect.x, self.rect.y) < max_distance:
-                                target_pixel = pixel
-                                max_distance = distPixel(pixel[0], pixel[1], \
-                                    self.rect.x, self.rect.y)
-                        # on attaque le pixel trouve
-                        #####
-                        # print " Verified", validPixels_num, "pixels."
-                        #####
-                        shots.append(Shot.Shot(self.rect.x, self.rect.y, \
-                            target_pixel[0], target_pixel[1], self.type))
+                        hittable_enemies = []
+                        splashable_enemies = []
                         for enemy in enemies:
-                            if distPixel(target_pixel[0], target_pixel[1], \
-                                enemy.rect.x, enemy.rect.y) <= self.splash:
-                                enemy.takeDamage(self.damage)
+                            if distPixel(self.rect.x, self.rect.y, \
+                                enemy.rect.x, enemy.rect.y) <= self.range:
+                                hittable_enemies.append(enemy)
+                                splashable_enemies.append(enemy)
+                            elif distPixel(self.rect.x, self.rect.y, \
+                                enemy.rect.x, enemy.rect.y) <= self.range + self.splash:
+                                splashable_enemies.append(enemy)
+                        max_damage = 0
+                        for enemy in hittable_enemies:
+                            potential_damage = 0
+                            for other_enemy in splashable_enemies:
+                                if distPixel(enemy.rect.x, enemy.rect.y, \
+                                    other_enemy.rect.x, other_enemy.rect.y) \
+                                    <= self.splash:
+                                    potential_damage += min(max(self.damage/2, \
+                                        self.damage - other_enemy.armor), \
+                                        other_enemy.HP)
+                            if potential_damage > max_damage:
+                                target_enemy = enemy
+                                max_damage = potential_damage
+                        shots.append(Shot.Shot(self.rect.x, self.rect.y, \
+                            target_enemy.rect.x, target_enemy.rect.y, self.type))
+                        for other_enemy in splashable_enemies:
+                            if distPixel(target_enemy.rect.x, target_enemy.rect.y, \
+                                other_enemy.rect.x, other_enemy.rect.y) \
+                                <= self.splash:
+                                other_enemy.takeDamage(self.damage)
                         self.cooldown += self.delay
                 
                 ## distance, 1 ennemi
@@ -121,27 +112,3 @@ class Tower(pygame.sprite.Sprite):
                             self.type))
                         self.cooldown += self.delay
         
-    def findValidPixels(self):
-        #####
-        # print "\n Finding valid pixels..."
-        validPixels_num = 0
-        #####
-        validPixels = []
-        imin = min(0, self.rect.x-self.range)
-        imax = max(self.rect.x+self.range+1, mapWidth*tileSize+1)
-        jmin = min(0, self.rect.y-self.range)
-        jmax = max(self.rect.y+self.range+1, mapHeight*tileSize+1)
-        pixelStep = tileSize
-        for i in range(imin, imax, pixelStep):
-            for j in range(jmin, jmax, pixelStep):
-                if distPixel(self.rect.x, self.rect.y, i, j) < self.range:
-                    validPixels.append([i, j])
-                    #####
-                    validPixels_num += 1
-        # print " Returning", validPixels_num, "pixels."
-        #####
-        return validPixels
-        
-    def fire(self, coords):
-        pass
-    

@@ -21,7 +21,7 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = column * tileSize
         self.rect.y = row * tileSize
 
-    def target(self, enemies, screen, shots):
+    def target(self, enemies, shots):
         # est-ce que le cooldown est ecoule?
         if self.cooldown > 0:
             self.cooldown -= 1

@@ -13,9 +13,9 @@ class Towers():
         map.T[row][column] = towerType
         self.towers.add(Tower.Tower(row, column, towerType-1))
 
-    def target(self, screen, shots):
+    def target(self, shots):
         for tower in self.towers:
-            tower.target(self.wave.enemies, screen, shots)
+            tower.target(self.wave.enemies, shots)
 
     def draw(self, screen):
         self.towers.draw(screen)

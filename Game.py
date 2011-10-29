@@ -132,10 +132,11 @@ def main():
 
         ## Display
         drawTick += 1
-        print(clock.get_fps())
-        #if drawTick >= clock.get_fps()/24.0:
-            #drawTick = 0
-            #draw(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
+        #print(clock.get_fps() > 30)
+        if drawTick >= clock.get_fps()/15.0:
+            #print(clock.get_fps())
+            drawTick = 0
+            draw(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
         
         # Limit to 24 frames per second
         clock.tick()

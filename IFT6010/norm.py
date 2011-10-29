@@ -9,7 +9,7 @@ for line in open('normalisations.txt'):
     txt, trans = line.split()
     dictionary[txt] = trans
 
-
+#apply them to texto
 for line in texto:
     words =  re.findall(r"[^\s.,!?;]+|[.,!?;]", line)
     for word in words:

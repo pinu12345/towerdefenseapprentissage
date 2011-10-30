@@ -1,3 +1,4 @@
 TODOLIST:
     SHOTS
     FPS
+    ESCAPE : (ingame menu) RESUME GAME etc.

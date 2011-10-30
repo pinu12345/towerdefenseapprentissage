@@ -34,12 +34,17 @@ def main():
     # Initialize the MainMenu
     mainMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
                [('Start Random Map', 1, None),
-                ('Start Test Map',  2, None),
-                ('Options',    3, None),
-                ('Exit',       4, None)])
+                ('Start Test Map', 2, None),
+                ('Options', 3, None),
+                ('Exit', 4, None)])
+    gameMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
+               [('Resume', 1, None),
+                ('Back to main menu', 2, None)])
     mainMenu.set_center(True, True)
+    gameMenu.set_center(True, True)
     mainMenu.set_alignment('center', 'center')
-    mainMenubackground = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg'))
+    gameMenu.set_alignment('center', 'center')
+    menubackground = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg'))
     rect_list = []
 
     # Initialize the map
@@ -74,19 +79,17 @@ def main():
     
         if Game.state == STATE_INITMENU:
             screen.fill(background)
-            screen.blit(mainMenubackground, (0, 0))
+            screen.blit(menubackground, (0, 0))
             pygame.display.flip()
             mainMenustate = 0
             mainMenuprev_state = 1
             Game.state = STATE_MENU
             
-        if Game.state == STATE_MENU:
-
+        elif Game.state == STATE_MENU:
             if mainMenuprev_state != mainMenustate:
                 pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
                 mainMenuprev_state = mainMenustate
             e = pygame.event.wait()
-
             if e.type == pygame.KEYDOWN or e.type == EVENT_CHANGE_STATE:
                 if mainMenustate == 0:
                     rect_list, mainMenustate = mainMenu.update(e, mainMenustate)
@@ -106,8 +109,37 @@ def main():
                 sys.exit()
             pygame.display.update(rect_list)
 
+        elif Game.state == STATE_INITGAMEMENU:
+            screen.fill(background)
+            screen.blit(menubackground, (0, 0))
+            pygame.display.flip()
+            gameMenustate = 0
+            gameMenuprev_state = 1
+            Game.state = STATE_GAMEMENU
+        
+        elif Game.state == STATE_GAMEMENU:
+            if gameMenuprev_state != gameMenustate:
+                pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
+                gameMenuprev_state = gameMenustate
+            e = pygame.event.wait()
+            if e.type == pygame.KEYDOWN or e.type == EVENT_CHANGE_STATE:
+                if e.key == pygame.K_ESCAPE:
+                    Game.state = STATE_PREPARATION
+                else:
+                    if gameMenustate == 0:
+                        rect_list, gameMenustate = gameMenu.update(e, gameMenustate)
+                    elif gameMenustate == 1:
+                        Game.state = STATE_PREPARATION
+                    elif gameMenustate == 2:
+                        towers.clear()
+                        wave.clear()
+                        Game.state = STATE_INITMENU
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            pygame.display.update(rect_list)
+        
         else:
-
             for event in pygame.event.get(): # User did something
                 # If user clicked close
                 if event.type == pygame.QUIT: 
@@ -126,7 +158,7 @@ def main():
                                 map.currentOY = row
                                 map.currentOX = column
                                 map.O[row][column] = towerBar.selectedTower
-                
+
                 # User clicks the mouse. Get the position
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
@@ -153,7 +185,12 @@ def main():
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        close_game = True
+                        Game.state = STATE_INITGAMEMENU
+                    elif event.key == pygame.K_SPACE:
+                        if Game.state == STATE_GAME:
+                            Game.state = STATE_PREPARATION
+                        elif Game.state == STATE_PREPARATION:
+                            Game.state = STATE_GAME
                     elif event.key == pygame.K_1:
                         towerBar.selectTower(1)
                     elif event.key == pygame.K_2:
@@ -180,9 +217,7 @@ def main():
 
             ## Display
             drawTick += 1
-            #print(clock.get_fps() > 30)
             if drawTick >= clock.get_fps()/10.0:
-                #print(clock.get_fps())
                 drawTick = 0
                 drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
         

@@ -1,7 +1,11 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game
 from Global import *
+from MainMenu import *
 
 def main():
+
+    # Initialize pygame
+    pygame.init()
 
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     
@@ -14,6 +18,7 @@ def main():
     cash = 2100
     health = 100
     drawTick = 0
+    Game.state = STATE_INITMENU
 
     # Set the height and width of the screen
     size = [mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
@@ -25,13 +30,20 @@ def main():
     layer2.set_colorkey(background)
     layer3.set_colorkey(background)
     layer2.set_alpha(150)
-    
+
+    # Initialize the MainMenu
+    mainMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
+               [('Start Random Map', 1, None),
+                ('Start Test Map',  2, None),
+                ('Options',    3, None),
+                ('Exit',       4, None)])
+    mainMenu.set_center(True, True)
+    mainMenu.set_alignment('center', 'center')
+    mainMenubackground = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg'))
+    rect_list = []
+
     # Initialize the map
     map = Map.Map(mapWidth,mapHeight)
-    map.loadRandomMap()
-    # map.loadBasicMap()
-    # map.loadFileMap('testmap')
-    # map.loadTestMap()
 
     # Initialize the wave
     wave = Wave.Wave(map)
@@ -48,9 +60,6 @@ def main():
     # Initialize the menu
     menu = Menu.Menu(map, wave, towers)
 
-    # Initialize pygame
-    pygame.init()
-
     # Set title of screen
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
 
@@ -62,88 +71,133 @@ def main():
         
     # -------- Main Program Loop -----------
     while close_game == False:
-        
-        for event in pygame.event.get(): # User did something
+    
+        if Game.state == STATE_INITMENU:
+            screen.fill(background)
+            screen.blit(mainMenubackground, (0, 0))
+            pygame.display.flip()
+            mainMenustate = 0
+            mainMenuprev_state = 1
+            Game.state = STATE_MENU
+            
+        if Game.state == STATE_MENU:
 
-            # If user clicked close
-            if event.type == pygame.QUIT: 
-                close_game = True # Flag that we are done so we exit this loop
+            if mainMenuprev_state != mainMenustate:
+                pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
+                mainMenuprev_state = mainMenustate
+            e = pygame.event.wait()
 
-            # User moves over the mouse 
-            elif event.type == pygame.MOUSEMOTION:
-                if towerBar.selectedTower != -1:
-                    pos = pygame.mouse.get_pos()                
+            if e.type == pygame.KEYDOWN or e.type == EVENT_CHANGE_STATE:
+                if mainMenustate == 0:
+                    rect_list, mainMenustate = mainMenu.update(e, mainMenustate)
+                elif mainMenustate == 1:
+                    map.loadRandomMap()
+                    Game.state = STATE_PREPARATION
+                elif mainMenustate == 2:
+                    map.loadFileMap('testmap')
+                    Game.state = STATE_PREPARATION
+                elif mainMenustate == 3:
+                    mainMenustate = 0
+                else:
+                    pygame.quit()
+                    sys.exit()
+            if e.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            pygame.display.update(rect_list)
+
+        else:
+
+            for event in pygame.event.get(): # User did something
+                # If user clicked close
+                if event.type == pygame.QUIT: 
+                    close_game = True # Flag that we are done so we exit this loop
+
+                # User moves over the mouse 
+                elif event.type == pygame.MOUSEMOTION:
+                    if towerBar.selectedTower != -1:
+                        pos = pygame.mouse.get_pos()                
+                        column = pos[0] // tileSize
+                        row = pos[1] // tileSize
+                        # Inside Map
+                        if (column < mapWidth) and (row < mapHeight):
+                            map.O[map.currentOY][map.currentOX] = 0
+                            if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
+                                map.currentOY = row
+                                map.currentOX = column
+                                map.O[row][column] = towerBar.selectedTower
+                
+                # User clicks the mouse. Get the position
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+
+                    # Change the x/y screen coordinates to grid coordinates (For the map)
                     column = pos[0] // tileSize
                     row = pos[1] // tileSize
+
                     # Inside Map
                     if (column < mapWidth) and (row < mapHeight):
-                        map.O[map.currentOY][map.currentOX] = 0
-                        if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
-                            map.currentOY = row
-                            map.currentOX = column
-                            map.O[row][column] = towerBar.selectedTower
-            
-            # User clicks the mouse. Get the position
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
+                        if towerBar.selectedTower != 0:
+                            if map.M[row][column] == car_turret:
+                                if map.T[row][column] == 0:
+                                    #TODO : money check
+                                    towers.placeTower(map, towerBar.selectedTower, row, column)
 
-                # Change the x/y screen coordinates to grid coordinates (For the map)
-                column = pos[0] // tileSize
-                row = pos[1] // tileSize
+                    # Inside Menu
+                    elif column >= mapWidth:
+                        menu.onClick(pos, map)
 
-                # Inside Map
-                if (column < mapWidth) and (row < mapHeight):
-                    if towerBar.selectedTower != 0:
-                        if map.M[row][column] == car_turret:
-                            if map.T[row][column] == 0:
-                                #TODO : money check
-                                towers.placeTower(map, towerBar.selectedTower, row, column)
+                    # Inside Tower Bar
+                    else:
+                        towerBar.onClick(pos)
 
-                # Inside Menu
-                elif column >= mapWidth:
-                    menu.onClick(pos, map)
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        close_game = True
+                    elif event.key == pygame.K_1:
+                        towerBar.selectTower(1)
+                    elif event.key == pygame.K_2:
+                        towerBar.selectTower(2)
+                    elif event.key == pygame.K_3:
+                        towerBar.selectTower(3)
+                    elif event.key == pygame.K_4:
+                        towerBar.selectTower(4)
+                    elif event.key == pygame.K_5:
+                        towerBar.selectTower(5)
+                            
+            if Game.state == STATE_PREPARATION:
+                pass
 
-                # Inside Tower Bar
-                else:
-                    towerBar.onClick(pos)
+            elif Game.state == STATE_GAME:
+                ## Game
+                
+                # Spawn any new enemy in the wave queue
+                wave.spawn()
+                # Move the enemies
+                wave.move()
+                # Tower target
+                towers.target(shots)
 
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    close_game = True
-                elif event.key == pygame.K_1:
-                    towerBar.selectTower(1)
-                elif event.key == pygame.K_2:
-                    towerBar.selectTower(2)
-                elif event.key == pygame.K_3:
-                    towerBar.selectTower(3)
-                elif event.key == pygame.K_4:
-                    towerBar.selectTower(4)
-                elif event.key == pygame.K_5:
-                    towerBar.selectTower(5)
-
-        ## Game
-        
-        # Spawn any new enemy in the wave queue
-        wave.spawn()
-        # Move the enemies
-        wave.move()
-        # Tower target
-        towers.target(shots)
-
-        ## Display
-        drawTick += 1
-        #print(clock.get_fps() > 30)
-        if drawTick >= clock.get_fps()/15.0:
-            #print(clock.get_fps())
-            drawTick = 0
-            draw(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
+            ## Display
+            drawTick += 1
+            #print(clock.get_fps() > 30)
+            if drawTick >= clock.get_fps()/10.0:
+                #print(clock.get_fps())
+                drawTick = 0
+                drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
         
         # Limit to 24 frames per second
         clock.tick()
 
     pygame.quit ()
 
-def draw(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3):
+def drawMenu(screen, layer1, layer2, layer3):
+    pygame.draw.rect(screen, route, [0, 0, 32, 32])
+    
+    # Update the screen
+    pygame.display.flip()
+
+def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3):
     # Set the screen background
     screen.fill(background)
     layer1.fill(background)

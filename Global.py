@@ -1,3 +1,9 @@
+# etats
+STATE_INITMENU = 0
+STATE_MENU = 1
+STATE_PREPARATION = 2
+STATE_GAME = 3
+
 # couleurs
 background    = (   0,   0,   0)
 empty         = ( 120,  80,  40)

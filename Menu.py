@@ -1,9 +1,12 @@
-import sys, os, pygame
+import sys, os, pygame, Game
+from Global import *
 
 class Menu():
     def __init__(self, map, wave, towers):
         self.btnGrid = GridButton(775,50)
         self.btnStart = StartButton(775,100)
+        self.btnRandom = RandomButton(775,450)
+        self.btnBack = BackButton(875,450)
         self.btnDino1 = BtnDino1(775,150)
         self.btnDino10 = BtnDino10(875,150)
         self.btnDinoJr2 = BtnDinoJr2(775,200)
@@ -18,7 +21,7 @@ class Menu():
         self.map = map
         self.wave = wave
         self.towers = towers
-        self.menu = pygame.sprite.Group(self.btnGrid, self.btnStart, self.btnExit)
+        self.menu = pygame.sprite.Group(self.btnGrid, self.btnStart, self.btnRandom, self.btnBack, self.btnExit)
         self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
 
     def draw(self, screen):
@@ -31,10 +34,17 @@ class Menu():
             else:
                 map.showGrid = 1
         elif self.btnStart.rect.collidepoint(pos):
+            Game.state = STATE_GAME
+        elif self.btnRandom.rect.collidepoint(pos):
             self.wave.clear()
             self.towers.clear()
             map.loadRandomMap()
             self.wave.newRandomSpawn()
+            Game.state = STATE_PREPARATION
+        elif self.btnBack.rect.collidepoint(pos):
+            self.wave.clear()
+            self.towers.clear()
+            Game.state = STATE_INITMENU
         elif self.btnDino1.rect.collidepoint(pos):
             self.wave.clear()
             self.wave.newSpawn(4, 1)
@@ -80,6 +90,22 @@ class StartButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join ('Images\Buttons', 'ok.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+class RandomButton(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'A.png'))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+ 
+class BackButton(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'B.png'))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

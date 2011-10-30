@@ -41,59 +41,6 @@ class Map:
         self.entranceX = entrance[0][1]
         self.entranceDirection = entrance[1]
 
-    def loadBasicMap(self):
-        self.M[5][0] = 1
-        self.M[5][1] = 1
-        self.M[5][2] = 1
-        self.M[5][3] = 1
-        self.M[5][4] = 1
-        self.M[6][3] = 2
-        self.M[6][4] = 1
-        self.M[7][4] = 1
-        self.M[8][4] = 1
-        self.M[9][4] = 1
-        self.M[10][4] = 1
-        self.M[10][5] = 1
-        self.M[10][6] = 1
-        self.M[10][7] = 1
-        self.M[10][8] = 1
-        self.M[10][9] = 1
-        self.M[9][9] = 1
-        self.M[8][9] = 1
-        self.M[7][9] = 1
-        self.M[6][9] = 1
-        self.M[6][10] = 1
-        self.M[6][11] = 1
-        self.M[6][12] = 1
-        self.M[6][13] = 1
-        self.M[6][14] = 1
-        self.M[7][14] = 1
-        self.M[8][14] = 1
-        self.M[8][13] = 1
-        self.M[8][12] = 1
-        self.M[9][12] = 1
-        self.M[9][13] = 2
-        self.M[10][12] = 1
-        self.M[10][13] = 1
-        self.M[10][14] = 1
-        self.M[10][15] = 1
-        self.M[10][16] = 1
-        self.M[10][17] = 1
-        self.M[10][18] = 1
-        self.M[11][18] = 1
-        self.M[12][18] = 1
-        self.M[12][19] = 1
-        self.M[12][20] = 1
-        self.M[12][21] = 1
-        self.M[11][21] = 1
-        self.M[10][21] = 1
-        self.M[9][21] = 1
-        self.M[8][21] = 1
-        self.M[7][21] = 1
-        self.M[7][22] = 1
-        self.M[7][23] = 1
-        self.M[6][23] = 2
-
     def loadTestMap(self):
         self.loadFileMap('testmap')
     
@@ -102,4 +49,4 @@ class Map:
         
     def loadFileMap(self, map_name):
         textMap = open(os.path.join('Maps', map_name+'.txt')).readlines()
-        self.loadMap(textMap.strip('\n'))
+        self.loadMap(textMap)

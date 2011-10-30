@@ -1,4 +1,8 @@
-TODOLIST:
-    SHOTS
+﻿TODOLIST:
     FPS
-    ESCAPE : (ingame menu) RESUME GAME etc.
+    CAMPAIGN
+    UPGRADE DE TOURS [2 upgrades]
+    LOADER LES IMAGES JUSTE UNE FOIS
+    Tours -> disponibilité
+    Tour qui ralentis autour d'elle
+    

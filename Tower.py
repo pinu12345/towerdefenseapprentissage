@@ -40,9 +40,7 @@ class Tower(pygame.sprite.Sprite):
                         break
                 # si oui, on attaque tous les ennemis a portee
                 if enemy_in_range:
-                    shots.append(Shot.Shot( \
-                        self.x, self.y, self.x, self.y, \
-                        self.type))
+                    shots.newShot(self.x, self.y, self.x, self.y, self.type)
                     for enemy in enemies:
                         if distPixel(self.x, self.y, \
                             enemy.x, enemy.y) <= self.splash:
@@ -84,8 +82,7 @@ class Tower(pygame.sprite.Sprite):
                             if potential_damage > max_damage:
                                 target_enemy = enemy
                                 max_damage = potential_damage
-                        shots.append(Shot.Shot(self.x, self.y, \
-                            target_enemy.x, target_enemy.y, self.type))
+                        shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         for other_enemy in splashable_enemies:
                             if distPixel(target_enemy.x, target_enemy.y, \
                                 other_enemy.x, other_enemy.y) \
@@ -108,9 +105,6 @@ class Tower(pygame.sprite.Sprite):
                     # si on en a trouve un, on l'attaque
                     if max_damage > 0:
                         target_enemy.takeDamage(self.damage)
-                        shots.append(Shot.Shot( \
-                            self.x, self.y, \
-                            target_enemy.x, target_enemy.y, \
-                            self.type))
+                        shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         self.cooldown += self.delay
         

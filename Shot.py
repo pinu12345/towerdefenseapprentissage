@@ -2,8 +2,10 @@ from Global import *
 from Util import *
 import pygame
 
-class Shot:
+class Shot(pygame.sprite.Sprite):
     def __init__(self, xi, yi, xt, yt, type):
+        pygame.sprite.Sprite.__init__(self)
+        
         self.type = type
         self.xi = xi
         self.yi = yi
@@ -17,7 +19,6 @@ class Shot:
             self.projWidth = TowerShotGraphs[type][2]
         else:
             self.projAlpha = 0
-            
         if TowerShotGraphs[type][4] > 0:
             self.zoneAlpha = 255
             self.zoneColor = TowerShotGraphs[type][3]
@@ -28,8 +29,7 @@ class Shot:
         
     def draw(self, screen):
         if self.projAlpha <= 0 and self.zoneAlpha <= 0:
-            # remove shot
-            pass
+            self.kill()
         if self.projAlpha > 0:
             self.projColorAlpha = ( \
                 self.projColor[0], self.projColor[1], self.projColor[2], \

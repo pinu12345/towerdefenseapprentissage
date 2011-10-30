@@ -1,6 +1,7 @@
 import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game
 from Global import *
 from MainMenu import *
+from Shots import *
 
 def main():
 
@@ -57,7 +58,7 @@ def main():
     towers = Towers.Towers(map, wave)
     
     # Initialize the shot graphics
-    shots = []
+    shots = Shots()
     
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
@@ -73,7 +74,7 @@ def main():
 
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
-        
+
     # -------- Main Program Loop -----------
     while close_game == False:
     
@@ -131,6 +132,7 @@ def main():
                     elif gameMenustate == 1:
                         Game.state = STATE_PREPARATION
                     elif gameMenustate == 2:
+                        shots.clear()
                         towers.clear()
                         wave.clear()
                         Game.state = STATE_INITMENU
@@ -189,7 +191,7 @@ def main():
                     elif event.key == pygame.K_SPACE:
                         if Game.state == STATE_GAME:
                             Game.state = STATE_PREPARATION
-                        elif Game.state == STATE_PREPARATION:
+                        elif Game.state == STATE_PREPARATION: 
                             Game.state = STATE_GAME
                     elif event.key == pygame.K_1:
                         towerBar.selectTower(1)
@@ -252,8 +254,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, l
     wave.draw(layer3)
     
     # Towers Target
-    for shot in shots:
-        shot.draw(layer3)
+    shots.draw(layer3)
     
     # Draw the game information menu
     menu.draw(layer3)

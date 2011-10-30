@@ -45,8 +45,7 @@ class Tower(pygame.sprite.Sprite):
                         if distPixel(self.rect.x, self.rect.y, \
                             enemy.rect.x, enemy.rect.y) <= self.splash:
                             enemy.takeDamage(self.damage)
-                    #self.cooldown += self.delay
-					self.cooldown -= 1000
+                    self.cooldown += self.delay
             else:
                 
                 ## distance, splash
@@ -90,8 +89,7 @@ class Tower(pygame.sprite.Sprite):
                                 other_enemy.rect.x, other_enemy.rect.y) \
                                 <= self.splash:
                                 other_enemy.takeDamage(self.damage)
-                        #self.cooldown += self.delay
-						self.cooldown -= 1000
+                        self.cooldown += self.delay
                 
                 ## distance, 1 ennemi
                 else:
@@ -112,6 +110,5 @@ class Tower(pygame.sprite.Sprite):
                             self.rect.x, self.rect.y, \
                             target_enemy.rect.x, target_enemy.rect.y, \
                             self.type))
-                        #self.cooldown += self.delay
-						self.cooldown -= 1000
+                        self.cooldown += self.delay
         

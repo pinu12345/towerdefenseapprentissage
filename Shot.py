@@ -47,7 +47,8 @@ class Shot:
                 self.projColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.projWidth*2 + 2)
-            self.projAlpha -= self.projDecay
+            #self.projAlpha -= self.projDecay
+			self.projAlpha -= 1000
         if self.zoneAlpha > 0:
             self.zoneColorAlpha = ( \
                 self.zoneColor[0], self.zoneColor[1], self.zoneColor[2], \
@@ -56,4 +57,5 @@ class Shot:
                 self.zoneColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.zoneRadius * tileSize + 4)
-            self.zoneAlpha -= self.zoneDecay
+            #self.zoneAlpha -= self.zoneDecay
+			self.zoneAlpha -= 1000

@@ -1,11 +1,3 @@
-# etats
-STATE_INITMENU = 0
-STATE_MENU = 1
-STATE_PREPARATION = 2
-STATE_GAME = 3
-STATE_INITGAMEMENU = 4
-STATE_GAMEMENU = 5
-
 # couleurs
 background    = (   0,   0,   0)
 empty         = ( 120,  80,  40)
@@ -69,4 +61,4 @@ TowerShotGraphs = \
     [  ( 200, 210, 255 ), 20,  4,     ( 0,   0,   0   ), 0  ],
     [  ( 0,   0,   0,  ), 0,   0,     ( 255, 100, 0   ), 10 ],
     [  ( 220, 160, 20  ), 4,   8,     ( 200, 150, 0   ), 20 ],
-    [  ( 255, 255, 255 ), 1,   3,     ( 0,   0,   0   ), 0  ]]
+    [  ( 255, 255, 255 ), 1,   3,     ( 255, 255, 255 ), 1 ]]

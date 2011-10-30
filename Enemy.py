@@ -98,7 +98,6 @@ class Enemy(pygame.sprite.Sprite):
                 self.direction = cardS
                 self.y += 1
                 return
-        print "I WON"
         self.kill()
         
     def setStartPosition(self, x, y, direction):

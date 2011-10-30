@@ -52,7 +52,7 @@ TowerTypes = \
     [["Mitraille",  100,    2,      5,      5,      0],
     ["Sniper",      200,    80,     100,    10,     0],
     ["Zone",        100,    4,      20,     0,      2],
-    ["Omega",       500,    200,    100,    12,     3],
+    ["Omega",       500,    100,    100,    12,     3],
     ["Hax",         1,      1000,   1,      4,      1]]
     
 ##     Shot Color         Dur  Width  Zone Color         Dur

@@ -276,12 +276,12 @@ def drawOnMouseOver(map, towerBar, layer):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if (map.T[row][column] == 0) and (map.O[row][column] > 0):
-                if TowerTypes[towerBar.selectedTower-1][TowerRANGE] != 0:
+                if TowerTypes[towerBar.selectedTower-1][TowerRANGE] == 0:
                     pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
                 else:
                     pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
                 pygame.draw.circle(layer, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH]) * tileSize, tileSize/16)
-                layer.blit(pygame.image.load(os.path.join( 'Images\Towers', str(towerBar.selectedTower)+'.png')).convert(), (tileSize*column,tileSize*row), None, 1)
+                layer.blit(pygame.image.load(os.path.join( 'Images\Towers', str(towerBar.selectedTower)+' - 0.png')).convert(), (tileSize*column,tileSize*row), None, 1)
 
 def drawMap(map, layer):
     # Draw the map

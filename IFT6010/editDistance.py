@@ -3,7 +3,11 @@ from numpy import *
 import re
 
 def align(tx, fr):
-    # input: 2 phrases
+    ### prend un texto et sa traduction manuelle
+    ### renvoie une liste des mots et de leur traduction
+    
+    tx = tx.lower()
+    fr = fr.lower()
     
     nums = alignNumber(tx, fr)
     numx = nums[0]
@@ -12,6 +16,7 @@ def align(tx, fr):
     txWords = wordSplit(tx)
     frWords = wordSplit(fr)
     
+    # 1
     # associe chaque mot de texto a ses alignements
     tx_to_align = []
     startChar = 0
@@ -21,23 +26,37 @@ def align(tx, fr):
         for i in range(curChar, curChar+len(word)):
             alignNums.append(numx[i][1])
         tx_to_align.append([word, alignNums])
-        startChar += len(word)
+        startChar += len(word)+1
     
+    # 2
     # associe chaque alignement a un mot francais
     align_to_fr = []
     curWord = 0
     curChar = 0
-    for a in range(len(numy)):
-        align_to_fr.append([numy[a][0], curWord])
-        curChar += 1
-        if curChar > len(frWords[curWord]):
+    for n in range(len(numy)):
+        #print curWord, curChar, len(frWords[curWord])
+        if curChar > len(frWords[curWord])-1:
             curChar = 0
             curWord += 1
+        align_to_fr.append([numy[n][0], curWord])
+        if numy[n][1] == frWords[curWord][curChar]:
+            curChar += 1
     
+    # 3
     # associe chaque mot de texto a un mot francais
     normList = []
     for elem in tx_to_align:
         frNumList = []
+        for n in [0, -1]:
+            num = elem[1][n]
+            align_match = -1
+            for i in range(len(align_to_fr)):
+                if align_to_fr[i][0] == num:
+                    align_match = i
+                    break
+            if align_match >= 0:
+                frNumList.append(align_to_fr[align_match][1])
+            
         for num in elem[1]:
             align_match = -1
             for i in range(len(align_to_fr)):
@@ -51,50 +70,76 @@ def align(tx, fr):
             
         norm = ""
         if len(frNumList) > 0:
-            for frNum in frNumList:
+            for frNum in range(frNumList[0], frNumList[-1]+1):
                 norm = norm + frWords[frNum] + " "
         else:
-            norm = ""
-            
+            norm = ""    
         normList.append(norm.rsplit())
+    
+    print
+    for i in range(len(normList)):
+        elem = normList[i]
+        if len(elem) > 1:
+            combinedWords = ""
+            for word in elem:
+                #print word
+                combinedWords += word + " "
+            #print combinedWords
+            normList[i] = [txWords[i], combinedWords]
+        else:
+            pass
+            normList[i] = [txWords[i], normList[i][0]]
+    
+    
+    affichage = 1
+    if affichage:
+    
+        #print
+        #for elem in align_to_fr:
+        #    print elem[0], elem[1]
+        #print
         
-    #print
-    #for elem in align_to_fr:
-    #    print elem[0], elem[1]
-    #print
-    
-    print
-    for i in range(len(numx)):
-        print numx[i][0],
-    print
-    for i in range(len(numx)):
-        print numx[i][1] % 10,
-    print
-    
-    print
-    for j in range(len(numy)):
-        print numy[j][0] % 10,
-    print
-    for j in range(len(numy)):
-        print numy[j][1],
-    print
-    
-    print
-    for elem in tx_to_align:
-        print elem[0], elem[1]
-    
-    print
-    for i in range(len(txWords)):
-        print txWords[i], normList[i]
-    
+        for n in range(2):
+            for i in range(len(align_to_fr)):
+                print align_to_fr[i][n] %10,
+            print
+        
+        print
+        for i in range(len(numx)):
+            print numx[i][0],
+        print
+        for i in range(len(numx)):
+            print numx[i][1] % 10,
+        print
+        
+        print
+        for j in range(len(numy)):
+            print numy[j][0] % 10,
+        print
+        for j in range(len(numy)):
+            print numy[j][1],
+        print
+        
+        # 1: tx_to_align
+        print
+        for elem in tx_to_align:
+            print elem[0], elem[1]
+        
+        # 2
+        print
+        for i in range(len(txWords)):
+            print normList[i][0], "-->", normList[i][1]
     
     # output: la traduction de chaque mot de la 1re liste
     ## align
 
 def wordSplit(sentence):
+    ### prend une phrase et retourne une liste de ses mots
     return re.findall(r"[a-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+|[^\sa-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+", sentence)
 
 def alignNumber(x, y):
+    ### prend un texto et sa traduction
+    ### retourne les numeros d'alignement de chacun
     i, j = len(x), len(y)
     T = editDistance(x, y, table=1)
     
@@ -122,6 +167,9 @@ def alignNumber(x, y):
             else:
                 print ' ',
         print
+        for n in range(len(stepList)):
+            print n % 10,
+        print
         i = 0
         for step in stepList:
             if step[0] != 'D':
@@ -136,6 +184,8 @@ def alignNumber(x, y):
     
     
 def editSteps(x, y):
+    ### prend un texto et sa traduction
+    ### retourne le tableau des etapes d'edition
     i, j = len(x), len(y)
     T = editDistance(x, y, table=1)
     

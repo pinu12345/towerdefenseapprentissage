@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import re
 import operator
+from editDistance import *
 
 texto = open('train.texto')
 norm = open('train.norm','w')

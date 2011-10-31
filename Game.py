@@ -27,9 +27,9 @@ def main():
     layer1 = pygame.Surface(size)
     layer2 = pygame.Surface(size)
     layer3 = pygame.Surface(size)
-    layer1.set_colorkey(background)
-    layer2.set_colorkey(background)
-    layer3.set_colorkey(background)
+    layer1.set_colorkey(pink)
+    layer2.set_colorkey(pink)
+    layer3.set_colorkey(pink)
     layer2.set_alpha(150)
 
     # Initialize the MainMenu
@@ -244,9 +244,9 @@ def drawMenu(screen, layer1, layer2, layer3):
 def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3):
     # Set the screen background ~ 3fps
     screen.fill(background)
-    layer1.fill(background)
-    layer2.fill(background)
-    layer3.fill(background)
+    layer1.fill(pink)
+    layer2.fill(pink)
+    layer3.fill(pink)
 
     # DrawMap ~20-25
     drawMap(map, layer1)

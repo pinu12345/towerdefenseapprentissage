@@ -13,6 +13,7 @@ route         = ( 200, 190, 170)
 tower         = ( 130, 140, 160)
 base          = ( 200,  80,  20)
 rangeCircle   = (  20, 100,  20, 10)
+pink          = ( 255,   0, 255)
 
 # dimensions de carte
 mapWidth = 24

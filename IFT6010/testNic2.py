@@ -2,8 +2,8 @@
 from editDistance import *
 from evalDistance import *
 
-tx = "pcqz jwvaiys X liavnir 2m1"
-fr = "Parce que je vais la voir demain."
+tx = "fds"
+fr = "fin de semaine."
 
 align(tx, fr)
 

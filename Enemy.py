@@ -2,6 +2,7 @@ import pygame, os, random
 from Game import *
 from Global import *
 from Util import *
+from Images import *
 
 type = 0
 
@@ -29,7 +30,7 @@ class Enemy(pygame.sprite.Sprite):
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Enemies', str(self.type)+'.png')).convert()
+        self.image = Images.EnemyImages[self.type]
         self.rect = self.image.get_rect()
 
         # Initialize position

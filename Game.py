@@ -1,4 +1,5 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images
+import pygame.examples.aliens
 from Global import *
 from MainMenu import *
 from Shots import *
@@ -6,10 +7,11 @@ from Shots import *
 def main():
 
     # Initialize pygame
+    # os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
-
-    os.environ['SDL_VIDEO_CENTERED'] = '1'
     
+    os.environ['SDL_VIDEO_CENTERED'] = '1'
+
     mapWidth = 24
     mapHeight = 16
     tileSize = 32
@@ -45,7 +47,10 @@ def main():
     gameMenu.set_center(True, True)
     mainMenu.set_alignment('center', 'center')
     gameMenu.set_alignment('center', 'center')
-    menubackground = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg'))
+
+    Images.init()
+
+    menubackground = Images.Background
     rect_list = []
 
     # Initialize the map
@@ -101,7 +106,7 @@ def main():
                     map.loadFileMap('testmap')
                     Game.state = STATE_PREPARATION
                 elif mainMenustate == 3:
-                    mainMenustate = 0
+                    pygame.examples.aliens.main()
                 else:
                     pygame.quit()
                     sys.exit()

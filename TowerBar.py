@@ -1,4 +1,4 @@
-import pygame, Map, os
+import pygame, Map, os, Images
 from Global import *
 
 # Colors
@@ -6,11 +6,7 @@ selected    = (  205,   149,   12)
 
 class TowerBar():
     def __init__(self, origX, origY):
-        self.towers = [pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(), \
-                       pygame.image.load(os.path.join ('Images\Towers', '2 - 0.png')).convert(), \
-                       pygame.image.load(os.path.join ('Images\Towers', '3 - 0.png')).convert(), \
-                       pygame.image.load(os.path.join ('Images\Towers', '4 - 0.png')).convert(), \
-                       pygame.image.load(os.path.join ('Images\Towers', '5 - 0.png')).convert()]
+        self.towers = Images.TowerImages
         self.origX = origX
         self.origY = origY
         self.space = 16

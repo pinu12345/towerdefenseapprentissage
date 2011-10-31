@@ -79,7 +79,7 @@ class Menu():
 class GridButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Grille.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Grille.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -87,7 +87,7 @@ class GridButton(pygame.sprite.Sprite):
 class StartButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'ok.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'ok.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -95,7 +95,7 @@ class StartButton(pygame.sprite.Sprite):
 class RandomButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'A.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'A.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -103,7 +103,7 @@ class RandomButton(pygame.sprite.Sprite):
 class BackButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'B.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'B.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -111,7 +111,7 @@ class BackButton(pygame.sprite.Sprite):
 class BtnDino1(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino1.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino1.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -119,7 +119,7 @@ class BtnDino1(pygame.sprite.Sprite):
 class BtnDino10(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino10.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Dino10.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -127,7 +127,7 @@ class BtnDino10(pygame.sprite.Sprite):
 class BtnDinoJr2(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr2.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr2.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -135,7 +135,7 @@ class BtnDinoJr2(pygame.sprite.Sprite):
 class BtnDinoJr20(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr20.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'DinoJr20.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -143,7 +143,7 @@ class BtnDinoJr20(pygame.sprite.Sprite):
 class BtnNinja5(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja5.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja5.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -151,7 +151,7 @@ class BtnNinja5(pygame.sprite.Sprite):
 class BtnNinja50(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja50.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Ninja50.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -159,7 +159,7 @@ class BtnNinja50(pygame.sprite.Sprite):
 class BtnPirate5(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate5.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate5.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -167,7 +167,7 @@ class BtnPirate5(pygame.sprite.Sprite):
 class BtnPirate50(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate50.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Pirate50.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -175,7 +175,7 @@ class BtnPirate50(pygame.sprite.Sprite):
 class BtnSinge10(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe10.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe10.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -183,7 +183,7 @@ class BtnSinge10(pygame.sprite.Sprite):
 class BtnSinge100(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe100.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Singe100.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -191,7 +191,7 @@ class BtnSinge100(pygame.sprite.Sprite):
 class ExitButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Quitter.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Quitter.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

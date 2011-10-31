@@ -213,10 +213,8 @@ def main():
                             
             if Game.state == STATE_PREPARATION:
                 pass
-
             elif Game.state == STATE_GAME:
                 ## Game
-                
                 # Spawn any new enemy in the wave queue
                 wave.spawn()
                 # Move the enemies
@@ -226,12 +224,14 @@ def main():
 
             ## Display
             drawTick += 1
+            #print(clock.get_fps())
             if drawTick >= clock.get_fps()/10:
                 drawTick = 0
                 drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
         
         # Limit to 24 frames per second
-        clock.tick()
+        #print(pygame.time.get_ticks())
+        clock.tick(500)
 
     pygame.quit ()
 

@@ -29,7 +29,7 @@ class Enemy(pygame.sprite.Sprite):
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.path.join ('Images\Enemies', str(self.type)+'.png'))
+        self.image = pygame.image.load(os.path.join ('Images\Enemies', str(self.type)+'.png')).convert()
         self.rect = self.image.get_rect()
 
         # Initialize position

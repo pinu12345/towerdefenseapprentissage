@@ -283,6 +283,17 @@ def drawOnMouseOver(map, towerBar, layer):
                 pygame.draw.circle(layer, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH]) * tileSize, tileSize/16)
                 layer.blit(pygame.image.load(os.path.join( 'Images\Towers', str(towerBar.selectedTower)+' - 0.png')).convert(), (tileSize*column,tileSize*row), None, 1)
 
+def drawRoute(map, layer):
+    for row in range(mapHeight):
+        for column in range(mapWidth):
+            if map.M[row][column] == car_path:
+                # Draw tiles with Grid
+                if map.showGrid == 1:
+                    pygame.draw.rect(layer, route, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                # Draw tiles without grid
+                else:
+                    pygame.draw.rect(layer, route, [tileSize*column, tileSize*row, tileSize, tileSize])
+
 def drawMap(map, layer):
     # Draw the map
     for row in range(mapHeight):

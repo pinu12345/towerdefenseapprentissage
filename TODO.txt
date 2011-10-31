@@ -8,11 +8,12 @@
     FPS
 
     --Gameplay (Urgent)
-    EFFACE/UPGRADE UNIVERSELLE
-    REMPLACER TOUR QUAND ON L'ECRASE AVEC UNE AUTRE (Phase preparation seulement)
-    ECRASER UNE TOUR AVEC LA MEME = UPGRADE (Phase preparation + jeu)
-    UPGRADE DE TOURS [2 upgrades]
     Tour qui ralentis autour d'elle
+    REMPLACER TOUR QUAND ON L'ECRASE AVEC UNE AUTRE (Phase preparation seulement)
+    UPGRADE DE TOURS [2 upgrades]
+        IF UPGRADABLE, TYPE += 1...
+    ECRASER UNE TOUR AVEC LA MEME = UPGRADE (Phase preparation + jeu)
+    EFFACE (MONTRE LA TOUR EN ROUGE SANS CERCLE DE RANGE) / UPGRADE UNIVERSELLE (MONTRE LE RANGE "UPGRADÉ" ET LA NOUVELLE IMAGE DE LA TOUR)
 
     --CAMPAIGN (Optional)
     Tours -> disponibilité

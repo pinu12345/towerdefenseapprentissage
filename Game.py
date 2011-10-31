@@ -22,7 +22,7 @@ def main():
     Game.state = STATE_INITMENU
 
     # Set the height and width of the screen
-    size = [mapWidth*(tileSize+1) + rightMenuSize,mapHeight*(tileSize+1) + bottomMenuSize]
+    size = [mapWidth*(tileSize+1) + rightMenuSize, mapHeight*(tileSize+1) + bottomMenuSize]
     screen = pygame.display.set_mode(size)
     layer1 = pygame.Surface(size)
     layer2 = pygame.Surface(size)
@@ -203,6 +203,13 @@ def main():
                         towerBar.selectTower(4)
                     elif event.key == pygame.K_5:
                         towerBar.selectTower(5)
+                    elif event.key == pygame.K_r:
+                        towers.clear()
+                        wave.clear()
+                        shots.clear()
+                    elif event.key == pygame.K_t:
+                        towers.clear()
+                        shots.clear()
                             
             if Game.state == STATE_PREPARATION:
                 pass

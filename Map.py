@@ -51,6 +51,13 @@ class Map:
                 self.O[row].append(0)
                 self.T[row].append(0)
     
+    def clearTowers(self):
+        self.T = []
+        for row in range(self.mapHeight):
+            self.T.append([])
+            for column in range(self.mapWidth):
+                self.T[row].append(0)
+    
     def loadMap(self, textMap):
         self.reset()
         self.M = textMap

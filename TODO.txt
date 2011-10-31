@@ -1,8 +1,28 @@
 ﻿TODOLIST:
-    FPS
+    AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
+    REMPLACER TOUR
+    EFFACE/UPGRADE UNIVERSELLE
+    MEME TOUR = UPGRADE
     CAMPAIGN
     UPGRADE DE TOURS [2 upgrades]
     LOADER LES IMAGES JUSTE UNE FOIS
     Tours -> disponibilité
     Tour qui ralentis autour d'elle
+    
+    
+    
+    
+    FPS
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     

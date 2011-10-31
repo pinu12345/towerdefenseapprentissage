@@ -21,4 +21,5 @@ class Towers():
         self.towers.draw(screen)
     
     def clear(self):
+        self.map.clearTowers()
         self.towers.empty()

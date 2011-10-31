@@ -16,7 +16,7 @@ class TowerBar():
         self.space = 16
         self.towerCount = len(self.towers)
         self.selectedTower = 0
-    
+
     def draw(self, screen):
         for i in range(self.towerCount):
             if i == self.selectedTower-1:

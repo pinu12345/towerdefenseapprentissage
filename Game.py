@@ -219,7 +219,7 @@ def main():
 
             ## Display
             drawTick += 1
-            if drawTick >= clock.get_fps()/10.0:
+            if drawTick >= clock.get_fps()/10:
                 drawTick = 0
                 drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
         
@@ -235,16 +235,19 @@ def drawMenu(screen, layer1, layer2, layer3):
     pygame.display.flip()
 
 def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3):
-    # Set the screen background
+    # Set the screen background ~ 3fps
     screen.fill(background)
     layer1.fill(background)
     layer2.fill(background)
     layer3.fill(background)
 
+    # DrawMap ~20-25
     drawMap(map, layer1)
+    
+    # Draw On Mouse Over ~ 0
     drawOnMouseOver(map, towerBar, layer2)
     
-    # Draw the tower bar
+    # Draw the tower bar ~ 0
     towerBar.draw(layer3)
     
     # Draw the towers
@@ -259,7 +262,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, l
     # Draw the game information menu
     menu.draw(layer3)
 
-    # Draw the layers
+    # Draw the layers ~ 200 fps
     screen.blit(layer1, (0,0))
     screen.blit(layer2, (0,0))
     screen.blit(layer3, (0,0))

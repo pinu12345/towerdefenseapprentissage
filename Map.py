@@ -1,7 +1,6 @@
 import pygame, os, RandomMap
 from Game import *
 from Util import *
-from Util import *
 import RandomMap
 
 class Map:
@@ -75,3 +74,11 @@ class Map:
     def loadFileMap(self, map_name):
         textMap = open(os.path.join('Maps', map_name+'.txt')).readlines()
         self.loadMap(textMap)
+
+    def drawAt(self, layer, color, row, column):
+        # Draw tiles with Grid
+        if self.showGrid == 1:
+            pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+        # Draw tiles without grid
+        else:
+            pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])

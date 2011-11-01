@@ -5,6 +5,7 @@ STATE_PREPARATION = 2
 STATE_GAME = 3
 STATE_INITGAMEMENU = 4
 STATE_GAMEMENU = 5
+STATE_LOADGAME = 6
 
 # couleurs
 background    = (   0,   0,   0)
@@ -21,6 +22,9 @@ mapHeight = 16
 showGrid = 0
 tileSize = 32
 gridSize = 1
+
+rightMenuSize = 200
+bottomMenuSize = 100
 
 # carte .txt: caracteres vide, chemin, emplacement et base
 car_empty  = '-'

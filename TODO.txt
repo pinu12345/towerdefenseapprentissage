@@ -4,10 +4,15 @@
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
     TIMER QUI TUE LES SAUTS DE JEU
     FPS
-    BARRE DE VIE : RELATIVE A LA VIE ENEMIE MAIS TOUJOURS PLUS PETITE QUE 32 [max 30]
-    BARRE DE VIE RENTRE DANS LA CASE 32x32 qui definie le sprite
+    FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
+    
+    --Redessiner:
+        -Zone autour des tours apres mouseover
+        -Route apres un mouvement d'un enemi
+        -Case après l'effacement d'une tour
 
     --Gameplay (Urgent)
+    Tours -> disponibilité
     Tour qui ralentis autour d'elle
     REMPLACER TOUR QUAND ON L'ECRASE AVEC UNE AUTRE (Phase preparation seulement)
     UPGRADE DE TOURS [2 upgrades]
@@ -16,7 +21,6 @@
     EFFACE (MONTRE LA TOUR EN ROUGE SANS CERCLE DE RANGE) / UPGRADE UNIVERSELLE (MONTRE LE RANGE "UPGRADÉ" ET LA NOUVELLE IMAGE DE LA TOUR)
 
     --CAMPAIGN (Optional)
-    Tours -> disponibilité
     Description de mission en début de partie
         -Separer le spawn de wave pour avoir plusieurs spawn points?!?
     
@@ -24,3 +28,4 @@ DONE:
     CHANGER LA COULEUR DE TRANSPARENCE (ROSE) + ENLEVER LES ALPHA DES PNG
     CLASSE QUI REGROUPE TOUTES LES IMAGES -| CONVERT()
     LOADER LES IMAGES JUSTE UNE FOIS
+    BARRE DE VIE RENTRE DANS LA CASE 32x32 qui definie le sprite

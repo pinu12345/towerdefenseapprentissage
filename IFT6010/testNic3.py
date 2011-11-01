@@ -1,11 +1,29 @@
 # -*- coding: utf-8 -*-
 from editDistance import *
 from evalDistance import *
+from random import *
 
-tx = "Kk ben je sais pas a kelle"
-fr = "Okay, okay, ben je ne sais pas à quelle"
+txList = open('train.texto').readlines()
+frList = open('train.fr').readlines()
 
-align(tx, fr)
+num = randint(0, len(txList))
+num = 615
+
+print "\n\n"
+print "--- Texto", num, "---"
+print
+
+tx = txList[num][35:-10].rstrip()
+fr = frList[num][40:-10].rstrip()
+
+#tx = "ZZZA B D E F"
+#fr = "A B C F"
+
+print " tx: ", tx
+print " fr: ", fr
+print
+
+affiche_normList(addDictionaryWordsFromSentencePair(tx, fr))
 
     
 if 0:
@@ -52,24 +70,3 @@ if 0:
             else:
                 norm.write(str(word) + ' ')
         norm.write('\n')
-
-
-
-
-
-
-    x = "Sa srait cool de srtr"
-    y = "Ca serait cool de sortir."
-
-    #x = ["Sa", "srait", "cool", "de", "srtr"]
-    #y = ["Ça", "serait", "cool", "de", "sortir", "."]
-
-    x = ["La", "di", "stance", "devrait", "être", "cinq", "."]
-    y = ["La", "distance", "devrait", "être", "cinq", "."]
-
-    x = "La di stance devrait être cinq. La di stance devrait être cinq. La di stance devrait être cinq. La di stance devrait être cinq. La di stance devrait être cinq. La di stance devrait être cinq."
-    y = "La distance devrait être cinq. La distance devrait être cinq. La distance devrait être cinq. La distance devrait être cinq. La distance devrait être cinq. La distance devrait être cinq."
-
-
-    print
-    print editDistance(x, y)

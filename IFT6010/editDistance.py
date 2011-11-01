@@ -2,19 +2,37 @@
 from numpy import *
 import re
 
-def align(tx, fr):
+def affiche_normList(normList):
+    print
+    lenMax = 0
+    for i in range(len(normList)):
+        if len(normList[i][0]) > lenMax:
+            lenMax = len(normList[i][0])
+    for i in range(len(normList)):
+        print "", normList[i][0] + ' '*(lenMax-len(normList[i][0])), \
+            "-->", normList[i][1]
+    print
+
+
+def addDictionaryWordsFromSentencePair(tx, fr):
     ### prend un texto et sa traduction manuelle
     ### renvoie une liste des mots et de leur traduction
     
     tx = tx.lower()
     fr = fr.lower()
     
+    txWords = wordSplit(tx)
+    frWords = wordSplit(fr)
+    
     nums = alignNumber(tx, fr)
+    if nums == 0:
+        normList = []
+        for i in range(len(txWords)):
+            normList.append([txWords[i], frWords[i]])
+        return normList
     numx = nums[0]
     numy = nums[1]
     
-    txWords = wordSplit(tx)
-    frWords = wordSplit(fr)
     
     # 1
     # associe chaque mot de texto a ses alignements
@@ -26,7 +44,7 @@ def align(tx, fr):
         for i in range(curChar, curChar+len(word)):
             alignNums.append(numx[i][1])
         tx_to_align.append([word, alignNums])
-        startChar += len(word)+1
+        startChar += len(word)
     
     # 2
     # associe chaque alignement a un mot francais
@@ -34,64 +52,106 @@ def align(tx, fr):
     curWord = 0
     curChar = 0
     for n in range(len(numy)):
-        #print curWord, curChar, len(frWords[curWord])
+        curWordMod = 0
         if curChar > len(frWords[curWord])-1:
             curChar = 0
             curWord += 1
-        align_to_fr.append([numy[n][0], curWord])
+            if numy[n][1] == ' ':
+                curWordMod = 1
+        align_to_fr.append([numy[n][0], curWord - curWordMod])
         if numy[n][1] == frWords[curWord][curChar]:
             curChar += 1
     
     # 3
     # associe chaque mot de texto a un mot francais
-    normList = []
+    alignList = []
     for elem in tx_to_align:
-        frNumList = []
-        for n in [0, -1]:
-            num = elem[1][n]
-            align_match = -1
-            for i in range(len(align_to_fr)):
-                if align_to_fr[i][0] == num:
-                    align_match = i
-                    break
-            if align_match >= 0:
-                frNumList.append(align_to_fr[align_match][1])
-            
+        align_match = -1
         for num in elem[1]:
-            align_match = -1
-            for i in range(len(align_to_fr)):
+            i = 0
+            while align_match == -1 and i < len(align_to_fr):
                 if align_to_fr[i][0] == num:
                     align_match = i
-                    break
-            if align_match >= 0:
-                frWord_num = align_to_fr[align_match][1]
-                if frWord_num not in frNumList:
-                    frNumList.append(frWord_num)
-            
-        norm = ""
-        if len(frNumList) > 0:
-            for frNum in range(frNumList[0], frNumList[-1]+1):
-                norm = norm + frWords[frNum] + " "
+                i += 1
+        if align_match >= 0:
+            alignList.append(align_to_fr[align_match][0])
         else:
-            norm = ""    
-        normList.append(norm.rsplit())
+            alignList.append(-1)
     
-    print
-    for i in range(len(normList)):
+    if 0:
+        #for n in [0, -1]:
+        #    num = elem[1][n]
+        #    align_match = -1
+        #    for i in range(len(align_to_fr)):
+        #        if align_to_fr[i][0] == num:
+        #            align_match = i
+        #            break
+        #    if align_match >= 0:
+        #        frNumList.append(align_to_fr[align_match][1])
+            
+        #for num in elem[1]:
+        #    align_match = -1
+        #    for i in range(len(align_to_fr)):
+        #        if align_to_fr[i][0] == num:
+        #            align_match = i
+        #            break
+        #    if align_match >= 0:
+        #        frWord_num = align_to_fr[align_match][1]
+        #        if frWord_num not in frNumList:
+        #            frNumList.append(frWord_num)
+        pass
+    
+    normList = []
+    norm = ""
+    if len(alignList) > 0:
+        for i in range(len(alignList)):
+            align_match = -1
+            wordNumList = []
+            norm = ""
+            if alignList[i] != -1:
+                for j in range(len(align_to_fr)):
+                    if align_to_fr[j][0] == alignList[i]:
+                        align_match = j
+                        break
+            if align_match >= 0:
+                if i < len(alignList) - 1:
+                    imod = i+1
+                    while imod < len(alignList):
+                        if alignList[imod] == -1:
+                            imod += 1
+                        else:
+                            break
+                    while align_to_fr[align_match][0] < alignList[imod]-1:
+                        wordNum = align_to_fr[align_match][1]
+                        if wordNum not in wordNumList:
+                            wordNumList.append(wordNum)
+                        if align_match < len(align_to_fr) -1:
+                            align_match += 1
+                        else:
+                            break
+                else:
+                    while align_match < len(align_to_fr):
+                        wordNum = align_to_fr[align_match][1]
+                        if wordNum not in wordNumList:
+                            wordNumList.append(wordNum)
+                        align_match += 1
+                for wordNum in wordNumList:
+                    norm = norm + frWords[wordNum] + " "
+            normList.append(norm.rsplit())
+    
+    for i in range(len(txWords)):
         elem = normList[i]
         if len(elem) > 1:
             combinedWords = ""
             for word in elem:
-                #print word
                 combinedWords += word + " "
-            #print combinedWords
             normList[i] = [txWords[i], combinedWords]
+        elif len(elem) == 1:
+            normList[i] = [txWords[i], elem[0]]
         else:
-            pass
-            normList[i] = [txWords[i], normList[i][0]]
+            normList[i] = [txWords[i], '']
     
-    
-    affichage = 1
+    affichage = 0
     if affichage:
     
         #print
@@ -127,11 +187,16 @@ def align(tx, fr):
         
         # 2
         print
+        lenMax = 0
         for i in range(len(txWords)):
-            print normList[i][0], "-->", normList[i][1]
+            if len(txWords[i]) > lenMax:
+                lenMax = len(txWords[i])
+        for i in range(len(txWords)):
+            print normList[i][0] + ' '*(lenMax-len(normList[i][0])), \
+                "-->", normList[i][1]
     
     # output: la traduction de chaque mot de la 1re liste
-    ## align
+    return normList
 
 def wordSplit(sentence):
     ### prend une phrase et retourne une liste de ses mots
@@ -143,7 +208,13 @@ def alignNumber(x, y):
     i, j = len(x), len(y)
     T = editDistance(x, y, table=1)
     
-    stepList = editSteps(x, y)
+    if T == 0:
+        return 0
+    
+    stepList = editSteps(x, y, T)
+    
+    #for step in stepList:
+    #    print step
     
     numx, numy = [], []
     i, j = 0, 0
@@ -157,46 +228,51 @@ def alignNumber(x, y):
     
     ## affichage
     affichage = 1
+    xlist = [' ']
+    ylist = [' ']
     if affichage:
-        i = 0
+        i, j = 0, 0
         for step in stepList:
             if step[0] != 'I':
                 if i < len(x):
-                    print x[i],
+                    xlist.append(x[i])
                     i += 1
             else:
-                print ' ',
-        print
-        for n in range(len(stepList)):
-            print n % 10,
-        print
-        i = 0
-        for step in stepList:
+                xlist.append(' ')
             if step[0] != 'D':
-                if i < len(y):
-                    print y[i],
-                    i += 1
+                if j < len(y):
+                    ylist.append(y[j])
+                    j += 1
             else:
-                print ' ',
+                ylist.append(' ')
         print
+    nlist = [' ']
+    for n in range(len(stepList)):
+        nlist.append(str(n % 10))
+    
+    print ''.join(xlist)
+    print ''.join(nlist)
+    print ''.join(ylist)
     
     return [numx, numy]
     
     
-def editSteps(x, y):
+def editSteps(x, y, T):
     ### prend un texto et sa traduction
     ### retourne le tableau des etapes d'edition
     i, j = len(x), len(y)
-    T = editDistance(x, y, table=1)
     
     #for i in range(len(T)):
     #    for j in range(len(T[0])):
     #        print T[i][j] % 10,
     #    print
+    #print
+    
+    if T == 0:
+        return 0
     
     stepList = []
-    print
-    while i > 0 and j > 0:
+    while i > 0 or j > 0:
         if T[i][j] == T[i-1][j]+1:
             i -= 1
             stepList.insert(0, ("Delete " + x[i]))

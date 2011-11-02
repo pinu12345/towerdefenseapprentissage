@@ -7,8 +7,9 @@ frList = open('train.fr').readlines()
 #norm = open('train.norm', 'w')
 dict = []
 
-#for i in range(len(txList)):
-for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
+#for num_tx in [len(txList)]:
+for num_tx in [len(txList)/100]:
+#for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
     start_time = time.clock()
     num_tx = min(num_tx, len(txList))
     for i in range(num_tx):
@@ -42,16 +43,18 @@ for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
                             break
                     if frWordNotFound:
                         txWordLine[1].append([frWord, 1])
+    
+    #print '\n Text:', num_tx
+    #print ' Dict:', len(dict)
+    #print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
+    #end_time = time.clock()
+    #delta_time = end_time - start_time
+    #print ' Time:', int(delta_time)
 
-    #for line in dict:
-    #    print line[0], line[1]
-    print '\n Text:', num_tx
-    print ' Dict:', len(dict)
-    print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
-    end_time = time.clock()
-    delta_time = end_time - start_time
-    print ' Time:', int(delta_time)
-                    
+for line in dict:
+    print line[0], line[1]
+
+    
 def original_de_PO():
     #load the normalisations
     #for line in open('normalisations.txt'):

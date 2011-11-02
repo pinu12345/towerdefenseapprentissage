@@ -62,11 +62,11 @@ TowerSPLASH = 5
 
 ## Nom              Value   Damage  Delay   Range   Splash
 TowerTypes = \
-    [["Mitraille",  [100, 210],
-                    [  2,   5],
-                    [  5,   4],
-                    [  5,   6],
-                    [  0,   0]],
+    [["Mitraille",  [100, 210, 300],
+                    [  2,   5,   10],
+                    [  5,   4,   3],
+                    [  5,   6,   7],
+                    [  0,   0,   0]],
     ["Sniper",      [200],
                     [80],
                     [100],

@@ -12,12 +12,22 @@ class TowerBar():
         self.towerCount = len(Images.TowerImages)
         self.selectedTower = 0
 
+    # Update les graphiques
+    #  Fill la tour precedente de noir et la redessine par dessu
+    #  Fill la nouvelle tour en or et la redessine par dessu
+    def update(self, screen):
+        self.previousSelected = self.selectedTower
+    
+    # Dessine les tours dans la barre
+    #  Si une tour est selectionner dessine un arriere plan en or
+    #  Sinon dessine un arriere plan noir
     def draw(self, screen):
         for i in range(self.towerCount):
             if i == self.selectedTower-1:
                 screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
                 screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
             else:
+                screen.fill(background, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
                 screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
 
     def onClick(self, pos):

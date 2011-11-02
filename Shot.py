@@ -23,7 +23,7 @@ class Shot(pygame.sprite.Sprite):
             self.zoneAlpha = 255
             self.zoneColor = TowerShotGraphs[type][3]
             self.zoneDecay = 255 // TowerShotGraphs[type][4]
-            self.zoneRadius = TowerTypes[type][TowerSPLASH]
+            self.zoneRadius = TowerTypes[type][TowerSPLASH][0]
         else:
             self.zoneAlpha = 0
         
@@ -47,7 +47,6 @@ class Shot(pygame.sprite.Sprite):
                 self.projColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.projWidth*2 + 2)
-            #self.projAlpha -= self.projDecay
             self.projAlpha -= 1000
         if self.zoneAlpha > 0:
             self.zoneColorAlpha = ( \
@@ -57,5 +56,4 @@ class Shot(pygame.sprite.Sprite):
                 self.zoneColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.zoneRadius * tileSize + 4)
-            #self.zoneAlpha -= self.zoneDecay
             self.zoneAlpha -= 1000

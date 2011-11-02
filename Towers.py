@@ -10,8 +10,19 @@ class Towers():
         self.wave = wave
 
     def placeTower(self, map, towerType, row, column):
-        map.T[row][column] = towerType
-        self.towers.add(Tower.Tower(row, column, towerType-1))
+        addedTower = Tower.Tower(row, column, towerType-1)
+        self.towers.add(addedTower)
+        map.T[row][column] = addedTower
+
+    def updateTower(self, map, towerType, row, column):
+        currentTower = map.T[row][column]
+        if towerType-1 == currentTower.type:
+            currentTower.upgrade()
+        else:
+            currentTower.kill()
+            addedTower = Tower.Tower(row, column, towerType-1)
+            self.towers.add(addedTower)
+            map.T[row][column] = addedTower
 
     def target(self, shots):
         for tower in self.towers:

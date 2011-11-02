@@ -178,7 +178,11 @@ def main():
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
+                                    print('Placing')
                                     towers.placeTower(map, towerBar.selectedTower, row, column)
+                                else:
+                                    print('Upgrading')
+                                    towers.updateTower(map, towerBar.selectedTower, row, column)
 
                     # Inside Menu
                     elif column >= mapWidth:
@@ -284,9 +288,12 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, l
     # Towers Target
     shots.draw(layer1)
 
+    towerBar.draw(layer3)
+    
     # Draw the layers ~ 200 fps
     screen.blit(layer1, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
     screen.blit(layer2, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
+    screen.blit(layer3, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize + bottomMenuSize))
 
     # Update the screen
     pygame.display.update(0, 0, mapWidth*tileSize, mapHeight*tileSize + bottomMenuSize)
@@ -296,7 +303,7 @@ def drawOnMouseOver(map, towerBar, layer):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if (map.T[row][column] == 0) and (map.O[row][column] > 0):
-                if TowerTypes[towerBar.selectedTower-1][TowerRANGE] == 0:
+                if TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] == 0:
                     pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]*tileSize, 0)
                 else:
                     pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 

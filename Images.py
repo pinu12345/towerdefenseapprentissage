@@ -15,7 +15,9 @@ def init():
         pygame.image.load(os.path.join ('Images\Enemies', '4.png')).convert()]
 
     Images.TowerImages = \
-        [[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(), pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert()],
+        [[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(),
+          pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert(),
+          pygame.image.load(os.path.join ('Images\Towers', '1 - 2.png')).convert()],
         [pygame.image.load(os.path.join ('Images\Towers', '2 - 0.png')).convert()],
         [pygame.image.load(os.path.join ('Images\Towers', '3 - 0.png')).convert(), pygame.image.load(os.path.join ('Images\Towers', '2 - 1.png')).convert()],
         [pygame.image.load(os.path.join ('Images\Towers', '4 - 0.png')).convert()],

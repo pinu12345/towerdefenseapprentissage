@@ -5,7 +5,7 @@
     TIMER QUI TUE LES SAUTS DE JEU
     FPS
     FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
-    
+
     --Redessiner:
         -Zone autour des tours apres mouseover
         -Route apres un mouvement d'un enemi
@@ -15,8 +15,6 @@
     Tours -> disponibilité
     Tour qui ralentis autour d'elle
     REMPLACER TOUR QUAND ON L'ECRASE AVEC UNE AUTRE (Phase preparation seulement)
-    UPGRADE DE TOURS [2 upgrades]
-        IF UPGRADABLE, TYPE += 1...
     ECRASER UNE TOUR AVEC LA MEME = UPGRADE (Phase preparation + jeu)
     EFFACE (MONTRE LA TOUR EN ROUGE SANS CERCLE DE RANGE) / UPGRADE UNIVERSELLE (MONTRE LE RANGE "UPGRADÉ" ET LA NOUVELLE IMAGE DE LA TOUR)
 
@@ -29,3 +27,4 @@ DONE:
     CLASSE QUI REGROUPE TOUTES LES IMAGES -| CONVERT()
     LOADER LES IMAGES JUSTE UNE FOIS
     BARRE DE VIE RENTRE DANS LA CASE 32x32 qui definie le sprite
+    UPGRADE DE TOURS [2 upgrades]

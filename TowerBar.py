@@ -6,20 +6,19 @@ selected    = (  205,   149,   12)
 
 class TowerBar():
     def __init__(self, origX, origY):
-        self.towers = Images.TowerImages
         self.origX = origX
         self.origY = origY
         self.space = 16
-        self.towerCount = len(self.towers)
+        self.towerCount = len(Images.TowerImages)
         self.selectedTower = 0
 
     def draw(self, screen):
         for i in range(self.towerCount):
             if i == self.selectedTower-1:
                 screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
-                screen.blit(self.towers[i], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
+                screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
             else:
-                screen.blit(self.towers[i], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
+                screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
 
     def onClick(self, pos):
         if (pos[1] > self.origY) and (pos[1] <= self.origY + tileSize):
@@ -29,4 +28,3 @@ class TowerBar():
 
     def selectTower(self, tower):
         self.selectedTower = tower
-        self.towers[tower-1] = pygame.image.load(os.path.join ('Images\Towers', str(self.selectedTower)+' - 0.png')).convert()

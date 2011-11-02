@@ -265,10 +265,10 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, l
     layer2.fill(pink)
     
     # Draw route
-    drawRoute(map, layer1)
-    
+    #drawRoute(map, layer1)
     # Draw Tower Spots
-    drawTowerEmplacements(map, layer1)
+    #drawTowerEmplacements(map, layer1)
+    drawMap(map, layer1)
 
     # Draw On Mouse Over ~ 0
     # IF ON MOUSE OVER ON TURRET...
@@ -297,11 +297,12 @@ def drawOnMouseOver(map, towerBar, layer):
         for column in range(mapWidth):
             if (map.T[row][column] == 0) and (map.O[row][column] > 0):
                 if TowerTypes[towerBar.selectedTower-1][TowerRANGE] == 0:
-                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH]*tileSize, 0)
+                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]*tileSize, 0)
                 else:
-                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerRANGE]*tileSize, 0)
-                pygame.draw.circle(layer, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH]) * tileSize, tileSize/16)
-                layer.blit(pygame.image.load(os.path.join( 'Images\Towers', str(towerBar.selectedTower)+' - 0.png')).convert(), (tileSize*column,tileSize*row), None, 1)
+                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
+                    TowerTypes[towerBar.selectedTower-1][TowerRANGE][0]*tileSize, 0)
+                pygame.draw.circle(layer, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]) * tileSize, tileSize/16)
+                layer.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 1)
 
 def drawRoute(map, layer):
     for row in range(mapHeight):

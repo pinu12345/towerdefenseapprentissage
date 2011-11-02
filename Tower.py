@@ -8,20 +8,35 @@ class Tower(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.type = type
+        self.state = 0
         self.name = TowerTypes[self.type][TowerNAME]
-        self.value = TowerTypes[self.type][TowerVALUE]
-        self.damage = TowerTypes[self.type][TowerDAMAGE]
-        self.delay = TowerTypes[self.type][TowerDELAY]
-        self.range = TowerTypes[self.type][TowerRANGE] * tileSize
-        self.splash = TowerTypes[self.type][TowerSPLASH] *tileSize
+        self.upgrades = len(TowerTypes[self.type][TowerVALUE]) - 1
         self.cooldown = 0.0
-        
-        self.image = Images.TowerImages[type]
+        self.setParams()
         self.rect = self.image.get_rect()
         self.x = column * tileSize
         self.y = row * tileSize
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def draw(self, layer):
+        pass
+
+    def update(self, layer):
+        pass
+
+    def upgrade(self):
+        if self.state < self.upgrades:
+            self.state += 1
+            self.setParams()
+
+    def setParams(self):
+        self.value = TowerTypes[self.type][TowerVALUE][self.state]
+        self.damage = TowerTypes[self.type][TowerDAMAGE][self.state]
+        self.delay = TowerTypes[self.type][TowerDELAY][self.state]
+        self.range = TowerTypes[self.type][TowerRANGE][self.state] * tileSize
+        self.splash = TowerTypes[self.type][TowerSPLASH][self.state] *tileSize
+        self.image = Images.TowerImages[self.type][self.state]
 
     def target(self, enemies, shots):
         # est-ce que le cooldown est ecoule?
@@ -107,4 +122,3 @@ class Tower(pygame.sprite.Sprite):
                         target_enemy.takeDamage(self.damage)
                         shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         self.cooldown += self.delay
-        

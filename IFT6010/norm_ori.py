@@ -3,8 +3,7 @@ import re
 import operator
 from editDistance import *
 
-txList = open('train.texto')
-frList = open('train.fr')
+texto = open('train.texto')
 norm = open('train.norm', 'w')
 dictionary = {}
 

@@ -14,6 +14,99 @@ def affiche_normList(normList):
     print
 
 
+def addNorms(txSentence, frSentence):
+    ### prend un texto et sa traduction manuelle
+    ### renvoie une liste des mots et de leur traduction
+    
+    tx, fr = 0, 1
+    
+    sentence = [None]*2
+    sentence[tx] = txSentence.lower()
+    sentence[fr] = frSentence.lower()
+    
+    words = [None]*2
+    words[tx] = wordSplit(sentence[tx])
+    words[fr] = wordSplit(sentence[fr])
+    
+    align = alignPairs(sentence[tx], sentence[fr])
+    wordPairs = []
+    if align == 0:
+        for i in range(len(words[tx])):
+            wordPairs.append([words[tx][i], words[fr][i]])
+        return wordPairs
+    
+    ## Pour chaque numero d'alignement
+    ##   On verifie a quels mots il correspond
+    ##   S'il correspond a un mot tx
+    ##     S'il correspond a un nouveau mot fr
+    ##       Alors on l'ajoute le mot fr a la traduction du mot tx
+    
+    lastWordNum = [None]*2
+    wordNum = [None]*2
+    word = [None]*2
+    charNum = [None]*2
+    char = [None]*2
+    match = [None]*2
+    matches = [None]*2
+    
+    for s in [tx, fr]:
+        wordNum[s] = 0
+        lastWordNum[s] = -1
+        word[s] = words[s][wordNum[s]]
+        charNum[s] = 0
+        char[s] = word[s][charNum[s]]
+        match[s] = None
+        matches[s] = []
+    
+    wordPairsNum = []
+    for i in range(len(words[tx])):
+        wordPairsNum.append([])
+    
+    for n in range(len(align[tx])):
+        ## Cet alignement correspond-il a des mots?
+        for s in [tx, fr]:
+            if charNum[s] == len(word[s]):
+                wordNum[s] += 1
+                if wordNum[s] < len(words[s]):
+                    word[s] = words[s][wordNum[s]]
+                charNum[s] = 0
+            char[s] = word[s][charNum[s]]
+            if align[s][n] == char[s]:
+                match[s] = 1
+                charNum[s] += 1
+            else:
+                match[s] = 0
+            matches[s].append(match[s])
+        ## Si l'alignement coorespond a un mot de tx
+        if match[tx]:
+            ## Si l'alignement correspond a un nouveau mot fr
+            if match[fr] and wordNum[fr] not in wordPairsNum[wordNum[tx]]:
+                ## Alors on l'ajoute le mot fr a la traduction du mot tx
+                wordPairsNum[wordNum[tx]].append(wordNum[fr])
+    
+    for i in range(len(words[tx])):
+        wordList = []
+        for wordNumTemp in wordPairsNum[i]:
+            wordList.append(words[fr][wordNumTemp])
+        wordPairs.append([words[tx][i], wordList])
+    
+    for pair in wordPairs:
+        if len(pair[fr]) >= 1:
+            combinedWords = ''
+            for word in pair[fr]:
+                combinedWords += word + ' '
+            pair[fr] = combinedWords.rstrip()
+        else:
+            pair[fr] = ""
+    
+    for i in range(len(wordPairs)-2, -1, -1):
+        if wordPairs[i][fr] == wordPairs[i+1][fr]:
+            wordPairs[i][tx] += ' ' + wordPairs[i+1][tx]
+            wordPairs[i+1:i+2] = []
+    
+    return wordPairs
+
+
 def addDictionaryWordsFromSentencePair(tx, fr):
     ### prend un texto et sa traduction manuelle
     ### renvoie une liste des mots et de leur traduction
@@ -77,6 +170,9 @@ def addDictionaryWordsFromSentencePair(tx, fr):
             alignList.append(align_to_fr[align_match][0])
         else:
             alignList.append(-1)
+    
+    for i in range(len(txWords)):
+        print "", txWords[i], alignList[i]
     
     if 0:
         #for n in [0, -1]:
@@ -202,6 +298,52 @@ def wordSplit(sentence):
     ### prend une phrase et retourne une liste de ses mots
     return re.findall(r"[a-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+|[^\sa-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+", sentence)
 
+def alignPairs(x, y):
+    ### prend un texto et sa traduction
+    ### retourne les numeros d'alignement de chacun
+    i, j = len(x), len(y)
+    T = editDistance(x, y, table=1)
+    
+    if T == 0:
+        return 0
+    
+    stepList = editSteps(x, y, T)
+    
+    #for step in stepList:
+    #    print step
+    
+    numx, numy = [], []
+    i, j = 0, 0
+    for n in range(len(stepList)):
+        if stepList[n][0] != 'I':
+            numx.append([x[i], n])
+            i += 1
+        if stepList[n][0] != 'D':
+            numy.append([n, y[j]])
+            j += 1
+    
+    xlist = []
+    ylist = []
+    i, j = 0, 0
+    for step in stepList:
+        if step[0] != 'I':
+            if i < len(x):
+                xlist.append(x[i])
+                i += 1
+        else:
+            xlist.append(' ')
+        if step[0] != 'D':
+            if j < len(y):
+                ylist.append(y[j])
+                j += 1
+        else:
+            ylist.append(' ')
+
+    #print '', ''.join(xlist),
+    #print '', ''.join(ylist),
+    
+    return [xlist, ylist]
+    
 def alignNumber(x, y):
     ### prend un texto et sa traduction
     ### retourne les numeros d'alignement de chacun

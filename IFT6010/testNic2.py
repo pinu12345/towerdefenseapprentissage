@@ -6,24 +6,21 @@ from random import *
 txList = open('train.texto').readlines()
 frList = open('train.fr').readlines()
 
-num = randint(0, len(txList))
 num = 615
+num = randint(0, len(txList))
 
 print "\n\n"
 print "--- Texto", num, "---"
 print
-
-tx = txList[num][35:-10].rstrip()
-fr = frList[num][40:-10].rstrip()
-
+tx = txList[num].rstrip()
+fr = frList[num].rstrip()
 #tx = "ZZZA B D E F"
-#fr = "A B C F"
-
+#fr = "ARB C F"
 print " tx: ", tx
 print " fr: ", fr
 print
 
-affiche_normList(addDictionaryWordsFromSentencePair(tx, fr))
+affiche_normList(addNorms(tx, fr))
 
     
 if 0:

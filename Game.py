@@ -24,13 +24,14 @@ def main():
     # Set the height and width of the screen
     size = [mapWidth*(tileSize+1) + rightMenuSize, mapHeight*(tileSize+1) + bottomMenuSize]
     screen = pygame.display.set_mode(size)
-    layer1 = pygame.Surface(size)
-    layer2 = pygame.Surface(size)
-    layer3 = pygame.Surface(size)
-    layer1.set_colorkey(pink)
-    layer2.set_colorkey(pink)
-    layer3.set_colorkey(pink)
-    layer2.set_alpha(150)
+    screen.set_colorkey(pink)
+    screen.fill(background)
+    layer = pygame.Surface(size)
+    layer.set_colorkey(pink)
+    layer.set_alpha(150)
+    Game.drawMouseOver = 0
+    Game.repaintMap = 0
+    Game.placedTower = 0
 
     # Initialize the MainMenu
     mainMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
@@ -152,6 +153,7 @@ def main():
 
                 # User moves over the mouse 
                 elif event.type == pygame.MOUSEMOTION:
+                    Game.drawMouseOver = 0
                     if towerBar.selectedTower != -1:
                         pos = pygame.mouse.get_pos()                
                         column = pos[0] // tileSize
@@ -163,6 +165,7 @@ def main():
                                 map.currentOY = row
                                 map.currentOX = column
                                 map.O[row][column] = towerBar.selectedTower
+                                Game.drawMouseOver = 1
 
                 # User clicks the mouse. Get the position
                 elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -178,11 +181,11 @@ def main():
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
-                                    print('Placing')
                                     towers.placeTower(map, towerBar.selectedTower, row, column)
+                                    Game.placedTower = 1
                                 else:
-                                    print('Upgrading')
                                     towers.updateTower(map, towerBar.selectedTower, row, column)
+                                    Game.placedTower = 1
 
                     # Inside Menu
                     elif column >= mapWidth:
@@ -220,121 +223,138 @@ def main():
             
             if Game.state == STATE_LOADGAME:
                 screen.fill(background)
-                layer1.fill(pink)
-                layer3.fill(pink)
-                pygame.draw.rect(layer3, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
+                pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
+                pygame.draw.rect(screen, background, ([0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize]))
+                
                 # Draw the map
-                drawMap(map, layer1)
+                drawMap(map, screen)
                 # Draw the game information menu
-                menu.draw(layer3)
+                menu.draw(screen)
                 # Draw the tower bar ~ 0
-                towerBar.draw(layer3)
+                towerBar.draw(screen)
+                
                 Game.state = STATE_PREPARATION
-                screen.blit(layer3, (0,0))
                 pygame.display.flip()
+                
             elif Game.state == STATE_PREPARATION:
+
                 drawTick += 1
-                #print(clock.get_fps())
-                if drawTick >= clock.get_fps()/10:
+                if drawTick >= clock.get_fps()/24:
+                    #print(clock.get_fps())
                     drawTick = 0
-                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
+                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
 
             elif Game.state == STATE_GAME:
-                ## Game
                 # Spawn any new enemy in the wave queue
                 wave.spawn()
                 # Move the enemies
                 wave.move()
                 # Tower target
                 towers.target(shots)
+
                 ## Display
-                
                 drawTick += 1
                 #print(clock.get_fps())
-                if drawTick >= clock.get_fps()/10:
+                if drawTick >= clock.get_fps()/24:
+                    print(clock.get_fps())
                     drawTick = 0
-                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3)
+                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
 
-            
-        
-        # Limit to 24 frames per second
+        #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
-        clock.tick()
+        clock.tick(500)
 
-    pygame.quit ()
+    pygame.quit()
 
-def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer1, layer2, layer3):
+def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
 
     # Empty layer 2 (MOUSE OVER WENT OUTSIDE A TURRET SPOT...)
-    layer2.fill(pink)
-    
-    # Draw route
-    #drawRoute(map, layer1)
-    # Draw Tower Spots
-    #drawTowerEmplacements(map, layer1)
-    drawMap(map, layer1)
+    layer.fill(pink)
 
+    #Draw the route
+    drawRoute(map, screen)
+    
     # Draw On Mouse Over ~ 0
-    # IF ON MOUSE OVER ON TURRET...
-    drawOnMouseOver(map, towerBar, layer2)
+    if Game.drawMouseOver:
+        if towerBar.redraw:
+            drawMap(map, screen)
+        else:
+            drawTowerEmplacements(map, screen)
+        drawOnMouseOver(map, towerBar, layer)
+        Game.repaintMap = 1
+    else:
+        if Game.repaintMap:
+            drawMap(map, screen)
+            Game.repaintMap = 0
+
+    if Game.placedTower and Game.repaintMap:
+        drawMap(map, screen)
+        Game.repaintMap = 0
+        Game.placedTower = 0
     
     # Draw the towers
     # IF NEW TOWER...
-    towers.draw(layer1)
+    towers.draw(screen)
 
     # Draw the wave
-    wave.draw(layer1)
+    wave.draw(screen)
     
     # Towers Target
-    shots.draw(layer1)
-
-    towerBar.draw(layer3)
+    #shots.draw(screen)
     
-    # Draw the layers ~ 200 fps
-    screen.blit(layer1, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
-    screen.blit(layer2, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
-    screen.blit(layer3, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize + bottomMenuSize))
+    # Update the game portion of the screen
+    screen.blit(layer, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
+    pygame.display.update(0, 0, mapWidth*tileSize, mapHeight*tileSize)
+    
+    # Update the right menu portion of the screen
+    if 0:
+        pygame.display.update(mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize)
+        
+    # Update the towerbar portion of the screen
+    if towerBar.redraw:
+        towerBar.draw(screen)
+        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize)
 
-    # Update the screen
-    pygame.display.update(0, 0, mapWidth*tileSize, mapHeight*tileSize + bottomMenuSize)
-
-def drawOnMouseOver(map, towerBar, layer):
+def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
     for row in range(mapHeight):
         for column in range(mapWidth):
             if (map.T[row][column] == 0) and (map.O[row][column] > 0):
                 if TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] == 0:
-                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]*tileSize, 0)
+                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]*tileSize, 0)
                 else:
-                    pygame.draw.circle(layer, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
+                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
                     TowerTypes[towerBar.selectedTower-1][TowerRANGE][0]*tileSize, 0)
-                pygame.draw.circle(layer, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]) * tileSize, tileSize/16)
-                layer.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 1)
+                pygame.draw.circle(screen, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]) * tileSize, tileSize/16)
+                screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 1)
 
-def drawRoute(map, layer):
+def drawRoute(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if map.M[row][column] == car_path:
-                #map.drawAt(layer, route, row, column)
+                #map.drawAt(screen, route, row, column)
                 # Draw tiles with Grid
                 if map.showGrid == 1:
-                    pygame.draw.rect(layer, route, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                    pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
                 # Draw tiles without grid
                 else:
-                    pygame.draw.rect(layer, route, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize, tileSize])
 
-def drawTowerEmplacements(map, layer):
+def drawTowerEmplacements(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if map.M[row][column] == car_turret:
-                # Draw tiles with Grid
                 if map.showGrid == 1:
-                    pygame.draw.rect(layer, tower, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                # Draw tiles without grid
+                    pygame.draw.rect(screen, tower, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
                 else:
-                    pygame.draw.rect(layer, tower, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    pygame.draw.rect(screen, tower, [tileSize*column, tileSize*row, tileSize, tileSize])
+            if map.M[row][column] == car_base:
+                if map.showGrid == 1:
+                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                else:
+                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize, tileSize])
 
-def drawMap(map, layer):
+def drawMap(map, screen):
     # Draw the map
     for row in range(mapHeight):
         for column in range(mapWidth):
@@ -350,11 +370,11 @@ def drawMap(map, layer):
 
             # Draw tiles with Grid
             if map.showGrid == 1:
-                pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                pygame.draw.rect(screen, color, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
 
             # Draw tiles without grid
             else:
-                pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])
+                pygame.draw.rect(screen, color, [tileSize*column, tileSize*row, tileSize, tileSize])
 
 if __name__ == "__main__":
     main()

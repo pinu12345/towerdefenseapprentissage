@@ -55,22 +55,22 @@ class Enemy(pygame.sprite.Sprite):
             mapX = pixelToMap(nextX)
 
             if self.direction == cardN:
-                if (mapY > mapHeight - 1) or ((mapY > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
+                if (mapY > mapHeight - 1) or ((mapY > 0) and ((self.wave.map.M[mapY][mapX] == car_path) or (self.wave.map.M[mapY][mapX] == car_base))):
                     self.y -= 1
                 else:
                     self.changeDirection()
             elif self.direction == cardS:
-                if (mapY < 0) or ((mapY < mapHeight - 1) and (self.wave.map.M[mapY][mapX] == car_path)):
+                if (mapY < 0) or ((mapY < mapHeight - 1) and ((self.wave.map.M[mapY][mapX] == car_path) or (self.wave.map.M[mapY][mapX] == car_base))):
                     self.y += 1
                 else:
                     self.changeDirection()
             elif self.direction == cardW:
-                if (mapX > mapWidth - 1) or ((mapX > 0) and (self.wave.map.M[mapY][mapX] == car_path)):
+                if (mapX > mapWidth - 1) or ((mapX > 0) and ((self.wave.map.M[mapY][mapX] == car_path) or (self.wave.map.M[mapY][mapX] == car_base))):
                     self.x -= 1
                 else:
                     self.changeDirection()
             elif self.direction == cardE:
-                if (mapX < 0) or ((mapX < mapWidth - 1) and (self.wave.map.M[mapY][mapX] == car_path)):
+                if (mapX < 0) or ((mapX < mapWidth - 1) and ((self.wave.map.M[mapY][mapX] == car_path) or (self.wave.map.M[mapY][mapX] == car_base))):
                     self.x += 1
                 else:
                     self.changeDirection()
@@ -79,11 +79,11 @@ class Enemy(pygame.sprite.Sprite):
         if (self.direction == cardN) or (self.direction == cardS):
             mapX = pixelToMap(self.x)
             mapY = pixelToMap(self.y)
-            if (mapX > 0) and (self.wave.map.M[mapY][mapX-1] == car_path):
+            if (mapX > 0) and ((self.wave.map.M[mapY][mapX-1] == car_path) or (self.wave.map.M[mapY][mapX-1] == car_base)):
                 self.direction = cardW
                 self.x -= 1
                 return
-            elif (mapX < mapWidth - 2) and (self.wave.map.M[mapY][mapX+1] == car_path):
+            elif (mapX < mapWidth - 2) and ((self.wave.map.M[mapY][mapX+1] == car_path) or (self.wave.map.M[mapY][mapX+1] == car_base)):
                 self.direction = cardE
                 self.x += 1
                 return
@@ -92,11 +92,11 @@ class Enemy(pygame.sprite.Sprite):
             mapY = pixelToMap(self.y)
             mapX = pixelToMap(self.x)
             mapY = pixelToMap(self.y)
-            if (mapY > 0) and (self.wave.map.M[mapY-1][mapX] == car_path):
+            if (mapY > 0) and ((self.wave.map.M[mapY-1][mapX] == car_path) or (self.wave.map.M[mapY-1][mapX] == car_base)):
                 self.direction = cardN
                 self.y -= 1
                 return
-            elif (mapY < mapHeight - 2) and (self.wave.map.M[mapY+1][mapX] == car_path):
+            elif (mapY < mapHeight - 2) and ((self.wave.map.M[mapY+1][mapX] == car_path) or (self.wave.map.M[mapY+1][mapX] == car_base)):
                 self.direction = cardS
                 self.y += 1
                 return

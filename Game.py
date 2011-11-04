@@ -36,8 +36,10 @@ def main():
     mainMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
                [('Start Random Map', 1, None),
                 ('Start Test Map', 2, None),
-                ('Options', 3, None),
-                ('Exit', 4, None)])
+                ('Start Map 1', 3, None),
+                ('Start Map 2', 4, None),
+                ('Start Map 3', 5, None),
+                ('Exit', 6, None)])
     gameMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
                 ('Back to main menu', 2, None)])
@@ -104,7 +106,14 @@ def main():
                     map.loadFileMap('testmap')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 3:
-                    pygame.examples.aliens.main()
+                    map.loadFileMap('map1')
+                    Game.state = STATE_LOADGAME
+                elif mainMenustate == 4:
+                    map.loadFileMap('map2')
+                    Game.state = STATE_LOADGAME
+                elif mainMenustate == 5:
+                    map.loadFileMap('map3')
+                    Game.state = STATE_LOADGAME
                 else:
                     pygame.quit()
                     sys.exit()
@@ -302,7 +311,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     wave.draw(screen)
     
     # Towers Target
-    #shots.draw(screen)
+    shots.draw(screen)
     
     # Update the game portion of the screen
     screen.blit(layer, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
@@ -334,13 +343,15 @@ def drawRoute(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if map.M[row][column] == car_path:
-                #map.drawAt(screen, route, row, column)
-                # Draw tiles with Grid
                 if map.showGrid == 1:
                     pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                # Draw tiles without grid
                 else:
                     pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize, tileSize])
+            elif map.M[row][column] == car_base:
+                if map.showGrid == 1:
+                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
+                else:
+                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize, tileSize])
 
 def drawTowerEmplacements(map, screen):
     for row in range(mapHeight):

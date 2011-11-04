@@ -15,6 +15,7 @@ tower         = ( 130, 140, 160)
 base          = ( 200,  80,  20)
 rangeCircle   = (  20, 100,  20, 10)
 pink          = ( 255,   0, 255)
+spritepink    = ( 255, 127, 255)
 
 # dimensions de carte
 mapWidth = 24
@@ -64,6 +65,7 @@ TowerRANGE = 4
 TowerSPLASH = 5
 
 ## Nom              Value   Damage  Delay   Range   Splash
+towerOffsets = ((0,32), (0,64),(0,96),(0,128),(0,160))
 TowerTypes = \
     [["Mitraille",  [100, 210, 300],
                     [  2,   5,   10],

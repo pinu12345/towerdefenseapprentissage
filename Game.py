@@ -24,7 +24,6 @@ def main():
     # Set the height and width of the screen
     size = [mapWidth*(tileSize+1) + rightMenuSize, mapHeight*(tileSize+1) + bottomMenuSize]
     screen = pygame.display.set_mode(size)
-    screen.set_colorkey(pink)
     screen.fill(background)
     layer = pygame.Surface(size)
     layer.set_colorkey(pink)

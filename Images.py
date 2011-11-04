@@ -10,17 +10,23 @@ def init():
     Images.EnemyImages = []
     for i in range(len(enemyOffsets)):
         tmpImg = pygame.Surface((tileSize, tileSize))
+        tmpImg.set_colorkey(spritepink)
         tmpImg.blit(Images.spriteSheet, (0, 0), (enemyOffsets[i], (tileSize, tileSize)))
         Images.EnemyImages.append(tmpImg)
 
     # Tower Images
-    Images.TowerImages = \
-        [[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(),
-          pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert(),
-          pygame.image.load(os.path.join ('Images\Towers', '1 - 2.png')).convert()],
-        [pygame.image.load(os.path.join ('Images\Towers', '2 - 0.png')).convert()],
-        [pygame.image.load(os.path.join ('Images\Towers', '3 - 0.png')).convert(), pygame.image.load(os.path.join ('Images\Towers', '2 - 1.png')).convert()],
-        [pygame.image.load(os.path.join ('Images\Towers', '4 - 0.png')).convert()],
-        [pygame.image.load(os.path.join ('Images\Towers', '5 - 0.png')).convert()]]
+    Images.TowerImages = []
+    for i in range(len(towerOffsets)):
+        tmpImg = pygame.Surface((tileSize, tileSize))
+        tmpImg.set_colorkey(spritepink)
+        tmpImg.blit(Images.spriteSheet, (0, 0), (towerOffsets[i], (tileSize, tileSize)))
+        Images.TowerImages.append([tmpImg])
+        #[[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(),
+        #  pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert(),
+        #  pygame.image.load(os.path.join ('Images\Towers', '1 - 2.png')).convert()],
+        #[pygame.image.load(os.path.join ('Images\Towers', '2 - 0.png')).convert()],
+        #[pygame.image.load(os.path.join ('Images\Towers', '3 - 0.png')).convert(), pygame.image.load(os.path.join ('Images\Towers', '2 - 1.png')).convert()],
+        #[pygame.image.load(os.path.join ('Images\Towers', '4 - 0.png')).convert()],
+        #[pygame.image.load(os.path.join ('Images\Towers', '5 - 0.png')).convert()]]
 
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg')).convert()

@@ -2,9 +2,10 @@
 
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
-    TIMER QUI TUE LES SAUTS DE JEU
-    FPS
     FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
+    #EVENT POUR ENTERED MOUSE OVER -> Dessine une fois le cercle vert sur layer
+    #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP
+    #REDRAW LES TOUR ON DELETED (OU L'EMPLACEMENT DE LA TOUR UNIQUEMENT)
 
     --Redessiner:
         -Zone autour des tours apres mouseover
@@ -20,12 +21,3 @@
     --CAMPAIGN (Optional)
     Description de mission en début de partie
         -Separer le spawn de wave pour avoir plusieurs spawn points?!?
-    
-DONE:
-    CHANGER LA COULEUR DE TRANSPARENCE (ROSE) + ENLEVER LES ALPHA DES PNG
-    CLASSE QUI REGROUPE TOUTES LES IMAGES -| CONVERT()
-    LOADER LES IMAGES JUSTE UNE FOIS
-    BARRE DE VIE RENTRE DANS LA CASE 32x32 qui definie le sprite
-    UPGRADE DE TOURS [2 upgrades]
-    REMPLACER TOUR QUAND ON L'ECRASE AVEC UNE AUTRE (Phase preparation seulement)
-    ECRASER UNE TOUR AVEC LA MEME = UPGRADE (Phase preparation + jeu)

@@ -1,6 +1,7 @@
 import pygame, os, RandomMap
 from Game import *
 from Util import *
+from Global import *
 import RandomMap
 
 class Map:
@@ -12,6 +13,7 @@ class Map:
         self.showGrid = 0
 
         # Create a 2 dimensional array. A two dimesional array is simply a list of lists.
+        self.S = []
         self.M = []
         self.O = []
         self.T = []
@@ -32,6 +34,7 @@ class Map:
     
     def reset(self):
         # Create a 2 dimensional array. A two dimesional array is simply a list of lists.
+        self.S = []
         self.M = []
         self.O = []
         self.T = []
@@ -60,6 +63,22 @@ class Map:
     def loadMap(self, textMap):
         self.reset()
         self.M = textMap
+        self.S = []
+        for row in range(self.mapHeight):
+            self.S.append([])
+            for column in range(self.mapWidth):
+                type = orientTile(column, row)
+                if type == ROUTEH:
+                elif type == ROUTEV:
+                elif type == ROUTENW:
+                elif type == ROUTENE:
+                elif type == ROUTESE:
+                elif type == ROUTESW:
+                elif type == BASEN:
+                elif type == BASES:
+                elif type == BASEE:
+                elif type == BASEW:
+
         entrance = findEntrance(self.M)
         self.entranceY = entrance[0][0]
         self.entranceX = entrance[0][1]
@@ -113,6 +132,3 @@ class Map:
                     return BASEN
             else:
                 return BASES
-                
-        
-        

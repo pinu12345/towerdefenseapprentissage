@@ -17,10 +17,12 @@ def init():
     # Tower Images
     Images.TowerImages = []
     for i in range(len(towerOffsets)):
-        tmpImg = pygame.Surface((tileSize, tileSize))
-        tmpImg.set_colorkey(spritepink)
-        tmpImg.blit(Images.spriteSheet, (0, 0), (towerOffsets[i], (tileSize, tileSize)))
-        Images.TowerImages.append([tmpImg])
+        Images.TowerImages.append([])
+        for j in range(len(towerOffsets[i])):
+            tmpImg = pygame.Surface((tileSize, tileSize))
+            tmpImg.set_colorkey(spritepink)
+            tmpImg.blit(Images.spriteSheet, (0, 0), (towerOffsets[i][j], (tileSize, tileSize)))
+            Images.TowerImages[i].append(tmpImg)
         #[[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(),
         #  pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert(),
         #  pygame.image.load(os.path.join ('Images\Towers', '1 - 2.png')).convert()],

@@ -65,7 +65,11 @@ TowerRANGE = 4
 TowerSPLASH = 5
 
 ## Nom              Value   Damage  Delay   Range   Splash
-towerOffsets = ((0,32), (0,64),(0,96),(0,128),(0,160))
+towerOffsets = [[(0,32), (32,32), (64, 32)],
+                [(0,64)],
+                [(0,96)],
+                [(0,128)],
+                [(0,160)]]
 TowerTypes = \
     [["Mitraille",  [100, 210, 300],
                     [  2,   5,   10],

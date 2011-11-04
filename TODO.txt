@@ -6,6 +6,7 @@
     #EVENT POUR ENTERED MOUSE OVER -> Dessine une fois le cercle vert sur layer
     #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP
     #REDRAW LES TOUR ON DELETED (OU L'EMPLACEMENT DE LA TOUR UNIQUEMENT)
+    #REDRAW LES TOURS ON UPGRADE ET ON CHANGED
 
     --Redessiner:
         -Zone autour des tours apres mouseover

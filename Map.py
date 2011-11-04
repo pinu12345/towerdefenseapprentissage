@@ -103,7 +103,11 @@ class Map:
             pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])
             
     def orientTile(self, x, y):
-        if x in [0, mapWidth-1]:
+        if self.M[y, x] == car_turret:
+            return EMPLACEMENT
+        elif self.M[y, x] == car_empty:
+            return WASTELAND
+        elif x in [0, mapWidth-1]:
             return ROUTEH
         elif y in [0, mapHeight-1]:
             return ROUTEV

@@ -40,7 +40,7 @@ class Menu():
             self.towers.clear()
             map.loadRandomMap()
             self.wave.newRandomSpawn()
-            Game.state = STATE_PREPARATION
+            Game.state = STATE_LOADGAME
         elif self.btnBack.rect.collidepoint(pos):
             Game.state = STATE_INITGAMEMENU
         elif self.btnDino1.rect.collidepoint(pos):

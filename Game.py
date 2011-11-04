@@ -255,7 +255,7 @@ def main():
                 drawTick += 1
                 #print(clock.get_fps())
                 if drawTick >= clock.get_fps()/24:
-                    print(clock.get_fps())
+                    #print(clock.get_fps())
                     drawTick = 0
                     drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
 
@@ -286,9 +286,12 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
             drawMap(map, screen)
             Game.repaintMap = 0
 
-    if Game.placedTower and Game.repaintMap:
-        drawMap(map, screen)
-        Game.repaintMap = 0
+    if Game.placedTower:
+        if Game.repaintMap:
+            drawMap(map, screen)
+            Game.repaintMap = 0
+        else:
+            drawTowerEmplacements(map, screen)
         Game.placedTower = 0
     
     # Draw the towers

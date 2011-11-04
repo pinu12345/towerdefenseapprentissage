@@ -26,10 +26,8 @@ class Tower(pygame.sprite.Sprite):
         pass
 
     def upgrade(self):
-        print('upgrading tower')
-        print(self.state)
-        print(self.upgrades)
         if self.state < self.upgrades:
+            Game.placedTower = 1
             self.state += 1
             self.setParams()
 

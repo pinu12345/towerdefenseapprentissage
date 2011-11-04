@@ -1,3 +1,9 @@
+# Tower States
+NORMAL = 0
+SHOOTNORMAL = 1
+DIAGONAL = 2
+SHOOTDIAGONAL = 3
+
 # etats
 STATE_INITMENU = 0
 STATE_MENU = 1
@@ -65,11 +71,6 @@ TowerRANGE = 4
 TowerSPLASH = 5
 
 ## Nom              Value   Damage  Delay   Range   Splash
-towerOffsets = [[(0,32), (32,32), (64, 32)],
-                [(0,64)],
-                [(0,96)],
-                [(0,128)],
-                [(0,160)]]
 TowerTypes = \
     [["Mitraille",  [100, 210, 300],
                     [  2,   5,   10],
@@ -91,12 +92,18 @@ TowerTypes = \
                     [100],
                     [12],
                     [3]],
-    ["Hax",         [1],
-                    [1000],
-                    [1],
-                    [4],
-                    [1]]]
-    
+    ["Hax",         [1, 1, 1, 1],
+                    [1000, 1500, 2000, 3000],
+                    [1, 1, 1, 1],
+                    [4, 4, 3, 3],
+                    [1, 1, 1, 1]]]
+
+towerOffsets = [[(0, 32), (32, 32), (64, 32), (96, 32)],
+                [(0, 64), (32, 64), (64, 64), (96, 64)],
+                [(0, 96), (32, 96), (64, 96), (96, 96)],
+                [(0,128), (32,128), (64,128), (96,128)],
+                [(0,160), (32,160), (64,160), (96,160)]]
+
 ##     Shot Color         Dur  Width  Zone Color         Dur
 TowerShotGraphs = \
     [[ ( 255, 255, 180 ), 4,   2,     ( 0,   0,   0   ), 0  ],

@@ -19,6 +19,7 @@ class Enemy(pygame.sprite.Sprite):
         self.wave = wave
         self.direction = direction
         self.moveThreshold = 0.0
+        self.drawDirection = cardE
 
         # Set the enemy parameters
         self.name = EnemyTypes[self.type][EnemyNAME]
@@ -120,17 +121,43 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
     
     def draw(self, screen):
+        if self.drawDirection != self.direction:
+            if self.drawDirection == cardN:
+                if self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,90)
+                elif self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,270)
+            elif self.drawDirection == cardS:
+                if self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,270)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,90)
+            elif self.drawDirection == cardE:
+                if self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,270)
+                elif self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,90)
+            elif self.drawDirection == cardW:
+                if self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,90)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,270)
+            self.drawDirection = self.direction
         self.rect.x = self.x
-        #self.layer1Rect = self.previousRect
-        #self.layer3Rect = (self.x, self.y, tileSize, tileSize)
         self.rect.y = self.y
         health_bar_x = self.x + 1
         health_bar_y = self.y + tileSize - 4
         screen.blit(self.image, self.rect)
         screen.fill(red,(health_bar_x, health_bar_y, 30, 4))
         screen.fill(green,(health_bar_x, health_bar_y, (30*self.HP/self.maxHP), 4))
-        #self.previousRect = (self.x, self.y, tileSize, tileSize)
-        #return self.layer1Rect, self.layer3Rect
     
     def update(self, screen):
         pass

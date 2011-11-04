@@ -32,5 +32,6 @@ class Towers():
         self.towers.draw(screen)
     
     def clear(self):
+        Game.placedTower = 1
         self.map.clearTowers()
         self.towers.empty()

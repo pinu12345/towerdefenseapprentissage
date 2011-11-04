@@ -72,6 +72,10 @@ ROUTENW = 2
 ROUTENE = 3
 ROUTESE = 4
 ROUTESW = 5
+BASEN = 6
+BASES = 7
+BASEE = 8
+BASEW = 9
 
 mapOffsets = [[(128,0),(128,32),(128,64),(128,96),(128,128)],
               [(160,0),(160,32),(160,64)],

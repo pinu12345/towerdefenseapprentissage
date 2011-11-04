@@ -73,7 +73,7 @@ class Tower(pygame.sprite.Sprite):
                             enemy.x, enemy.y) <= self.range:
                             enemy_in_range = 1
                             break
-                    # si oui, on trouve quel ennemi attaquer pour maximiser les dommages
+                    # si oui, on trouve quel ennemi attaquer pour maximiser les dégâts
                     if enemy_in_range:
                         hittable_enemies = []
                         splashable_enemies = []

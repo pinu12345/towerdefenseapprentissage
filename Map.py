@@ -82,3 +82,13 @@ class Map:
         # Draw tiles without grid
         else:
             pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])
+            
+    def orientTile(self, x, y):
+        path = [car_path, car_base]
+        if x in [0, mapWidth-1]:
+            return ROUTEH
+        if y in [0, mapHeight-1]:
+            return ROUTEV
+        
+        
+        

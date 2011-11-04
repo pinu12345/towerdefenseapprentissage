@@ -1,19 +1,19 @@
 import pygame, os, Images
+from Global import *
 
 def init():
-    # Enemy Images
-    Images.EnemyImages = \
-        [pygame.image.load(os.path.join ('Images\Enemies', '0.png')).convert(),
-        #[pygame.image.load(os.path.join ('Images\Enemies', '0.png')),
-        #pygame.image.load(os.path.join ('Images\Enemies', '1.png')),
-        #pygame.image.load(os.path.join ('Images\Enemies', '2.png')),
-        #pygame.image.load(os.path.join ('Images\Enemies', '3.png')),
-        #pygame.image.load(os.path.join ('Images\Enemies', '4.png'))]
-        pygame.image.load(os.path.join ('Images\Enemies', '1.png')).convert(),
-        pygame.image.load(os.path.join ('Images\Enemies', '2.png')).convert(),
-        pygame.image.load(os.path.join ('Images\Enemies', '3.png')).convert(),
-        pygame.image.load(os.path.join ('Images\Enemies', '4.png')).convert()]
 
+    # Master SpriteSheet
+    Images.spriteSheet = pygame.image.load(os.path.join ('Images', 'Spritesheet32.png')).convert()
+    
+    # Enemy Images
+    Images.EnemyImages = []
+    for i in range(len(enemyOffsets)):
+        tmpImg = pygame.Surface((tileSize, tileSize))
+        tmpImg.blit(Images.spriteSheet, (0, 0), (enemyOffsets[i], (tileSize, tileSize)))
+        Images.EnemyImages.append(tmpImg)
+
+    # Tower Images
     Images.TowerImages = \
         [[pygame.image.load(os.path.join ('Images\Towers', '1 - 0.png')).convert(),
           pygame.image.load(os.path.join ('Images\Towers', '1 - 1.png')).convert(),

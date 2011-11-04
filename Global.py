@@ -44,6 +44,9 @@ EnemySPEED = 4
 EnemyDELAY = 5
 
 ## Name             Value   HP      Armor   Speed   Delay
+enemyOffsets = ((0,224), (32,224),(64,224),(96,224),
+                (0,256), (32,256),(64,256),(96,256))
+
 EnemyTypes = \
     [["Ninja",      5,      100,    0,      100,   48],
     ["Pirate",      5,      200,    0,      60,    48],

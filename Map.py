@@ -84,11 +84,35 @@ class Map:
             pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])
             
     def orientTile(self, x, y):
-        path = [car_path, car_base]
         if x in [0, mapWidth-1]:
             return ROUTEH
-        if y in [0, mapHeight-1]:
+        elif y in [0, mapHeight-1]:
             return ROUTEV
-        
+        else:
+            car_pb = [car_path, car_base]
+            if self.M[y, x-1] in car_pb:
+                if self.M[y, x+1] in car_pb:
+                    return ROUTEH
+                elif self.M[y-1, x] in car_pb:
+                    return ROUTENW
+                elif self.M[y+1, x] in car_pb:
+                    return ROUTESW
+                else:
+                    return BASEW
+            elif self.M[y, x+1] in car_pb:
+                if self.M[y-1, x] in car_pb:
+                    return ROUTENE
+                elif self.M[y+1, x] in car_pb:
+                    return ROUTESE
+                else:
+                    return BASEE
+            elif self.M[y-1, x] in car_pb:
+                if self.M[y+1, x] in car_pb:
+                    return ROUTEV
+                else:
+                    return BASEN
+            else:
+                return BASES
+                
         
         

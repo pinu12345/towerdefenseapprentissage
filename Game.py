@@ -343,51 +343,23 @@ def drawRoute(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if map.M[row][column] == car_path:
-                if map.showGrid == 1:
-                    pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                else:
-                    pygame.draw.rect(screen, route, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
             elif map.M[row][column] == car_base:
-                if map.showGrid == 1:
-                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                else:
-                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
 
 def drawTowerEmplacements(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if map.M[row][column] == car_turret:
-                if map.showGrid == 1:
-                    pygame.draw.rect(screen, tower, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                else:
-                    pygame.draw.rect(screen, tower, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
             if map.M[row][column] == car_base:
-                if map.showGrid == 1:
-                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-                else:
-                    pygame.draw.rect(screen, base, [tileSize*column, tileSize*row, tileSize, tileSize])
+                    screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
 
 def drawMap(map, screen):
     # Draw the map
     for row in range(mapHeight):
         for column in range(mapWidth):
-
-            # Identify terrain type
-            color = empty
-            if map.M[row][column] == car_path:
-                color = route
-            if map.M[row][column] == car_turret:
-                color = tower
-            if map.M[row][column] == car_base:
-                color = base
-
-            # Draw tiles with Grid
-            if map.showGrid == 1:
-                pygame.draw.rect(screen, color, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-
-            # Draw tiles without grid
-            else:
-                pygame.draw.rect(screen, color, [tileSize*column, tileSize*row, tileSize, tileSize])
+             screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
 
 if __name__ == "__main__":
     main()

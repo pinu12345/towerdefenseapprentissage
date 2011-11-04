@@ -27,5 +27,11 @@ def init():
     # Map Images
     Images.MapImages = []
     for i in range(len(mapOffsets)):
-    
+        Images.MapImages.append([])
+        for j in range(len(mapOffsets[i])):
+            tmpImg = pygame.Surface((tileSize, tileSize))
+            tmpImg.set_colorkey(spritepink)
+            tmpImg.blit(Images.spriteSheet, (0, 0), (mapOffsets[i][j], (tileSize, tileSize)))
+            Images.MapImages[i].append(tmpImg)
+
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'background.jpg')).convert()

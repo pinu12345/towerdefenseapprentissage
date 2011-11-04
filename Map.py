@@ -10,7 +10,6 @@ class Map:
         # This sets the map global parameters
         self.mapWidth = mapWidth
         self.mapHeight = mapHeight
-        self.showGrid = 0
 
         # Create a 2 dimensional array. A two dimesional array is simply a list of lists.
         self.S = []
@@ -67,17 +66,37 @@ class Map:
         for row in range(self.mapHeight):
             self.S.append([])
             for column in range(self.mapWidth):
-                type = orientTile(column, row)
+                type = self.orientTile(column, row)
                 if type == ROUTEH:
+                #MAPROUTE = 0
+                #MAPROUTTURN = 1
+                #MAPEMPLACEMENT = 2
+                #MAPBASE = 3
+                #MAPWASTELAND = 4
+                    self.S[row].append(Images.MapImages[MAPROUTE][0])
                 elif type == ROUTEV:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTE][0],90))
                 elif type == ROUTENW:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],90))
                 elif type == ROUTENE:
+                    self.S[row].append(Images.MapImages[MAPROUTTURN][0])
                 elif type == ROUTESE:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],270))
                 elif type == ROUTESW:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],180))
                 elif type == BASEN:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPBASE][0],270))
                 elif type == BASES:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPBASE][0],90))
                 elif type == BASEE:
+                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPBASE][0],180))
                 elif type == BASEW:
+                    self.S[row].append(Images.MapImages[MAPBASE][0])
+                elif type == EMPLACEMENT:
+                    self.S[row].append(Images.MapImages[MAPEMPLACEMENT][0])
+                elif type == WASTELAND:
+                    self.S[row].append(Images.MapImages[MAPWASTELAND][0])
+                    
 
         entrance = findEntrance(self.M)
         self.entranceY = entrance[0][0]
@@ -94,18 +113,10 @@ class Map:
         textMap = open(os.path.join('Maps', map_name+'.txt')).readlines()
         self.loadMap(textMap)
 
-    def drawAt(self, layer, color, row, column):
-        # Draw tiles with Grid
-        if self.showGrid == 1:
-            pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize-gridSize, tileSize-gridSize])
-        # Draw tiles without grid
-        else:
-            pygame.draw.rect(layer, color, [tileSize*column, tileSize*row, tileSize, tileSize])
-            
     def orientTile(self, x, y):
-        if self.M[y, x] == car_turret:
+        if self.M[y][x] == car_turret:
             return EMPLACEMENT
-        elif self.M[y, x] == car_empty:
+        elif self.M[y][x] == car_empty:
             return WASTELAND
         elif x in [0, mapWidth-1]:
             return ROUTEH
@@ -113,24 +124,24 @@ class Map:
             return ROUTEV
         else:
             car_pb = [car_path, car_base]
-            if self.M[y, x-1] in car_pb:
-                if self.M[y, x+1] in car_pb:
+            if self.M[y][x-1] in car_pb:
+                if self.M[y][x+1] in car_pb:
                     return ROUTEH
-                elif self.M[y-1, x] in car_pb:
+                elif self.M[y-1][x] in car_pb:
                     return ROUTENW
-                elif self.M[y+1, x] in car_pb:
+                elif self.M[y+1][x] in car_pb:
                     return ROUTESW
                 else:
                     return BASEW
-            elif self.M[y, x+1] in car_pb:
-                if self.M[y-1, x] in car_pb:
+            elif self.M[y][x+1] in car_pb:
+                if self.M[y-1][x] in car_pb:
                     return ROUTENE
-                elif self.M[y+1, x] in car_pb:
+                elif self.M[y+1][x] in car_pb:
                     return ROUTESE
                 else:
                     return BASEE
-            elif self.M[y-1, x] in car_pb:
-                if self.M[y+1, x] in car_pb:
+            elif self.M[y-1][x] in car_pb:
+                if self.M[y+1][x] in car_pb:
                     return ROUTEV
                 else:
                     return BASEN

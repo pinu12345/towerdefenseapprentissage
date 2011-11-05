@@ -2,7 +2,7 @@ import pygame, Map, os, Images
 from Global import *
 
 # Colors
-selected    = (  205,   149,   12)
+selected = (205, 149, 12)
 
 class TowerBar():
     def __init__(self, origX, origY):

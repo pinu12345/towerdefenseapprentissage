@@ -27,7 +27,7 @@ def main():
     screen.fill(background)
     layer = pygame.Surface(size)
     layer.set_colorkey(pink)
-    layer.set_alpha(150)
+    layer.set_alpha(120)
     Game.drawMouseOver = 0
     Game.repaintMap = 0
     Game.placedTower = 0
@@ -340,7 +340,7 @@ def drawOnMouseOver(map, towerBar, screen):
                     pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
                     TowerTypes[towerBar.selectedTower-1][TowerRANGE][0]*tileSize, 0)
                 pygame.draw.circle(screen, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]) * tileSize, tileSize/16)
-                screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 1)
+                screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 0)
 
 def drawRoute(map, screen):
     for row in range(mapHeight):

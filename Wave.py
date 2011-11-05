@@ -16,7 +16,8 @@ class Wave():
     def newSpawn(self, type, count):
         self.spawnType = type
         self.spawnCount = count
-        self.spawnDelay = EnemyTypes[self.spawnType][EnemyDELAY] * 100 / EnemyTypes[self.spawnType][EnemySPEED]
+        self.spawnDelay = EnemyStats[self.spawnType][EnemySPREAD] \
+            / EnemyStats[self.spawnType][EnemySPEED]
         self.spawnTimer = self.spawnDelay
 
     def spawn(self):

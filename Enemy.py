@@ -22,12 +22,13 @@ class Enemy(pygame.sprite.Sprite):
         self.drawDirection = cardE
 
         # Set the enemy parameters
-        self.name = EnemyTypes[self.type][EnemyNAME]
-        self.value = EnemyTypes[self.type][EnemyVALUE]
-        self.maxHP = EnemyTypes[self.type][EnemyHP]
+        self.name = EnemyStats[self.type][EnemyNAME]
+        self.value = EnemyStats[self.type][EnemyVALUE]
+        self.maxHP = 10000
         self.HP = self.maxHP
-        self.armor = EnemyTypes[self.type][EnemyARMOR]
-        self.speed = EnemyTypes[self.type][EnemySPEED]
+        self.speed = EnemyStats[self.type][EnemySPEED]
+        self.spread = EnemyStats[self.type][EnemySPREAD]
+        self.dim = EnemyStats[self.type][EnemySPREAD]
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)

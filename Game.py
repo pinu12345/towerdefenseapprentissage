@@ -221,7 +221,7 @@ def main():
                         towerBar.selectTower(4)
                     elif event.key == pygame.K_5:
                         towerBar.selectTower(5)
-                    elif event.key == pygame.K_5:
+                    elif event.key == pygame.K_6:
                         towerBar.selectTower(6)
                     elif event.key == pygame.K_r:
                         towers.clear()

@@ -7,10 +7,9 @@ class Tower(pygame.sprite.Sprite):
     def __init__(self, row, column, type):
         pygame.sprite.Sprite.__init__(self)
 
-        self.direction = cardE
-        self.drawDirection = cardE
+        self.direction = cardN
+        self.drawDirection = cardN
         self.firing = 0
-        self.justFired = 0
         self.type = type
         self.state = 0
         self.name = TowerTypes[self.type][TowerNAME]
@@ -27,12 +26,7 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
         
-        Images.TowerImages[self.type][0] # E
-        Images.TowerImages[self.type][1] # Etir
-        Images.TowerImages[self.type][2] # NE
-        Images.TowerImages[self.type][3] # NEtir
-        
-        if self.drawDirection != self.direction or self.firing or self.justFired:
+        if self.drawDirection != self.direction or self.firing:
             if self.drawDirection == cardN:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][0+self.firing], 90)
@@ -55,11 +49,8 @@ class Tower(pygame.sprite.Sprite):
             else: # SE
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][2+self.firing], -90)
-            if self.justFired == 1:
-                self.justFired
             if self.firing:
                 self.firing = 0
-                self.justFired = 1
             self.drawDirection = self.direction
         screen.blit(self.image, self.rect)
 

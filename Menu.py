@@ -3,7 +3,7 @@ from Global import *
 
 class Menu():
     def __init__(self, map, wave, towers):
-        self.btnStart = StartButton(775,100)
+        self.btnStart = StartButton(875,100)
         self.btnRandom = RandomButton(775,450)
         self.btnBack = BackButton(875,450)
         self.btnDino1 = BtnDino1(775,150)
@@ -17,10 +17,11 @@ class Menu():
         self.btnSinge10 = BtnSinge10(775,350)
         self.btnSinge100 = BtnSinge100(875,350)
         self.btnExit = ExitButton(775,400)
+        self.btnRandomSpawn = RandomSpawnButton(775,100)
         self.map = map
         self.wave = wave
         self.towers = towers
-        self.menu = pygame.sprite.Group(self.btnStart, self.btnRandom, self.btnBack, self.btnExit)
+        self.menu = pygame.sprite.Group(self.btnStart, self.btnRandom, self.btnBack, self.btnExit, self.btnRandomSpawn)
         self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
 
     def draw(self, screen):
@@ -69,6 +70,8 @@ class Menu():
             self.wave.newSpawn(2, 100)
         elif self.btnExit.rect.collidepoint(pos):
             pygame.quit()
+        elif self.btnRandomSpawn.rect.collidepoint(pos):
+            self.wave.newRandomSpawn()
 
 class StartButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
@@ -178,6 +181,14 @@ class ExitButton(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.path.join ('Images\Buttons', 'Quitter.png')).convert()
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
+class RandomSpawnButton(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(os.path.join ('Images\Buttons', 'C.png')).convert()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

@@ -29,23 +29,23 @@ class Tower(pygame.sprite.Sprite):
         self.rect.y = self.y
         
         if self.drawDirection != self.direction or self.firing or self.justFired:
-            if self.drawDirection == cardN:
+            if self.direction == cardN:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][0+self.firing], 90)
-            elif self.drawDirection == cardS:
+            elif self.direction == cardS:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][0+self.firing], -90)
-            elif self.drawDirection == cardW:
+            elif self.direction == cardW:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][0+self.firing], 180)
-            elif self.drawDirection == cardE:
+            elif self.direction == cardE:
                 self.image = Images.TowerImages[self.type][0+self.firing]
-            elif self.drawDirection == cardNW:
+            elif self.direction == cardNW:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][2+self.firing], 90)
-            elif self.drawDirection == cardNE:
+            elif self.direction == cardNE:
                 self.image = Images.TowerImages[self.type][2+self.firing]
-            elif self.drawDirection == cardSW:
+            elif self.direction == cardSW:
                 self.image = pygame.transform.rotate(
                     Images.TowerImages[self.type][2+self.firing], 180)
             else: # SE

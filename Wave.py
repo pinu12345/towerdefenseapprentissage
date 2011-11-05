@@ -41,7 +41,9 @@ class Wave():
             enemy.draw(screen)
     
     def newRandomSpawn(self):
-        self.newSpawn(randint(0,4), randint(75, 100))
+        randType = randint(0, 8)
+        self.newSpawn(randType, \
+            max(1, randint(10, 100)**2/EnemyStats[randType][EnemyVALUE]))
         
     def clear(self):
         self.enemies.empty()

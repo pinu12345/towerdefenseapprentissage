@@ -8,12 +8,16 @@
     Efface et upgrade universel [P]
     Afficher un popup avec du text au milieu [P]
     
-    Structure de damage en pourcent [N]
-    Variables globales de tour [N]
-    Retravailler le deplacement ennemi [N]
-    S'occuper des waves d'ennemis [N]
+    S'occuper des waves d'ennemis? [N]
+    Implanter les graphiques aleatoires seedes
     
     Faire la map 3 [N]
+    
+    --Accompli par Nicolas dans la nui du vendredi:
+    * Excel produit automatiquement les tableaux de stats en Python
+    * Les nouvelles stats de tourelles et d'ennemis sont implantees
+    * Les degats sont calcules de la nouvelle maniere (et splash graduel)
+    * Les ennemis se deplacent fichtre vite
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER

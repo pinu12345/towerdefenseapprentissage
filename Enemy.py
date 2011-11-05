@@ -53,7 +53,7 @@ class Enemy(pygame.sprite.Sprite):
                 nextX += 32
             mapY = pixelToMap(nextY)
             mapX = pixelToMap(nextX)
-
+                    
             if self.direction == cardN:
                 if (mapY > mapHeight - 1) or ((mapY > 0) and ((self.wave.map.M[mapY][mapX] == car_path) or (self.wave.map.M[mapY][mapX] == car_base))):
                     self.y -= 1

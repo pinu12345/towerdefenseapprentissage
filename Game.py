@@ -272,7 +272,7 @@ def main():
 
         #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
-        clock.tick(24)
+        clock.tick(48)
 
     pygame.quit()
 

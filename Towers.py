@@ -29,7 +29,8 @@ class Towers():
             tower.target(self.wave.enemies, shots)
 
     def draw(self, screen):
-        self.towers.draw(screen)
+        for tower in self.towers:
+            tower.draw(screen)
     
     def clear(self):
         Game.placedTower = 1

@@ -221,6 +221,8 @@ def main():
                         towerBar.selectTower(4)
                     elif event.key == pygame.K_5:
                         towerBar.selectTower(5)
+                    elif event.key == pygame.K_5:
+                        towerBar.selectTower(6)
                     elif event.key == pygame.K_r:
                         towers.clear()
                         wave.clear()
@@ -280,7 +282,8 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     layer.fill(pink)
 
     #Draw the route
-    drawRoute(map, screen)
+    #drawRoute(map, screen)
+    drawMap(map, screen)
     
     # Draw On Mouse Over ~ 0
     if Game.drawMouseOver:
@@ -292,7 +295,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         Game.repaintMap = 1
     else:
         if Game.repaintMap:
-            drawMap(map, screen)
+            #drawMap(map, screen)
             Game.repaintMap = 0
 
     if Game.placedTower:

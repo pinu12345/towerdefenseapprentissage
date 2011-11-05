@@ -7,6 +7,8 @@ class Tower(pygame.sprite.Sprite):
     def __init__(self, row, column, type):
         pygame.sprite.Sprite.__init__(self)
 
+        self.direction = cardE
+        self.drawDirection = cardE
         self.type = type
         self.state = 0
         self.name = TowerTypes[self.type][TowerNAME]
@@ -19,8 +21,40 @@ class Tower(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def draw(self, layer):
-        pass
+    def draw(self, screen):
+        self.rect.x = self.x
+        self.rect.y = self.y
+        if self.drawDirection != self.direction:
+            if self.drawDirection == cardN:
+                if self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,90)
+                elif self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,270)
+            elif self.drawDirection == cardS:
+                if self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,270)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,90)
+            elif self.drawDirection == cardE:
+                if self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,270)
+                elif self.direction == cardW:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,90)
+            elif self.drawDirection == cardW:
+                if self.direction == cardS:
+                    self.image = pygame.transform.rotate(self.image,90)
+                elif self.direction == cardE:
+                    self.image = pygame.transform.rotate(self.image,180)
+                elif self.direction == cardN:
+                    self.image = pygame.transform.rotate(self.image,270)
+            self.drawDirection = self.direction
+        screen.blit(self.image, self.rect)
 
     def update(self, layer):
         pass
@@ -40,11 +74,9 @@ class Tower(pygame.sprite.Sprite):
         self.image = Images.TowerImages[self.type][self.state]
 
     def target(self, enemies, shots):
-        # est-ce que le cooldown est ecoule?
         if self.cooldown > 0:
             self.cooldown -= 1
         else:
-            
             ## juste splash
             if self.range == 0:
                 # y a-t-il au moins un ennemi a portee?
@@ -63,7 +95,6 @@ class Tower(pygame.sprite.Sprite):
                             enemy.takeDamage(self.damage)
                     self.cooldown += self.delay
             else:
-                
                 ## distance, splash
                 if self.splash > 0:                   
                     # y a-t-il au moins un ennemi a portee?
@@ -105,7 +136,11 @@ class Tower(pygame.sprite.Sprite):
                                 <= self.splash:
                                 other_enemy.takeDamage(self.damage)
                         self.cooldown += self.delay
-                
+                        ##CHANGEMENT DE DIRECTION
+                        if target_enemy.x > self.x:
+                            self.direction = cardE
+                        else:
+                            self.direction = cardW
                 ## distance, 1 ennemi
                 else:
                     # a quel ennemi causerait-on le plus de dommages?
@@ -123,3 +158,8 @@ class Tower(pygame.sprite.Sprite):
                         target_enemy.takeDamage(self.damage)
                         shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         self.cooldown += self.delay
+                        ##CHANGEMENT DE DIRECTION
+                        if target_enemy.x > self.x:
+                            self.direction = cardE
+                        else:
+                            self.direction = cardW

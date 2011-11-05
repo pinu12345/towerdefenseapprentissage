@@ -1,5 +1,20 @@
 ﻿TODOLIST:
 
+    --Objectifs
+    Appeler l'ombudsman [P]
+    Braquer des dinosaurs [P]
+    Ajouter des levels a level.py [P]
+    Upgrade des emplacements de tourelle [P]
+    Efface et upgrade universel [P]
+    Afficher un popup avec du text au milieu [P]
+    
+    Structure de damage en pourcent [N]
+    Variables globales de tour [N]
+    Retravailler le deplacement ennemi [N]
+    S'occuper des waves d'ennemis [N]
+    
+    Faire la map 3 [N]
+    
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
     FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
@@ -11,9 +26,6 @@
 
     --Gameplay (Urgent)
     Tours -> disponibilité
-    Tour qui ralentis autour d'elle
-    EFFACE (MONTRE LA TOUR EN ROUGE SANS CERCLE DE RANGE) = -2
-    UPGRADE UNIVERSELLE (MONTRE LE RANGE "UPGRADÉ" ET LA NOUVELLE IMAGE DE LA TOUR) = -3
 
     --CAMPAIGN (Optional)
     Description de mission en début de partie

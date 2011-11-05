@@ -13,9 +13,10 @@ class Tower(pygame.sprite.Sprite):
         self.justFired = 0
         self.type = type
         self.state = 0
-        self.name = TowerTypes[self.type][TowerNAME]
-        self.upgrades = len(TowerTypes[self.type][TowerVALUE]) - 1
-        self.cooldown = 0.0
+        self.level = 0 ## A MODIFIER?
+        self.name = TowerStats[self.type][self.level][TowerNAME]
+        self.upgrades = len(TowerStats[self.type]) -1
+        self.cooldown = 0
         self.setParams()
         self.rect = self.image.get_rect()
         self.x = column * tileSize
@@ -68,11 +69,11 @@ class Tower(pygame.sprite.Sprite):
             self.setParams()
 
     def setParams(self):
-        self.value = TowerTypes[self.type][TowerVALUE][self.state]
-        self.damage = TowerTypes[self.type][TowerDAMAGE][self.state]
-        self.delay = TowerTypes[self.type][TowerDELAY][self.state]
-        self.range = TowerTypes[self.type][TowerRANGE][self.state] * tileSize
-        self.splash = TowerTypes[self.type][TowerSPLASH][self.state] * tileSize
+        self.value = TowerStats[self.type][self.level][TowerPRICE]
+        self.damage = TowerStats[self.type][self.level][TowerDAMAGE]
+        self.delay = TowerStats[self.type][self.level][TowerDELAY]
+        self.range = TowerStats[self.type][self.level][TowerRANGE]
+        self.splash = TowerStats[self.type][self.level][TowerSPLASH]
         self.image = Images.TowerImages[self.type][0]
     
     def getFacing(self, target):
@@ -125,9 +126,10 @@ class Tower(pygame.sprite.Sprite):
                 if enemy_in_range:
                     #shots.newShot(self.x, self.y, self.x, self.y, self.type)
                     for enemy in enemies:
-                        if distPixel(self.x, self.y, \
-                            enemy.x, enemy.y) <= self.splash:
-                            enemy.takeDamage(self.damage)
+                        distEnemy = distPixel(self.x, self.y, enemy.x, enemy.y)
+                        if distEnemy <= self.splash:
+                            enemy.takeDamage(int(self.damage[enemy.type] \
+                                *(1-1.0*distEnemy/self.splash)))
                     self.firing = 1
                     self.cooldown += self.delay
             else:
@@ -153,24 +155,26 @@ class Tower(pygame.sprite.Sprite):
                                 enemy.x, enemy.y) <= self.range + self.splash:
                                 splashable_enemies.append(enemy)
                         max_damage = 0
-                        for enemy in hittable_enemies:
+                        for hit_enemy in hittable_enemies:
                             potential_damage = 0
-                            for other_enemy in splashable_enemies:
-                                if distPixel(enemy.x, enemy.y, \
-                                    other_enemy.x, other_enemy.y) \
-                                    <= self.splash:
-                                    potential_damage += min(max(self.damage/2, \
-                                        self.damage - other_enemy.armor), \
-                                        other_enemy.HP)
+                            for enemy in splashable_enemies:
+                                distEnemy = distPixel(hit_enemy.x, hit_enemy.y, \
+                                    enemy.x, enemy.y)
+                                if distEnemy <= self.splash:
+                                    potential_damage += enemy.value * \
+                                        min(int(self.damage[enemy.type] \
+                                            *(1-1.0*distEnemy/self.splash)), \
+                                            enemy.HP)
                             if potential_damage > max_damage:
-                                target_enemy = enemy
+                                target_enemy = hit_enemy
                                 max_damage = potential_damage
                         #shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
-                        for other_enemy in splashable_enemies:
-                            if distPixel(target_enemy.x, target_enemy.y, \
-                                other_enemy.x, other_enemy.y) \
-                                <= self.splash:
-                                other_enemy.takeDamage(self.damage)
+                        for enemy in splashable_enemies:
+                            distEnemy = distPixel(hit_enemy.x, hit_enemy.y, \
+                                enemy.x, enemy.y)
+                            if distEnemy <= self.splash:
+                                enemy.takeDamage(int(self.damage[enemy.type] \
+                                *(1-1.0*distEnemy/self.splash)))
                         self.firing = 1
                         self.cooldown += self.delay
                         self.getFacing(target_enemy)
@@ -181,14 +185,18 @@ class Tower(pygame.sprite.Sprite):
                     for enemy in enemies:
                         if distPixel(self.x, self.y, \
                             enemy.x, enemy.y) <= self.range:
-                            potential_damage = min(max(self.damage/2, \
-                                self.damage - enemy.armor), enemy.HP)
+                            if self.delay <= 32:
+                                potential_damage = enemy.value * \
+                                    self.damage[enemy.type]
+                            else:
+                                potential_damage = enemy.value * \
+                                    min(self.damage[enemy.type], enemy.HP)
                             if potential_damage > max_damage:
                                 target_enemy = enemy
                                 max_damage = potential_damage
                     # si on en a trouve un, on l'attaque
                     if max_damage > 0:
-                        target_enemy.takeDamage(self.damage)
+                        target_enemy.takeDamage(self.damage[enemy.type])
                         #shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         self.firing = 1
                         self.cooldown += self.delay

@@ -18,7 +18,6 @@ class Enemy(pygame.sprite.Sprite):
         self.type = type
         self.wave = wave
         self.direction = direction
-        self.moveThreshold = 0.0
         self.drawDirection = cardE
 
         # Set the enemy parameters
@@ -39,9 +38,9 @@ class Enemy(pygame.sprite.Sprite):
         self.setStartPosition(x, y, direction)
 
     def move(self):
-        self.moveThreshold += self.speed / 100.0
-        if self.moveThreshold >= 1:
-            self.moveThreshold -= 1
+        pixelsToGo = self.speed
+        while pixelsToGo > 0:
+            pixelsToGo -= 1
             nextX = self.x
             nextY = self.y
             if self.direction == cardN:
@@ -116,7 +115,6 @@ class Enemy(pygame.sprite.Sprite):
             self.x -= 32
     
     def takeDamage(self, damage):
-        damage = max(damage/2, damage-self.armor)
         self.HP = max(0, self.HP - damage)
         if self.HP <= 0:
             self.kill()

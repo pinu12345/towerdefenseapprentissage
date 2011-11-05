@@ -272,7 +272,7 @@ def main():
 
         #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
-        clock.tick(500)
+        clock.tick(24)
 
     pygame.quit()
 
@@ -334,12 +334,15 @@ def drawOnMouseOver(map, towerBar, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
             if (map.T[row][column] == 0) and (map.O[row][column] > 0):
-                if TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] == 0:
-                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]*tileSize, 0)
+                ##  vvv  A MODIFER PAR P-O vvv
+                TowerLEVEL_TEMP = 0
+                ##  ^^^  A MODIFER PAR P-O ^^^
+                if TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] == 0:
+                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], 0)
                 else:
                     pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
-                    TowerTypes[towerBar.selectedTower-1][TowerRANGE][0]*tileSize, 0)
-                pygame.draw.circle(screen, TowerShotGraphs[towerBar.selectedTower-1][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), (TowerTypes[towerBar.selectedTower-1][TowerRANGE][0] + TowerTypes[towerBar.selectedTower-1][TowerSPLASH][0]) * tileSize, tileSize/16)
+                    TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE], 0)
+                pygame.draw.circle(screen, TowerShotGraphs[towerBar.selectedTower-1][TowerLEVEL_TEMP][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
                 screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 0)
 
 def drawRoute(map, screen):

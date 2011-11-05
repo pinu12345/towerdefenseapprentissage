@@ -78,33 +78,33 @@ class Tower(pygame.sprite.Sprite):
         if dx > 0:
             if dy > 0:
                 if dy*5 < dx*2:
-                    return cardE
+                    self.direction = cardE
                 elif dx*5 < dy*2:
-                    return cardS
+                    self.direction = cardS
                 else:
-                    return cardSE
+                    self.direction = cardSE
             else:
                 if -dy*5 < dx*2:
-                    return cardE
+                    self.direction = cardE
                 elif dx*5 < -dy*2:
-                    return cardS
+                    self.direction = cardS
                 else:
-                    return cardSE
+                    self.direction = cardSE
         else:
             if dy > 0:
                 if dy*5 < -dx*2:
-                    return cardE
+                    self.direction = cardE
                 elif -dx*5 < dy*2:
-                    return cardS
+                    self.direction = cardS
                 else:
-                    return cardSE
+                    self.direction = cardSE
             else:
                 if -dy*5 < -dx*2:
-                    return cardE
+                    self.direction = cardE
                 elif -dx*5 < -dy*2:
-                    return cardS
+                    self.direction = cardS
                 else:
-                    return cardSE
+                    self.direction = cardSE
     
     def target(self, enemies, shots):
         if self.cooldown > 0:
@@ -169,7 +169,7 @@ class Tower(pygame.sprite.Sprite):
                                 <= self.splash:
                                 other_enemy.takeDamage(self.damage)
                         self.cooldown += self.delay
-                        self.direction = getFacing(target_enemy)
+                        self.getFacing(target_enemy)
                 ## distance, 1 ennemi
                 else:
                     # a quel ennemi causerait-on le plus de dommages?
@@ -187,4 +187,4 @@ class Tower(pygame.sprite.Sprite):
                         target_enemy.takeDamage(self.damage)
                         shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type)
                         self.cooldown += self.delay
-                        self.direction = getFacing(target_enemy)
+                        self.getFacing(target_enemy)

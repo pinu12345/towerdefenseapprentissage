@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ï»¿# -*- coding: utf-8 -*-
 from numpy import *
 import re
 
@@ -296,7 +296,7 @@ def addDictionaryWordsFromSentencePair(tx, fr):
 
 def wordSplit(sentence):
     ### prend une phrase et retourne une liste de ses mots
-    return re.findall(r"[a-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+|[^\sa-zA-Z0-9àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÜŸ]+", sentence)
+    return re.findall(r"[a-zA-Z0-9Ã Ã¢Ã¦Ã§Ã©Ã¨ÃªÃ«Ã®Ã¯Ã´Å“Ã¹Ã»Ã¼Ã¿Ã€Ã‚Ã†Ã‡Ã‰ÃˆÃŠÃ‹ÃÃÃ”Å’Ã™ÃœÅ¸]+|[^\sa-zA-Z0-9Ã Ã¢Ã¦Ã§Ã©Ã¨ÃªÃ«Ã®Ã¯Ã´Å“Ã¹Ã»Ã¼Ã¿Ã€Ã‚Ã†Ã‡Ã‰ÃˆÃŠÃ‹ÃÃÃ”Å’Ã™ÃœÅ¸]+", sentence)
 
 def alignPairs(x, y):
     ### prend un texto et sa traduction

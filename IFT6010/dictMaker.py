@@ -16,13 +16,14 @@ def makeDict(docTx, docFr):
         start_time = time.clock()
         num_tx = min(num_tx, len(txList))
         for i in range(num_tx):
-            #print "\n--- Texto", i+1 , "---\n"
+            print "\n--- Texto", i+1 , "---\n"
             tx, fr = txList[i], frList[i]
             wordPairs = addNorms(tx, fr)
             #affiche_normList(wordPairs)
             for j in range(len(wordPairs)):
                 txWord, frWord = wordPairs[j][0], wordPairs[j][1]
                 if txWord != frWord:
+                    print(txWord, frWord)
                     # cherche txWord dans dict
                     # ameliorable par recherche binaire
                     txWordNotFound = 1
@@ -46,26 +47,28 @@ def makeDict(docTx, docFr):
                                 break
                         if frWordNotFound:
                             txWordLine[1].append([frWord, 1])
-        
-        #print '\n Text:', num_tx
-        #print ' Dict:', len(dict)
-        #print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
-        #end_time = time.clock()
-        #delta_time = end_time - start_time
-        #print ' Time:', int(delta_time)
 
     dictDoc = open('dictTrad.py', 'w')
     dictDoc.write('# -*- coding: utf-8 -*-\ndict = ')
-    json.dump(dict, dictDoc, encoding='UTF-8')
+    #json.dump(dict, dictDoc)
+
+    for i in range(len(dict)):
+        if i == 0:
+            dictDoc.write('[')
+        dictDoc.write('["' + dict[i][0] + '", [["' + dict[i][1][0][0] + '", ' + str(dict[i][1][0][1]) + ']]]')
+        if i != len(dict)-1:
+            dictDoc.write(', ')
+        else:
+            dictDoc.write(']')
+            
+        #print 'line 0 :', line[0]
+        #print 'line 1 :', line[1][0][0]
+        #for word in line[1]
+            #print '-->', wo1rd
+    #dictDoc.write(line[0])
+    #dictDoc.write(line[1])
+    #dictDoc.write('\n')
     dictDoc.close()
-
-    #dictDoc.write(dict)
-    for line in dict:
-        print '', line[0], '', line[1]
-    #    dictDoc.write(line[0])
-    #    dictDoc.write('\n')
-    
-
     
 def original_de_PO():
     #load the normalisations

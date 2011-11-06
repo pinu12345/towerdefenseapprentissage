@@ -1,8 +1,6 @@
 ﻿TODOLIST:
 
     --Objectifs
-    Appeler l'ombudsman [P]
-    Braquer des dinosaurs [P]
     Ajouter des levels a level.py [P]
     Upgrade des emplacements de tourelle [P]
     Efface et upgrade universel [P]

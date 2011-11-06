@@ -10,7 +10,7 @@ class Towers():
         self.wave = wave
 
     def placeTower(self, map, towerType, row, column):
-        addedTower = Tower.Tower(row, column, towerType-1)
+        addedTower = Tower.Tower(row, column, towerType-1, self.map)
         self.towers.add(addedTower)
         map.T[row][column] = addedTower
 
@@ -19,8 +19,9 @@ class Towers():
         if towerType-1 == currentTower.type:
             currentTower.upgrade()
         else:
+            currentTower.resetEmplacement()
             currentTower.kill()
-            addedTower = Tower.Tower(row, column, towerType-1)
+            addedTower = Tower.Tower(row, column, towerType-1, self.map)
             self.towers.add(addedTower)
             map.T[row][column] = addedTower
 
@@ -35,4 +36,6 @@ class Towers():
     def clear(self):
         Game.placedTower = 1
         self.map.clearTowers()
+        for tower in self.towers:
+            tower.resetEmplacement()
         self.towers.empty()

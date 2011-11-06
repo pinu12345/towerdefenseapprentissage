@@ -4,11 +4,12 @@ from Util import *
 from numpy import *
 
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, row, column, type):
+    def __init__(self, row, column, type, map):
         pygame.sprite.Sprite.__init__(self)
-
         self.direction = cardN
         self.drawDirection = cardN
+        self.row = row
+        self.column = column
         self.firing = 0
         self.justFired = 0
         self.type = type
@@ -17,6 +18,7 @@ class Tower(pygame.sprite.Sprite):
         self.name = TowerStats[self.type][self.level][TowerNAME]
         self.upgrades = len(TowerStats[self.type]) -1
         self.cooldown = 0
+        self.map = map
         self.setParams()
         self.rect = self.image.get_rect()
         self.x = column * tileSize
@@ -62,10 +64,13 @@ class Tower(pygame.sprite.Sprite):
     def update(self, layer):
         pass
 
+    def resetEmplacement(self):
+        self.map.S[self.row][self.column] = Images.MapImages[MAPEMPLACEMENT][0]
+
     def upgrade(self):
-        if self.state < self.upgrades:
+        if self.level < self.upgrades:
             Game.placedTower = 1
-            self.state += 1
+            self.level += 1
             self.setParams()
 
     def setParams(self):
@@ -74,6 +79,7 @@ class Tower(pygame.sprite.Sprite):
         self.delay = TowerStats[self.type][self.level][TowerDELAY]
         self.range = TowerStats[self.type][self.level][TowerRANGE]
         self.splash = TowerStats[self.type][self.level][TowerSPLASH]
+        self.map.S[self.row][self.column] = Images.MapImages[MAPEMPLACEMENT][self.level]
         self.image = Images.TowerImages[self.type][0]
     
     def getFacing(self, target):

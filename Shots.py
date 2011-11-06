@@ -8,8 +8,8 @@ class Shots():
     def __init__(self):
         self.shots = pygame.sprite.OrderedUpdates()
 
-    def newShot(self, xi, yi, xt, yt, type):
-        self.shots.add(Shot(xi, yi, xt, yt, type))
+    def newShot(self, xi, yi, xt, yt, type, level, card):
+        self.shots.add(Shot(xi, yi, xt, yt, type, level, card))
 
     def draw(self, screen):
         #Draw their new positions

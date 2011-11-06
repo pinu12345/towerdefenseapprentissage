@@ -2,7 +2,6 @@ import pygame, os, RandomMap
 from Game import *
 from Util import *
 from Global import *
-import RandomMap
 
 class Map:
     def __init__(self, mapWidth, mapHeight):
@@ -57,27 +56,60 @@ class Map:
         self.reset()
         self.M = textMap
         self.S = []
+        mapSeed = 0
+        for row in textMap:
+            for tile in row:
+                if tile == car_path:
+                    mapSeed += 1
+        print mapSeed
+        random.seed(mapSeed)
         for row in range(mapHeight):
             self.S.append([])
             for column in range(mapWidth):
                 type = self.orientTile(column, row)
                 if type == ROUTEH:
-                #MAPROUTE = 0
-                #MAPROUTTURN = 1
-                #MAPEMPLACEMENT = 2
-                #MAPBASE = 3
-                #MAPWASTELAND = 4
-                    self.S[row].append(Images.MapImages[MAPROUTE][0])
+                    flipX = random.randint(0, 2)
+                    flipY = random.randint(0, 2)
+                    if randint(0, 4):
+                        randNum = 0
+                    else:
+                        randNum = random.randint(len(Images.MapImages[MAPROUTE]))
+                    randImage = Images.MapImages[MAPROUTE][randNum]
+                    randImage = pygame.transform.flip(randImage, flipX, flipY)
+                    self.S[row].append(randImage)
                 elif type == ROUTEV:
-                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTE][0],90))
-                elif type == ROUTENW:
-                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],90))
-                elif type == ROUTENE:
-                    self.S[row].append(Images.MapImages[MAPROUTTURN][0])
-                elif type == ROUTESE:
-                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],270))
-                elif type == ROUTESW:
-                    self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPROUTTURN][0],180))
+                    flipX = random.randint(0, 2)
+                    flipY = random.randint(0, 2)
+                    if randint(0, 4):
+                        randNum = 0
+                    else:
+                        randNum = random.randint(len(Images.MapImages[MAPROUTE]))
+                    randImage = pygame.transform.rotate( \
+                        Images.MapImages[MAPROUTE][randNum], 90)
+                    randImage = pygame.transform.flip(randImage, flipX, flipY)
+                    self.S[row].append(randImage)
+                elif type in [ROUTENW, ROUTENE, ROUTESW, ROUTESE]:
+                    flipXY = random.randint(0, 2)
+                    if flipXY:
+                        rotFlip = 180
+                    else:
+                        rotFlip = 0
+                    if choice([0, 1]):
+                        randNum = 0
+                    else:
+                        randNum = random.randint(len(Images.MapImages[MAPROUTTURN]))
+                    if type == ROUTENW:
+                        rotType = 90
+                    elif type == ROUTENE:
+                        rotType = 0
+                    elif type == ROUTESE:
+                        rotType = -90
+                    elif type == ROUTESW:
+                        rotType = 180
+                    randImage = pygame.transform.flip( \
+                        Images.MapImages[MAPROUTTURN][randNum], flipXY, flipXY)
+                    randImage = pygame.transform.rotate(randImage, rotType + rotFlip)
+                    self.S[row].append(randImage)
                 elif type == BASEN:
                     self.S[row].append(pygame.transform.rotate(Images.MapImages[MAPBASE][0],270))
                 elif type == BASES:
@@ -89,9 +121,20 @@ class Map:
                 elif type == EMPLACEMENT:
                     self.S[row].append(Images.MapImages[MAPEMPLACEMENT][0])
                 elif type == WASTELAND:
-                    self.S[row].append(Images.MapImages[MAPWASTELAND][0])
+                    flipX = random.randint(0, 2)
+                    flipY = random.randint(0, 2)
+                    randRot = 90*random.randint(0, 4)
+                    if randint(0, 2):
+                        randNum = 0
+                    else:
+                        randNum = random.randint(len(Images.MapImages[MAPWASTELAND]))
                     
-
+                    randImage = Images.MapImages[MAPWASTELAND][randNum]
+                    randImage = pygame.transform.rotate(randImage, randRot)
+                    randImage = pygame.transform.flip(randImage, flipX, flipY)
+                    self.S[row].append(randImage)
+        random.seed()
+        
         entrance = findEntrance(self.M)
         self.entranceY = entrance[0][0]
         self.entranceX = entrance[0][1]

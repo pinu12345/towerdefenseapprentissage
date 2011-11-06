@@ -13,11 +13,12 @@
     
     Faire la map 3 [N]
     
-    --Accompli par Nicolas dans la nui du vendredi:
+    --Accompli par Nicolas depuis vendredi:
     * Excel produit automatiquement les tableaux de stats en Python
     * Les nouvelles stats de tourelles et d'ennemis sont implantees
     * Les degats sont calcules de la nouvelle maniere (et splash graduel)
     * Les ennemis se deplacent fichtre vite
+    * La barre de vie ennemie est de taille et position variables
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER

@@ -27,7 +27,7 @@ class Enemy(pygame.sprite.Sprite):
         self.HP = self.maxHP
         self.speed = EnemyStats[self.type][EnemySPEED]
         self.spread = EnemyStats[self.type][EnemySPREAD]
-        self.dim = EnemyStats[self.type][EnemySPREAD]
+        self.dim = EnemyStats[self.type][EnemyDIM]
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)
@@ -123,40 +123,42 @@ class Enemy(pygame.sprite.Sprite):
         if self.drawDirection != self.direction:
             if self.drawDirection == cardN:
                 if self.direction == cardW:
-                    self.image = pygame.transform.rotate(self.image,90)
+                    self.image = pygame.transform.rotate(self.image, 90)
                 elif self.direction == cardS:
-                    self.image = pygame.transform.rotate(self.image,180)
+                    self.image = pygame.transform.rotate(self.image, 180)
                 elif self.direction == cardE:
-                    self.image = pygame.transform.rotate(self.image,270)
+                    self.image = pygame.transform.rotate(self.image, 270)
             elif self.drawDirection == cardS:
                 if self.direction == cardW:
-                    self.image = pygame.transform.rotate(self.image,270)
+                    self.image = pygame.transform.rotate(self.image, 270)
                 elif self.direction == cardN:
-                    self.image = pygame.transform.rotate(self.image,180)
+                    self.image = pygame.transform.rotate(self.image, 180)
                 elif self.direction == cardE:
-                    self.image = pygame.transform.rotate(self.image,90)
+                    self.image = pygame.transform.rotate(self.image, 90)
             elif self.drawDirection == cardE:
                 if self.direction == cardS:
-                    self.image = pygame.transform.rotate(self.image,270)
+                    self.image = pygame.transform.rotate(self.image, 270)
                 elif self.direction == cardW:
-                    self.image = pygame.transform.rotate(self.image,180)
+                    self.image = pygame.transform.rotate(self.image, 180)
                 elif self.direction == cardN:
-                    self.image = pygame.transform.rotate(self.image,90)
+                    self.image = pygame.transform.rotate(self.image, 90)
             elif self.drawDirection == cardW:
                 if self.direction == cardS:
-                    self.image = pygame.transform.rotate(self.image,90)
+                    self.image = pygame.transform.rotate(self.image, 90)
                 elif self.direction == cardE:
-                    self.image = pygame.transform.rotate(self.image,180)
+                    self.image = pygame.transform.rotate(self.image, 180)
                 elif self.direction == cardN:
-                    self.image = pygame.transform.rotate(self.image,270)
+                    self.image = pygame.transform.rotate(self.image, 270)
             self.drawDirection = self.direction
         self.rect.x = self.x
         self.rect.y = self.y
-        health_bar_x = self.x + 1
-        health_bar_y = self.y + tileSize - 4
+        health_bar_width = self.dim * 1.5
+        health_bar_x = self.x + (32-health_bar_width)/2
+        health_bar_y = self.y + tileSize + 1 - (32-health_bar_width)/2
         screen.blit(self.image, self.rect)
-        screen.fill(red,(health_bar_x, health_bar_y, 30, 4))
-        screen.fill(green,(health_bar_x, health_bar_y, (30*self.HP/self.maxHP), 4))
+        screen.fill(red, (health_bar_x, health_bar_y, health_bar_width, 4))
+        screen.fill(green, (health_bar_x, health_bar_y, \
+            (health_bar_width * self.HP/self.maxHP), 4))
     
     def update(self, screen):
         pass

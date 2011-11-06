@@ -9,9 +9,11 @@ def main():
     # Initialize pygame
     # os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
-    
+    pygame.mouse.set_cursor(*pygame.cursors.tri_left)
     os.environ['SDL_VIDEO_CENTERED'] = '1'
-
+    
+    framesPerSecond = 12
+    
     mapWidth = 24
     mapHeight = 16
     tileSize = 32
@@ -272,7 +274,7 @@ def main():
 
         #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
-        clock.tick(48)
+        clock.tick(framesPerSecond)
 
     pygame.quit()
 
@@ -342,7 +344,7 @@ def drawOnMouseOver(map, towerBar, screen):
                 else:
                     pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
                     TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE], 0)
-                pygame.draw.circle(screen, TowerShotGraphs[towerBar.selectedTower-1][TowerLEVEL_TEMP][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
+                pygame.draw.circle(screen, ShotGraphs[towerBar.selectedTower-1][TowerLEVEL_TEMP][0], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
                 screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 0)
 
 def drawRoute(map, screen):

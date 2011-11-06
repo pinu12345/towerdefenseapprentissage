@@ -1,58 +1,70 @@
 ﻿# -*- coding: utf-8 -*-
-import re, operator, time
+import re, operator, time, json, io
 from editDistance import *
+from dictTrad import *
 
-txList = open('train.texto').readlines()
-frList = open('train.fr').readlines()
-#norm = open('train.norm', 'w')
-dict = []
-
-#for num_tx in [len(txList)]:
-for num_tx in [len(txList)/100]:
-#for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
-    start_time = time.clock()
-    num_tx = min(num_tx, len(txList))
-    for i in range(num_tx):
-        #print "\n--- Texto", i+1 , "---\n"
-        tx, fr = txList[i], frList[i]
-        wordPairs = addNorms(tx, fr)
-        #affiche_normList(wordPairs)
-        for j in range(len(wordPairs)):
-            txWord, frWord = wordPairs[j][0], wordPairs[j][1]
-            if txWord != frWord:
-                # cherche txWord dans dict
-                # ameliorable par recherche binaire
-                txWordNotFound = 1
-                for line in dict:
-                    if txWord == line[0]:
-                        txWordNotFound = 0
-                        txWordLine = line
-                        break
-                if txWordNotFound:
-                    # ajoute txWord au dict, puis ordonne
-                    # ameliorable par insertion precise
-                    dict.append([txWord, [[frWord, 1]]])
-                    dict.sort()
-                else:
-                    # verifie si frWord existe deja
-                    frWordNotFound = 1
-                    for frTrad in txWordLine[1]:
-                        if frWord == frTrad[0]:
-                            frTrad[1] += 1
-                            frWordNotFound = 0
+def makeDict(docTx, docFr):
+    txList = open('train.texto').readlines()
+    frList = open('train.fr').readlines()
+    #if 'dict' not in globals():
+    dict = []
+    #print dict[0][0]
+    #for num_tx in [len(txList)]:
+    #for num_tx in [len(txList)/1000]:
+    #for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
+    for num_tx in [5]:
+        start_time = time.clock()
+        num_tx = min(num_tx, len(txList))
+        for i in range(num_tx):
+            #print "\n--- Texto", i+1 , "---\n"
+            tx, fr = txList[i], frList[i]
+            wordPairs = addNorms(tx, fr)
+            #affiche_normList(wordPairs)
+            for j in range(len(wordPairs)):
+                txWord, frWord = wordPairs[j][0], wordPairs[j][1]
+                if txWord != frWord:
+                    # cherche txWord dans dict
+                    # ameliorable par recherche binaire
+                    txWordNotFound = 1
+                    for line in dict:
+                        if txWord == line[0]:
+                            txWordNotFound = 0
+                            txWordLine = line
                             break
-                    if frWordNotFound:
-                        txWordLine[1].append([frWord, 1])
-    
-    #print '\n Text:', num_tx
-    #print ' Dict:', len(dict)
-    #print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
-    #end_time = time.clock()
-    #delta_time = end_time - start_time
-    #print ' Time:', int(delta_time)
+                    if txWordNotFound:
+                        # ajoute txWord au dict, puis ordonne
+                        # ameliorable par insertion precise
+                        dict.append([txWord, [[frWord, 1]]])
+                        dict.sort()
+                    else:
+                        # verifie si frWord existe deja
+                        frWordNotFound = 1
+                        for frTrad in txWordLine[1]:
+                            if frWord == frTrad[0]:
+                                frTrad[1] += 1
+                                frWordNotFound = 0
+                                break
+                        if frWordNotFound:
+                            txWordLine[1].append([frWord, 1])
+        
+        #print '\n Text:', num_tx
+        #print ' Dict:', len(dict)
+        #print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
+        #end_time = time.clock()
+        #delta_time = end_time - start_time
+        #print ' Time:', int(delta_time)
 
-for line in dict:
-    print line[0], line[1]
+    dictDoc = open('dictTrad.py', 'w')
+    dictDoc.write('# -*- coding: utf-8 -*-\ndict = ')
+    json.dump(dict, dictDoc, encoding='UTF-8')
+    dictDoc.close()
+
+    #dictDoc.write(dict)
+    for line in dict:
+        print '', line[0], '', line[1]
+    #    dictDoc.write(line[0])
+    #    dictDoc.write('\n')
+    
 
     
 def original_de_PO():

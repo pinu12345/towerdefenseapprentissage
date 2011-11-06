@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-import re, operator, time, json, io
+import re, operator, time, json, io, string
 from editDistance import *
 from dictTrad import *
 
@@ -63,9 +63,16 @@ def makeDict(docTx, docFr):
     for i in range(len(dict)):
         if i == 0:
             dictDoc.write('[')
-        dictDoc.write('["' + dict[i][0] + '", [["' + dict[i][1][0][0] + '", ' + str(dict[i][1][0][1]) + ']]]')
+        dictDoc.write('["' + dict[i][0].replace('"', '\\"') + '", [')
+        for j in range(len(dict[i][1])):
+            dictDoc.write('["' + dict[i][1][j][0].replace('"', '\\"') + '", ' + str(dict[i][1][j][1]) + ']')
+            if j != len(dict[i][1])-1:
+                dictDoc.write(', ')
+            else:
+                dictDoc.write(']')
+        dictDoc.write(']')
         if i != len(dict)-1:
-            dictDoc.write(', ')
+            dictDoc.write(', \n')
         else:
             dictDoc.write(']')
             

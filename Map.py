@@ -61,7 +61,6 @@ class Map:
             for tile in row:
                 if tile == car_path:
                     mapSeed += 1
-        print mapSeed
         random.seed(mapSeed)
         for row in range(mapHeight):
             self.S.append([])

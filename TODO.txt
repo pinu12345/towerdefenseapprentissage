@@ -7,11 +7,11 @@
     Upgrade des emplacements de tourelle [P]
     Efface et upgrade universel [P]
     Afficher un popup avec du text au milieu [P]
+    S'occuper des waves d'ennemis [P]
     
-    S'occuper des waves d'ennemis? [N]
-    Implanter les graphiques aleatoires seedes
+    Graphiques de l'interface [Nic]
     
-    Faire la map 3 [N]
+    Faire la map 3 [Ninjoop]
     
     --Accompli par Nicolas depuis vendredi:
     * Excel produit automatiquement les tableaux de stats en Python
@@ -19,6 +19,7 @@
     * Les degats sont calcules de la nouvelle maniere (et splash graduel)
     * Les ennemis se deplacent fichtre vite
     * La barre de vie ennemie est de taille et position variables
+    * Les graphiques aleatoires existent
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER

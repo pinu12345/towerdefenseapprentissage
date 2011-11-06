@@ -9,10 +9,10 @@ def makeDict(docTx, docFr):
     #if 'dict' not in globals():
     dict = []
     #print dict[0][0]
-    #for num_tx in [len(txList)]:
+    for num_tx in [len(txList)]:
     #for num_tx in [len(txList)/1000]:
     #for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
-    for num_tx in [100]:
+    #for num_tx in [100]:
         start_time = time.clock()
         num_tx = min(num_tx, len(txList))
         for i in range(num_tx):

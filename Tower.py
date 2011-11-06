@@ -169,7 +169,7 @@ class Tower(pygame.sprite.Sprite):
                                 target_enemy = hit_enemy
                                 max_damage = potential_damage
                         for enemy in splashable_enemies:
-                            distEnemy = distPixel(hit_enemy.x, hit_enemy.y, \
+                            distEnemy = distPixel(target_enemy.x, target_enemy.y, \
                                 enemy.x, enemy.y)
                             if distEnemy <= self.splash:
                                 enemy.takeDamage(int(self.damage[enemy.type] \

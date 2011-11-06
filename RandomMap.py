@@ -39,7 +39,7 @@ class RandomMap:
 		empl_min = 1
 		empl_max = idim*jdim - len - 1
 		empl_rec = int(min(empl_max*.8, empl_max**(rand()*rand()) \
-			+ 10*rand() + 10*rand()))
+			+ 20*rand() + 20*rand()))
 		if empl < empl_min or empl > empl_max:
 			empl = empl_rec
 		

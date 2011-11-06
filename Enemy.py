@@ -28,6 +28,7 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = EnemyStats[self.type][EnemySPEED]
         self.spread = EnemyStats[self.type][EnemySPREAD]
         self.dim = EnemyStats[self.type][EnemyDIM]
+        self.HPbar = EnemyStats[self.type][EnemyHPBAR]
         
         # Required by Sprite
         pygame.sprite.Sprite.__init__(self)
@@ -152,9 +153,9 @@ class Enemy(pygame.sprite.Sprite):
             self.drawDirection = self.direction
         self.rect.x = self.x
         self.rect.y = self.y
-        health_bar_width = self.dim * 1.5
+        health_bar_width = self.HPbar
         health_bar_x = self.x + (32-health_bar_width)/2
-        health_bar_y = self.y + tileSize + 1 - (32-health_bar_width)/2
+        health_bar_y = self.y + tileSize + 2 + self.dim//10 - (32-self.dim)/2
         screen.blit(self.image, self.rect)
         screen.fill(red, (health_bar_x, health_bar_y, health_bar_width, 4))
         screen.fill(green, (health_bar_x, health_bar_y, \

@@ -84,7 +84,7 @@ mapOffsets = [
 ## Ennemis
 #   0       1       2        3         4         5      6       7      8
 # [ Sold[], Moto[], Buggy[], Camion[], Humvee[], IFV[], Tank[], Eng[], MT[] ]
-# -> [ NOM, VALEUR, VITESSE(p/t), SPREAD(p), DIMENSIONS(p) ]
+# -> [ NOM, VALEUR, VITESSE(p/t), SPREAD(p), DIMENSIONS(p), HPBAR(p) ]
 EnemyStats = EnemyData.EnemyStatsFromExcel
 
 EnemyNAME = 0
@@ -92,6 +92,7 @@ EnemyVALUE = 1
 EnemySPEED = 2
 EnemySPREAD = 3
 EnemyDIM = 4
+EnemyHPBAR = 5
 
 
 ## Tourelles

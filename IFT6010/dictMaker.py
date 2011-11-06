@@ -12,18 +12,19 @@ def makeDict(docTx, docFr):
     #for num_tx in [len(txList)]:
     #for num_tx in [len(txList)/1000]:
     #for num_tx in [10, 40, 100, 400, 1000, 4000, 10000]:
-    for num_tx in [5]:
+    for num_tx in [100]:
         start_time = time.clock()
         num_tx = min(num_tx, len(txList))
         for i in range(num_tx):
-            print "\n--- Texto", i+1 , "---\n"
+            #print "\n--- Texto", i+1 , "---\n"
             tx, fr = txList[i], frList[i]
             wordPairs = addNorms(tx, fr)
             #affiche_normList(wordPairs)
             for j in range(len(wordPairs)):
                 txWord, frWord = wordPairs[j][0], wordPairs[j][1]
-                if txWord != frWord:
-                    print(txWord, frWord)
+                #if txWord != frWord:
+                if 1:
+                    #print(txWord, frWord)
                     # cherche txWord dans dict
                     # ameliorable par recherche binaire
                     txWordNotFound = 1
@@ -47,7 +48,14 @@ def makeDict(docTx, docFr):
                                 break
                         if frWordNotFound:
                             txWordLine[1].append([frWord, 1])
-
+        
+        #print '\n Text:', num_tx
+        #print ' Dict:', len(dict)
+        #print ' Taux:', int(10000*len(dict)/num_tx)/100, '%'
+        #end_time = time.clock()
+        #delta_time = end_time - start_time
+        #print ' Time:', int(delta_time)
+        
     dictDoc = open('dictTrad.py', 'w')
     dictDoc.write('# -*- coding: utf-8 -*-\ndict = ')
     #json.dump(dict, dictDoc)

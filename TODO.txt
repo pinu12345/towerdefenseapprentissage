@@ -1,15 +1,18 @@
 ﻿TODOLIST:
 
     --Objectifs
+    Faire plein de games super vite pour avoir des stats sur la balance
+    
+    [P]
     Ajouter des levels a level.py [P]
-    Upgrade des emplacements de tourelle [P]
     Efface et upgrade universel [P]
-    Afficher un popup avec du text au milieu [P]
-    S'occuper des waves d'ennemis [P]
+    Afficher un popup avec du text au milieu
+    Bouton accelerer/decelerer le jeu
     
-    Graphiques de l'interface [Nic]
-    
-    Faire la map 3 [Ninjoop]
+    [Nic]
+    Graphiques de l'interface
+    Fonction pour calculer la "valeur" de chaque emplacement
+    Fonction pour placer les tourelles aux meileurs endroits
     
     --Accompli par Nicolas depuis vendredi:
     * Excel produit automatiquement les tableaux de stats en Python
@@ -21,6 +24,8 @@
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
+    S'assurer que la TowerBar ne soit pas affectee par le jeu
+    Afficher
     FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
     #EVENT POUR ENTERED MOUSE OVER -> Dessine une fois le cercle vert sur layer
     #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP

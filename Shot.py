@@ -63,9 +63,6 @@ class Shot(pygame.sprite.Sprite):
                     xiOff = self.xi + coOff
                     yiOff = self.yi + coOff
             
-            print '', self.xi, self.yi
-            print '', xiOff, yiOff, '\n'
-            
             pygame.draw.line(screen, \
                 self.projColorAlpha, \
                 (xiOff + tileSize/2-1, yiOff + tileSize/2-1), \
@@ -87,12 +84,12 @@ class Shot(pygame.sprite.Sprite):
             self.zoneFarColorAlpha = ( \
                 self.zoneFarColor[0], self.zoneFarColor[1], self.zoneFarColor[2], \
                 self.zoneAlpha)
+            #pygame.draw.circle(screen, \
+            #    self.zoneFarColorAlpha, \
+            #    (self.xt + tileSize/2, self.yt + tileSize/2), \
+            #    self.zoneRadius + 4)
             pygame.draw.circle(screen, \
                 self.zoneColorAlpha, \
                 (self.xt + tileSize/2, self.yt + tileSize/2), \
                 self.zoneRadius/2 + 2)
-            pygame.draw.circle(screen, \
-                self.zoneFarColorAlpha, \
-                (self.xt + tileSize/2, self.yt + tileSize/2), \
-                self.zoneRadius + 4)
             self.zoneAlpha -= 1000

@@ -14,8 +14,8 @@ print "--- Texto", num, "---"
 print
 tx = txList[num].rstrip()
 fr = frList[num].rstrip()
-#tx = "ZZZA B D E F"
-#fr = "ARB C F"
+tx = "ZZZA B D E F"
+fr = "ARB C F"
 print " tx: ", tx
 print " fr: ", fr
 print

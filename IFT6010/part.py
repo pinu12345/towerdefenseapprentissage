@@ -168,6 +168,9 @@ for s in range(num_tx):
     print("")
     
     ## Traduction terminee, passons aux regles specifiques
+    for k in range(len(txCopy[s])):
+        if txCopy[s][k] in ['florent', 'claude', 'valerie', 'amelie']:
+            txCopy[s][k] = txCopy[s][k].capitalize()
     txCopy[s] = ' '.join(txCopy[s])
     txCopy[s] = txCopy[s].capitalize()
     txCopy[s] = string.replace(txCopy[s], " ' ", "'")

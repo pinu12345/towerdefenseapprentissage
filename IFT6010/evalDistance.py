@@ -1,4 +1,12 @@
-def evalDistance(x, y, table=False):
+def evalTotalDistance(x, y):
+    if x == y:
+        return 0
+    totalDistance = 0
+    for i in range(len(x)):
+        totalDistance += evalDistance(x[i], y[i])
+    return totalDistance/len(x)
+    
+def evalDistance(x, y):
 
     if x == y:
         return 0

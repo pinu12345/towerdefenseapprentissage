@@ -18,6 +18,9 @@ for i in range(num_tx):
     #frList[i] = wordSplit(frList[i])
 
 for s in range(num_tx):
+    #
+    # inserer une liste de candidats vide
+    #
     for w in range(len(txCopy[s])):
         word = txCopy[s][w]
         a = 0
@@ -34,15 +37,16 @@ for s in range(num_tx):
                 b = i
         if word_found:
             trads = dict[i][1]
+            
+            ## ici, je trouve la traduction la plus probable
+            ########################
             num_seen = 0
             for j in range(len(trads)):
                 if trads[j][1] > num_seen:
                     num_seen = trads[j][1]
                     most_seen = j
-            #print txCopy[s][w]
+            #########################
             txCopy[s][w] = trads[most_seen][0]
-            #print txCopy[s][w]
-            #print
 
     ## Traduction terminee, passons aux regles specifiques
     txCopy[s] = ' '.join(txCopy[s])

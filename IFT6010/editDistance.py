@@ -339,8 +339,8 @@ def alignPairs(x, y):
         else:
             ylist.append(' ')
 
-    #print '', ''.join(xlist),
-    #print '', ''.join(ylist),
+    print '', ''.join(xlist)
+    print '', ''.join(ylist)
     
     return [xlist, ylist]
     

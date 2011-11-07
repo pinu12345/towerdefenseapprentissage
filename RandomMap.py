@@ -73,7 +73,7 @@ class RandomMap:
 			# trouve un endroit en bordure au hasard
 			# c.i et c.j notent les coordonnees
 			# dir note vers ou on etend le chemin
-			# le chemin des ennemis est note '+'
+			# le chemin des ennemis est note 'X' (car_path)
 			if randint(2): # au nord ou au sud
 				c.j = randint(1, jdim-1)
 				if randint(2): # nord

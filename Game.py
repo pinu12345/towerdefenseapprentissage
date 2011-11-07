@@ -35,20 +35,20 @@ def main():
     Game.placedTower = 0
 
     # Initialize the MainMenu
-    mainMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
+    mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Start Random Map', 1, None),
                 ('Start Test Map', 2, None),
                 ('Start Map 1', 3, None),
                 ('Start Map 2', 4, None),
                 ('Start Map 3', 5, None),
                 ('Exit', 6, None)])
-    gameMenu = cMenu(50, 50, 20, 5, 'vertical', 100, screen,
+    gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
-                ('Back to main menu', 2, None)])
-    mainMenu.set_center(True, True)
-    gameMenu.set_center(True, True)
-    mainMenu.set_alignment('center', 'center')
-    gameMenu.set_alignment('center', 'center')
+                ('Back to main menu (current progress will be lost!)', 2, None)])
+    #mainMenu.set_center(True, True)
+    #gameMenu.set_center(True, True)
+    #mainMenu.set_alignment('center', 'center')
+    #gameMenu.set_alignment('center', 'center')
 
     Images.init()
 

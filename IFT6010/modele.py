@@ -4,10 +4,11 @@ from editDistance import *
 
 frList = open('train.fr').readlines()
 norm = open('train.norm', 'w')
-n = 2
+n = 3
 dict = []
 
 for num_tx in [len(frList)]:
+#for num_tx in [5]:
     num_tx = min(num_tx, len(frList))
     for i in range(num_tx):
         #print "\n--- Texto", i+1 , "---\n"
@@ -66,7 +67,7 @@ if 1 :
             norm.write('[')
         norm.write('["' + dict[i][0].replace('\\','\\\\').replace('"', '\\"') + '", [')
         for j in range(len(dict[i][1])):
-            norm.write('["' + dict[i][1][j][0].replace('\\','\\\\').replace('"', '\\"') + '", ' + str(dict[i][1][j][1]) + ']')
+            norm.write('["' + dict[i][1][j][0].replace('\\','\\\\').replace('"', '\\"') + '", "' + dict[i][1][j][1].replace('\\','\\\\').replace('"', '\\"') + '", ' + str(dict[i][1][j][2]) + ']')
             if j != len(dict[i][1])-1:
                 norm.write(', ')
             else:

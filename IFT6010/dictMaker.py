@@ -63,9 +63,9 @@ def makeDict(docTx, docFr):
     for i in range(len(dict)):
         if i == 0:
             dictDoc.write('[')
-        dictDoc.write('["' + dict[i][0].replace('"', '\\"') + '", [')
+        dictDoc.write('["' + dict[i][0].replace('\\','\\\\').replace('"', '\\"') + '", [')
         for j in range(len(dict[i][1])):
-            dictDoc.write('["' + dict[i][1][j][0].replace('"', '\\"') + '", ' + str(dict[i][1][j][1]) + ']')
+            dictDoc.write('["' + dict[i][1][j][0].replace('\\','\\\\').replace('"', '\\"') + '", ' + str(dict[i][1][j][1]) + ']')
             if j != len(dict[i][1])-1:
                 dictDoc.write(', ')
             else:

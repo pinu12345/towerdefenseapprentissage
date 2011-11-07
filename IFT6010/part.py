@@ -159,37 +159,46 @@ for s in range(num_tx):
             #print('WORD NOT FOUND : ' + word)
             candidats = addAll(candidats, word, 2*w)
 
-            ## ACCEPTÉ PAR LE MODELE DE LANGUE
-            #txCopy[s][w] = trads[most_seen][0]
+           
     #print("")
 
     results = toList(candidats)
+    maxProb = 0
+    #print("===================")
     for i in range(len(results)):
-        Probability = []
         w2 = 'BOS'
         w1 = 'BOS'
         w0 = 'BOS'
+        prob = 1
+        #print("Norm : ", results[i]),
         for j in range(len(results[i])):
             w0 = results[i][j]
-            print(w2 + ', ' + w1 + ', ' + w0),
+            #print(w2 + ', ' + w1 + ', ' + w0),
             tri = findTrigramme(w0, w2, w1)*al/countTrigramme
             bi  = findBigramme(w0, w1)*be/countTrigramme
             uni = findUnigramme(w0)*ga/countTrigramme
             zero = la/countTrigramme
-            print(' : ' + str(tri) + ', ' + str(bi) + ', ' + str(uni) + ', ' + str(zero))
+            wprob = tri + bi + uni + zero
+            #print wprob
             #Set w2 to w1 and w1 to w0
             w2 = w1
             w1 = w0
-            
-        print("")
-    print("")
+            prob *= wprob
+        #print prob
+        if prob > maxProb:
+            maxProb = prob
+            bestNorm = results[i]
+        #print("")
+    #print("BestNorm : ", bestNorm)
+    ## ACCEPTÉ PAR LE MODELE DE LANGUE
+    txCopy[s] = bestNorm
     
     ## Traduction terminee, passons aux regles specifiques
     for k in range(len(txCopy[s])):
-        if txCopy[s][k] in ['florent', 'claude', 'valerie', 'amelie']:
+        if txCopy[s][k] in ['florent', 'claude', 'virginie', 'amélie']:
             txCopy[s][k] = txCopy[s][k].capitalize()
     txCopy[s] = ' '.join(txCopy[s])
-    txCopy[s] = txCopy[s].capitalize()
+    txCopy[s] = txCopy[s][0].capitalize() + txCopy[s][1:]
     txCopy[s] = string.replace(txCopy[s], " ' ", "'")
     txCopy[s] = string.replace(txCopy[s], " ,", ",")
     txCopy[s] = string.replace(txCopy[s], " - ", "-")
@@ -207,19 +216,20 @@ for s in range(num_tx):
                     txCopy[s] = txCopy[s][:-4] + '.' + txCopy[s][-4:]
         elif txCopy[s][len(txCopy[s])-1] != '-':
             txCopy[s] += '.'
+    print txCopy[s]
     
-#print
-#for i in range(num_tx):
-    #txList[i] = ' '.join(txList[i])
-    #print '', txList[i],
-    #print '', txCopy[i]
-    #frList[i] = ' '.join(frList[i])
-    #print '', frList[i],
-    #print
+print
+for i in range(num_tx):
+    txList[i] = ''.join(txList[i])
+    print '', txList[i],
+    print '', txCopy[i]
+    frList[i] = ''.join(frList[i])
+    print '', frList[i],
+    print
     #pass
     
-#print ' ', round(100*evalTotalDistance(txList[:num_tx], frList[:num_tx]), 2), '%'
-#print '', round(100*evalTotalDistance(txCopy[:num_tx], frList[:num_tx]), 2), '%'
+print ' ', round(100*evalTotalDistance(txList[:num_tx], frList[:num_tx]), 2), '%'
+print '', round(100*evalTotalDistance(txCopy[:num_tx], frList[:num_tx]), 2), '%'
 
 #str = '"lol'
 #print str.replace('"', '\\"')

@@ -205,6 +205,18 @@ for s in range(num_tx):
     txCopy[s] = string.replace(txCopy[s], " .", ".")
     txCopy[s] = string.replace(txCopy[s], " !", "!")
     txCopy[s] = string.replace(txCopy[s], " ?", "?")
+    txCopy[s] = string.replace(txCopy[s], " j ", " j'")
+    txCopy[s] = string.replace(txCopy[s], "J ", "J'")
+    txCopy[s] = string.replace(txCopy[s], " t ", " t'")
+    txCopy[s] = string.replace(txCopy[s], "T ", "T'")
+    txCopy[s] = string.replace(txCopy[s], " m ", " m'")
+    txCopy[s] = string.replace(txCopy[s], "M ", "M'")
+    txCopy[s] = string.replace(txCopy[s], " n ", " n'")
+    txCopy[s] = string.replace(txCopy[s], "N ", "N'")
+    txCopy[s] = string.replace(txCopy[s], " l ", " l'")
+    txCopy[s] = string.replace(txCopy[s], "L ", "L'")
+    txCopy[s] = string.replace(txCopy[s], " qu ", " qu'")
+    txCopy[s] = string.replace(txCopy[s], "Qu ", "Qu'")
     if txCopy[s][len(txCopy[s])-1] not in ['.', '!', '?', ')', '(']:
         if txCopy[s][len(txCopy[s])-2] == ':':
             if len(txCopy[s]) > 2:

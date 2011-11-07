@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import types
 import json
 import numpy
@@ -64,6 +65,20 @@ def findTrigramme(w0, w2, w1):
                     if trigramme[i][j][k][0] == w2 and trigramme[i][j][k][1] == w1:
                         return trigramme[i][j][k][2]
     return 0
+    
+def findBigramme(w0, w1):
+    found = 0
+    for i in range(len(bigramme)):
+        for j in range(len(bigramme[i])):
+            if j == 0 and bigramme[i][j] == w0:
+                found = 1
+            if j != 0:
+                if found == 0 :
+                    continue
+                for k in range(len(bigramme[i][j])):
+                    if bigramme[i][j][k][0] == w1:
+                        return bigramme[i][j][k][1]
+    return 0
 
 def findUnigramme(w0):
     found = 0
@@ -80,8 +95,6 @@ def findUnigramme(w0):
                 return sum
     return 0
 
-#print findTrigramme('\'', "BOS", "BOS")
-print findUnigramme('\'')
-print findUnigramme('BOS')
-print findUnigramme('Je')
-print findUnigramme('Claude')
+print findBigramme('Donne', "BOS")
+print findBigramme('Dubois', "Claude")
+print findBigramme('Effectivement', "BOS")

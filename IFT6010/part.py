@@ -77,6 +77,20 @@ def findTrigramme(w0, w2, w1):
                             return trigramme[i][j][k][2]
     return 0
 
+def findBigramme(w0, w1):
+    found = 0
+    for i in range(len(bigramme)):
+        for j in range(len(bigramme[i])):
+            if j == 0 and bigramme[i][j] == w0:
+                found = 1
+            if j != 0:
+                if found == 0 :
+                    continue
+                for k in range(len(bigramme[i][j])):
+                    if bigramme[i][j][k][0] == w1:
+                        return bigramme[i][j][k][1]
+    return 0
+
 def findUnigramme(w0):
     found = 0
     for i in range(len(trigramme)):
@@ -157,13 +171,16 @@ for s in range(num_tx):
         w0 = 'BOS'
         for j in range(len(results[i])):
             w0 = results[i][j]
-            #print(w2 + ', ' + w1 + ', ' + w0),
+            print(w2 + ', ' + w1 + ', ' + w0),
+            tri = findTrigramme(w0, w2, w1)*al/countTrigramme
+            bi  = findBigramme(w0, w1)*be/countTrigramme
+            uni = findUnigramme(w0)*ga/countTrigramme
+            zero = la/countTrigramme
+            print(' : ' + str(tri) + ', ' + str(bi) + ', ' + str(uni) + ', ' + str(zero))
+            #Set w2 to w1 and w1 to w0
             w2 = w1
             w1 = w0
-            #print(i, j)
-            tri = findTrigramme(w0, w2, w1)
-            bi  = findBigramme(w0, w1)
-            uni = findUnigramme(w0)
+            
         print("")
     print("")
     

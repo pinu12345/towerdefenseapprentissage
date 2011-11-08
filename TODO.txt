@@ -4,8 +4,8 @@
     Faire plein de games super vite pour avoir des stats sur la balance
     
     [P]
-    Ajouter des levels a level.py [P]
-    Efface et upgrade universel [P]
+    Ajouter des levels a level.py
+    Efface et upgrade universel
     Afficher un popup avec du text au milieu
     Bouton accelerer/decelerer le jeu
     

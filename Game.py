@@ -12,7 +12,8 @@ def main():
     pygame.mouse.set_cursor(*pygame.cursors.tri_left)
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     
-    framesPerSecond = 24
+    Game.framesPerSecond = 48
+    Game.speedModifier = 1
     
     mapWidth = 24
     mapHeight = 16
@@ -226,6 +227,12 @@ def main():
                         towerBar.selectTower(5)
                     elif event.key == pygame.K_6:
                         towerBar.selectTower(6)
+                    elif event.key == pygame.K_EQUALS:
+                        if Game.speedModifier <= 10.0:
+                            Game.speedModifier *= 1.3
+                    elif event.key == pygame.K_MINUS:
+                        if Game.speedModifier >= 0.1:
+                            Game.speedModifier /= 1.3
                     elif event.key == pygame.K_r:
                         towers.clear()
                         wave.clear()
@@ -276,7 +283,7 @@ def main():
 
         #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
-        clock.tick(framesPerSecond)
+        clock.tick(Game.framesPerSecond * Game.speedModifier)
 
     pygame.quit()
 

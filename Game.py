@@ -49,7 +49,7 @@ def main():
     Images.init()
 
     menubackground = Images.Background
-    interfaceBG = Images.InterfaceBG
+    interfaceBGwashed = Images.InterfaceBGwashed
     rect_list = []
 
     # Initialize the map
@@ -247,7 +247,7 @@ def main():
             
             ## Init Game
             if Game.state == STATE_LOADGAME:
-                screen.blit(interfaceBG, (0, 0))
+                screen.blit(interfaceBGwashed, (0, 0))
                 #screen.fill(background)
                 #pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
                 #pygame.draw.rect(screen, background, ([0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize]))

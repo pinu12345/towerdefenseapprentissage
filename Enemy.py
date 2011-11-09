@@ -102,7 +102,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.y += 1
                 return
 
-        ## Fin de la partie ò_ó
+        ## Fin de la partie
         self.kill()
         
     def setStartPosition(self, x, y, direction):

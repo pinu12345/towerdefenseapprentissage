@@ -37,5 +37,14 @@ def init():
     # Titre
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'title.png')).convert()
     
-    # Fond d'interface
-    Images.InterfaceBG = pygame.image.load(os.path.join ('Images\Interface', 'bg_delave.png')).convert()
+    # Interface
+    Images.InterfaceBGwashed = pygame.image.load(os.path.join ('Images\Interface', 'bg_washed.png')).convert()
+    Images.InterfaceBGopaque = pygame.image.load(os.path.join ('Images\Interface', 'bg_opaque.png')).convert()
+    Images.InterfaceBGbright = pygame.image.load(os.path.join ('Images\Interface', 'bg_bright.png')).convert()
+    Images.InterfaceL1 = pygame.image.load(os.path.join ('Images\Interface', 'lv1.png')).convert()
+    Images.InterfaceL2 = pygame.image.load(os.path.join ('Images\Interface', 'lv2.png')).convert()
+    Images.InterfaceL3 = pygame.image.load(os.path.join ('Images\Interface', 'lv3.png')).convert()
+    Images.InterfaceDI = pygame.image.load(os.path.join ('Images\Interface', 'def_inf.png')).convert()
+    Images.InterfaceDA = pygame.image.load(os.path.join ('Images\Interface', 'def_arm.png')).convert()
+    Images.InterfaceDS = pygame.image.load(os.path.join ('Images\Interface', 'def_shi.png')).convert()
+    

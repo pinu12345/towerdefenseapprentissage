@@ -96,7 +96,7 @@ EnemyHPBAR = 5
 
 
 ## Tourelles
-#   1            2         3          4          5        6
+#   0            1         2          3          4        5
 # [ Mitraille[], Sniper[], Grenade[], Mortier[], Canon[], Radio[] ]
 # -> [ Niveau1[], Niveau2[], Niveau 3[] ]
 #   -> [ NOM, NIVEAU, PRIX, PORTEE(p), DELAI(t), SPLASH(p), Degats[] ]

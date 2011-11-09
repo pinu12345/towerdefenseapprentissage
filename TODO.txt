@@ -7,12 +7,13 @@
     Ajouter des levels a level.py
     Efface et upgrade universel
     Afficher un popup avec du text au milieu
+    Placer les graphiques de l'interface
     Bouton accelerer/decelerer le jeu
     
     [Nic]
-    Graphiques de l'interface
-    Fonction pour calculer la "valeur" de chaque emplacement
-    Fonction pour placer les tourelles aux meileurs endroits
+    -- OU -- Fonction pour placer les tourelles choisies aux meileurs endroits
+    -- OU -- Accepter une beaucoup plus grande variete de positions et compenser avec prog
+    Rouler des tonnes de niveaux au hasard et en extraire des donnees
     
     --Accompli par Nicolas depuis vendredi:
     * Excel produit automatiquement les tableaux de stats en Python
@@ -21,6 +22,7 @@
     * Les ennemis se deplacent fichtre vite
     * La barre de vie ennemie est de taille et position variables
     * Les graphiques aleatoires existent
+    * Fonction pour calculer la "valeur" de chaque emplacement
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER

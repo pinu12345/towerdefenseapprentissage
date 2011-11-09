@@ -9,6 +9,7 @@
     Afficher un popup avec du text au milieu
     Placer les graphiques de l'interface
     Bouton accelerer/decelerer le jeu
+    Implanter les graphiques Radio
     
     [Nic]
     -- OU -- Fonction pour placer les tourelles choisies aux meileurs endroits

@@ -24,6 +24,15 @@ def init():
             tmpImg.blit(Images.spriteSheet, (0, 0), (towerOffsets[i][j], (tileSize, tileSize)))
             Images.TowerImages[i].append(tmpImg)
 
+    # Radio splash
+    # Niveau 1: 128x128
+    Images.RS1 = pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash1.png')).convert()
+    # Niveau 2: 160x160
+    Images.RS2 = pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash2.png')).convert()
+    # Niveau 3: 192x192
+    Images.RS3 = pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash3.png')).convert()
+    
+            
     # Map Images
     Images.MapImages = []
     for i in range(len(mapOffsets)):

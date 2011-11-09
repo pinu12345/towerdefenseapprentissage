@@ -38,4 +38,4 @@ def init():
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'title.png')).convert()
     
     # Fond d'interface
-    Images.InterfaceBG = pygame.image.load(os.path.join ('Images\Interface', 'Background.png')).convert()
+    Images.InterfaceBG = pygame.image.load(os.path.join ('Images\Interface', 'bg_delave.png')).convert()

@@ -147,6 +147,7 @@ class Map:
         
     def loadFileMap(self, map_name):
         textMap = open(os.path.join('Maps', map_name+'.txt')).readlines()
+        print textMap
         self.loadMap(textMap)
 
     def orientTile(self, x, y):

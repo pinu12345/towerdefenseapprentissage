@@ -29,7 +29,7 @@ class TowerBar():
                 screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
                 screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
             else:
-                screen.fill(background, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
+                screen.blit(Images.InterfaceBG, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5) , (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
                 screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
         self.redraw = 0
 

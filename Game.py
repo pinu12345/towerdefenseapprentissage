@@ -1,4 +1,4 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images, Level
 import pygame.examples.aliens
 from Global import *
 from MainMenu import *
@@ -29,7 +29,7 @@ def main():
     screen = pygame.display.set_mode(size)
     screen.fill(background)
     layer = pygame.Surface(size)
-    layer.set_colorkey(pink)
+    layer.set_colorkey(spritepink)
     layer.set_alpha(120)
     Game.drawMouseOver = 0
     Game.repaintMap = 0
@@ -46,11 +46,6 @@ def main():
     gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
                 ('Back to main menu (current progress will be lost!)', 2, None)])
-    #mainMenu.set_center(True, True)
-    #gameMenu.set_center(True, True)
-    #mainMenu.set_alignment('center', 'center')
-    #gameMenu.set_alignment('center', 'center')
-
     Images.init()
 
     menubackground = Images.Background
@@ -68,12 +63,15 @@ def main():
     
     # Initialize the shot graphics
     shots = Shots()
-    
+
     # Initialize the tower bar
     towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
 
     # Initialize the menu
     menu = Menu.Menu(map, wave, towers)
+
+    # Initialize the level
+    level = Level.Level(map, wave, towers, towerBar, menu)
 
     # Set title of screen
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
@@ -86,7 +84,8 @@ def main():
 
     # -------- Main Program Loop -----------
     while close_game == False:
-    
+
+        ## Init menu
         if Game.state == STATE_INITMENU:
             screen.fill(background)
             screen.blit(menubackground, (0, 0))
@@ -94,7 +93,8 @@ def main():
             mainMenustate = 0
             mainMenuprev_state = 1
             Game.state = STATE_MENU
-            
+        
+        ## Menu
         elif Game.state == STATE_MENU:
             if mainMenuprev_state != mainMenustate:
                 pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
@@ -116,7 +116,7 @@ def main():
                     map.loadFileMap('map2')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 5:
-                    map.loadFileMap('map3')
+                    level.loadLevel('map3')
                     Game.state = STATE_LOADGAME
                 else:
                     pygame.quit()
@@ -126,6 +126,7 @@ def main():
                 sys.exit()
             pygame.display.update(rect_list)
 
+        ## Init Game Menu
         elif Game.state == STATE_INITGAMEMENU:
             screen.fill(background)
             screen.blit(menubackground, (0, 0))
@@ -134,6 +135,7 @@ def main():
             gameMenuprev_state = 1
             Game.state = STATE_GAMEMENU
         
+        ## Game Menu
         elif Game.state == STATE_GAMEMENU:
             if gameMenuprev_state != gameMenustate:
                 pygame.event.post(pygame.event.Event(EVENT_CHANGE_STATE, key = 0))
@@ -163,6 +165,7 @@ def main():
                 if event.type == pygame.QUIT: 
                     close_game = True # Flag that we are done so we exit this loop
 
+                ## Mouse Events
                 # User moves over the mouse 
                 elif event.type == pygame.MOUSEMOTION:
                     Game.drawMouseOver = 0
@@ -206,7 +209,8 @@ def main():
                     # Inside Tower Bar
                     else:
                         towerBar.onClick(pos)
-
+                
+                ## Keyboard Events
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         Game.state = STATE_INITGAMEMENU
@@ -241,6 +245,7 @@ def main():
                         towers.clear()
                         shots.clear()
             
+            ## Init Game
             if Game.state == STATE_LOADGAME:
                 screen.blit(interfaceBG, (0, 0))
                 #screen.fill(background)
@@ -256,15 +261,19 @@ def main():
                 
                 Game.state = STATE_PREPARATION
                 pygame.display.flip()
-                
+            
+            ## Game Paused
             elif Game.state == STATE_PREPARATION:
 
+                ## Display
                 drawTick += 1
+                #print(clock.get_fps())
                 if drawTick >= clock.get_fps()/24:
                     #print(clock.get_fps())
                     drawTick = 0
                     drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
 
+            ## Game Running
             elif Game.state == STATE_GAME:
                 # Spawn any new enemy in the wave queue
                 wave.spawn()
@@ -290,7 +299,7 @@ def main():
 def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
 
     # Empty layer 2 (MOUSE OVER WENT OUTSIDE A TURRET SPOT...)
-    layer.fill(pink)
+    layer.fill(spritepink)
 
     #Draw the route
     #drawRoute(map, screen)

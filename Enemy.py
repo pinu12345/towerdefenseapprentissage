@@ -101,6 +101,8 @@ class Enemy(pygame.sprite.Sprite):
                 self.direction = cardS
                 self.y += 1
                 return
+
+        ## Fin de la partie ò_ó
         self.kill()
         
     def setStartPosition(self, x, y, direction):
@@ -118,6 +120,7 @@ class Enemy(pygame.sprite.Sprite):
     def takeDamage(self, damage):
         self.HP = max(0, self.HP - damage)
         if self.HP <= 0:
+            ## Verifie si il reste encore des enemies
             self.kill()
     
     def draw(self, screen):

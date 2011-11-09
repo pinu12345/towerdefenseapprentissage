@@ -11,7 +11,6 @@ class Wave():
         self.spawnDelay = 0
         self.map = map
         self.enemies = pygame.sprite.OrderedUpdates()
-        self.newRandomSpawn()
 
     def newSpawn(self, type, count):
         self.spawnType = type

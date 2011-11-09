@@ -53,6 +53,7 @@ def main():
     Images.init()
 
     menubackground = Images.Background
+    interfaceBG = Images.InterfaceBG
     rect_list = []
 
     # Initialize the map
@@ -234,9 +235,10 @@ def main():
                         shots.clear()
             
             if Game.state == STATE_LOADGAME:
-                screen.fill(background)
-                pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
-                pygame.draw.rect(screen, background, ([0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize]))
+                screen.blit(interfaceBG, (0, 0))
+                #screen.fill(background)
+                #pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
+                #pygame.draw.rect(screen, background, ([0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize]))
                 
                 # Draw the map
                 drawMap(map, screen)

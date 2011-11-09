@@ -33,5 +33,9 @@ def init():
             tmpImg.set_colorkey(spritepink)
             tmpImg.blit(Images.spriteSheet, (0, 0), (mapOffsets[i][j], (tileSize, tileSize)))
             Images.MapImages[i].append(tmpImg)
-
+    
+    # Titre
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'title.png')).convert()
+    
+    # Fond d'interface
+    Images.InterfaceBG = pygame.image.load(os.path.join ('Images\Interface', 'Background.png')).convert()

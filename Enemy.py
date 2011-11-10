@@ -109,8 +109,9 @@ class Enemy(pygame.sprite.Sprite):
             #print 'An enemy has passed, restarting level...'
             #Game.level.restart()
             
-            print 'An enemy has passed, restarting wave...'
-            Game.level.restartWave()
+            print ' \n --- FAILURE ---\n'
+            #Game.level.restartWave()
+            Game.level.autoWave()
         
     def setStartPosition(self, x, y, direction):
         self.x = x * 32
@@ -127,11 +128,11 @@ class Enemy(pygame.sprite.Sprite):
     def takeDamage(self, damage):
         self.HP = max(0, self.HP - damage)
         if self.HP <= 0:
-            ## Verifie si il reste encore des enemies
+            ## Verifie s'il reste encore des ennemis
             self.kill()
             Game.enemyCount -= 1
             if Game.enemyCount == 0:
-                print 'Wave completed'
+                print ' Wave completed'
                 Game.state = STATE_PREPARATION
                 Game.level.nextWave()
     

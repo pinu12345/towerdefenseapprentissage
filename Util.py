@@ -61,8 +61,8 @@ def findEntrance(M):
 def emplacementValues(M):
     # renvoie une liste d'emplacements avec leurs coordonnees 
     #   et leur qualite pour chaque type et niveau de tourelle
-    #   coordonnees: eM[num_emp][0], eM[num_emp][1]
-    #   valeur d'emp: eM[num_emp][2][tower_type][tower_level]
+    #   coordonnees: empVal[num_emp][0], empVal[num_emp][1]
+    #   valeur d'emp: empVal[num_emp][2][tower_type][tower_level]
     ## approximatives pour l'instant, pas au pixel pres
     emplacements = []
     for y in range(mapHeight):

@@ -72,6 +72,8 @@ def main():
 
     # Initialize the level
     Game.level = Level.Level(map, wave, towers, towerBar, menu)
+    Game.level.randomLevel()
+    #Game.level.autoWave()
 
     # Set title of screen
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
@@ -196,10 +198,10 @@ def main():
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
-                                    towers.placeTower(map, towerBar.selectedTower, row, column)
+                                    towers.placeTower(map, towerBar.selectedTower, 0, row, column)
                                     Game.placedTower = 1
                                 else:
-                                    towers.updateTower(map, towerBar.selectedTower, row, column)
+                                    towers.updateTower(map, towerBar.selectedTower, 0, row, column)
                                     Game.placedTower = 1
 
                     # Inside Menu
@@ -232,11 +234,11 @@ def main():
                     elif event.key == pygame.K_6:
                         towerBar.selectTower(6)
                     elif event.key == pygame.K_EQUALS:
-                        if Game.speedModifier <= 10.0:
-                            Game.speedModifier *= 1.3
+                        if Game.speedModifier <= 8.0:
+                            Game.speedModifier *= 2
                     elif event.key == pygame.K_MINUS:
-                        if Game.speedModifier >= 0.1:
-                            Game.speedModifier /= 1.3
+                        if Game.speedModifier >= 0.5:
+                            Game.speedModifier /= 2
                     elif event.key == pygame.K_r:
                         towers.clear()
                         wave.clear()

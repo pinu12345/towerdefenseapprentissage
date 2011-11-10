@@ -4,7 +4,7 @@ from Util import *
 from numpy import *
 
 class Tower(pygame.sprite.Sprite):
-    def __init__(self, row, column, type, map):
+    def __init__(self, row, column, type, level, map):
         pygame.sprite.Sprite.__init__(self)
         self.direction = cardN
         self.drawDirection = cardN
@@ -14,7 +14,7 @@ class Tower(pygame.sprite.Sprite):
         self.justFired = 0
         self.type = type
         self.state = 0
-        self.level = 0 ## A MODIFIER?
+        self.level = level
         self.name = TowerStats[self.type][self.level][TowerNAME]
         self.upgrades = len(TowerStats[self.type]) -1
         self.cooldown = 0

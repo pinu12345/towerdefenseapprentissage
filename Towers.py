@@ -9,19 +9,19 @@ class Towers():
         self.towers = pygame.sprite.Group()
         self.wave = wave
 
-    def placeTower(self, map, towerType, row, column):
-        addedTower = Tower.Tower(row, column, towerType-1, self.map)
+    def placeTower(self, map, towerType, towerLevel, row, column):
+        addedTower = Tower.Tower(row, column, towerType-1, towerLevel, self.map)
         self.towers.add(addedTower)
-        map.T[row][column] = addedTower
+        self.map.T[row][column] = addedTower
 
-    def updateTower(self, map, towerType, row, column):
+    def updateTower(self, map, towerType, towerLevel, row, column):
         currentTower = map.T[row][column]
         if towerType-1 == currentTower.type:
             currentTower.upgrade()
         else:
             currentTower.resetEmplacement()
             currentTower.kill()
-            addedTower = Tower.Tower(row, column, towerType-1, self.map)
+            addedTower = Tower.Tower(row, column, towerType-1, towerLevel, self.map)
             self.towers.add(addedTower)
             map.T[row][column] = addedTower
 

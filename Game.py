@@ -71,7 +71,7 @@ def main():
     menu = Menu.Menu(map, wave, towers)
 
     # Initialize the level
-    level = Level.Level(map, wave, towers, towerBar, menu)
+    Game.level = Level.Level(map, wave, towers, towerBar, menu)
 
     # Set title of screen
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
@@ -116,7 +116,7 @@ def main():
                     map.loadFileMap('map2')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 5:
-                    level.loadLevel('map3')
+                    Game.level.loadLevel('map3')
                     Game.state = STATE_LOADGAME
                 else:
                     pygame.quit()

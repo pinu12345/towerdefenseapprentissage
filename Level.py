@@ -5,19 +5,22 @@ from Util import *
 
 class Level():
     def __init__(self, map, waves, towers, towerBar, menu):
-        self.levelBudget = 0
-        self.levelUpgrades = 0
-        self.levelWaves = []
-        self.levelTowers = []
-        self.levelMap = []
-        
+        self.resetLevel()
         self.map = map
         self.waves = waves
         self.towers = towers
         self.towerBar = towerBar
         self.menu = menu
 
+    def resetLevel(self):
+        self.levelBudget = 0
+        self.levelUpgrades = 0
+        self.levelWaves = []
+        self.levelTowers = []
+        self.levelMap = []
+        
     def randomLevel(self):
+        self.resetLevel()
         self.levelBudget = 9999
         self.levelUpgrades = 2
         self.levelWaves = [[0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [5, 5], [6, 5], [7, 5], [8, 5]]
@@ -26,6 +29,7 @@ class Level():
         self.start()
 
     def loadLevel(self, levelName, levelMap = 'levelMap'):
+        self.resetLevel()
         if levelMap != 'levelMap':
             self.levelMap = open(os.path.join('Maps', levelMap + '.txt')).readlines()
         else:
@@ -53,14 +57,16 @@ class Level():
         self.currentWave = 0
         self.maxWave = len(self.levelWaves)
         self.money = self.levelBudget
-        print self.levelMap
-        print self.maxWave
         self.map.loadMap(self.levelMap)
         self.nextWave()
-        
+
+    def restart(self):
+        self.currentWave = 0
+        self.nextWave()
+    
     def nextWave(self):
         if self.currentWave < self.maxWave:
             self.waves.newSpawn(self.levelWaves[self.currentWave][0], self.levelWaves[self.currentWave][1])
             self.currentWave += 1
         else:
-            pass
+            print 'Level complete, congratulations!'

@@ -103,10 +103,14 @@ class Enemy(pygame.sprite.Sprite):
                 return
         ## Fin de la partie
         if Game.state != STATE_PREPARATION:
-            print 'An enemy has passed, restarting level...'
             Game.state = STATE_PREPARATION
             self.wave.clear()
-            Game.level.restart()
+            
+            #print 'An enemy has passed, restarting level...'
+            #Game.level.restart()
+            
+            print 'An enemy has passed, restarting wave...'
+            Game.level.restartWave()
         
     def setStartPosition(self, x, y, direction):
         self.x = x * 32

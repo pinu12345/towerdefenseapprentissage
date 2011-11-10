@@ -5,14 +5,16 @@ from Util import *
 
 class Level():
     def __init__(self, map, waves, towers, towerBar, menu):
-        self.resetLevel()
         self.map = map
         self.waves = waves
         self.towers = towers
         self.towerBar = towerBar
         self.menu = menu
+        self.resetLevel()
 
     def resetLevel(self):
+        self.towers.clear()
+        self.waves.clear()
         self.levelBudget = 0
         self.levelUpgrades = 0
         self.levelWaves = []
@@ -58,15 +60,23 @@ class Level():
         self.maxWave = len(self.levelWaves)
         self.money = self.levelBudget
         self.map.loadMap(self.levelMap)
-        self.nextWave()
+        self.startWave()
 
     def restart(self):
         self.currentWave = 0
         self.nextWave()
     
+    def restartWave(self):
+        self.startWave()
+    
     def nextWave(self):
+        self.currentWave += 1
+        self.startWave()
+    
+    def startWave(self):
         if self.currentWave < self.maxWave:
             self.waves.newSpawn(self.levelWaves[self.currentWave][0], self.levelWaves[self.currentWave][1])
-            self.currentWave += 1
         else:
             print 'Level complete, congratulations!'
+            
+            self.randomLevel()

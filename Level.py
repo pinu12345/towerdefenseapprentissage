@@ -21,6 +21,8 @@ class Level():
         self.levelWaves = []
         self.levelTowers = []
         self.levelMap = []
+        self.levelMessages = []
+
         
     def randomLevel(self):
         self.resetLevel()
@@ -32,12 +34,13 @@ class Level():
         enemyNumber = randint(1, int(1000/EnemyStats[enemyType][EnemyVALUE]))
         self.levelWaves = [[enemyType, enemyNumber]]
         self.levelTowers = [1, 2, 3, 4, 5, 6]
+        self.levelMessages = []
         self.levelMap = RandomMap.RandomMap().M
         self.start()
     
     
     def autoWave(self):
-        print "\n\n --- NEW LEVEL ---"
+        print "\n\n --- NEW LEVEL (autoWave)---"
         self.resetLevel()
         self.levelBudget = 1000000
         self.levelMap = RandomMap.RandomMap().M
@@ -76,23 +79,33 @@ class Level():
         print
         empVal = emplacementValues(M)
         availableEmps = range(len(empVal))
+        maxLoop = 0
         while spentBudget < usableBudget and len(availableEmps) > 0:
+            maxLoop += 1
+            #print ('Placing towers : ', spentBudget, usableBudget, len(availableEmps), maxLoop)
             rEmp = randint(0, len(empVal))
             if rEmp in availableEmps:
                 rTower = availableTowers[randint(0, len(availableTowers)-1)]
                 rLevel = randint(0, self.levelUpgrades)
+                #print ('rEmp', rEmp, rTower, rLevel)
                 if empVal[rEmp][2][rTower][rLevel]:
+                    #print 'empVal'
                     self.towers.placeTower(map, rTower, rLevel, \
                         empVal[rEmp][0], empVal[rEmp][1])
                     spentBudget += TowerStats[rTower][rLevel][TowerPRICE]
                     availableEmps.remove(rEmp)
-        
+                else:
+                    if maxLoop > 1000:
+                        break
+        print('Finished placing towers')
+
         # Probablement utile
         self.levelTowers = [1, 2, 3, 4, 5, 6]
-        
+
+        # Send the waves
         self.start()
-        
-        while Game.state == STATE_PREPARATION: 
+
+        if Game.state == STATE_PREPARATION: 
             Game.state = STATE_GAME
     
     def loadLevel(self, levelName, levelMap = 'levelMap'):
@@ -101,23 +114,26 @@ class Level():
             self.levelMap = open(os.path.join('Maps', levelMap + '.txt')).readlines()
         else:
             self.levelFile = open(os.path.join('Maps', levelName+'.txt')).readlines()
+        
         for i in range(len(self.levelFile)):
             if i == 1:
                 self.levelBudget = int(self.levelFile[i])
-            if i == 4:
+            elif i == 4:
                 for tower in self.levelFile[i].rsplit(','):
                     type = int(tower.strip())
                     self.levelTowers.append(type)
-            if i == 7:
+            elif i == 7:
                 self.levelUpgrades = int(self.levelFile[i])
-            if i == 10:
+            elif i == 10:
                 for wave in self.levelFile[i].rsplit(','):
                     type = wave.strip().rsplit(' ')[0]
                     count = wave.strip().rsplit(' ')[1]
                     self.levelWaves.append([int(type), int(count)])
-            if levelMap == 'levelMap':
-                if i >= 13:
+            elif (i >= 13) and (i <= 28):
+                if levelMap == 'levelMap':
                     self.levelMap.append(self.levelFile[i])
+            elif i >= 32:
+                self.levelMessages.append(self.levelFile[i])
         self.start()
     
     def start(self):
@@ -125,6 +141,9 @@ class Level():
         self.maxWave = len(self.levelWaves)
         self.money = self.levelBudget
         self.map.loadMap(self.levelMap)
+        ## Verify if there is a message at 0
+        if self.levelMessages != []:
+            pass
         self.startWave()
 
     def restart(self):
@@ -136,6 +155,9 @@ class Level():
     
     def nextWave(self):
         self.currentWave += 1
+        ## Verify if there is a message at currentWave
+        if self.levelMessages != []:
+            pass
         self.startWave()
     
     def startWave(self):
@@ -148,5 +170,3 @@ class Level():
             #    f.write(' '.join(self.dataLog), "\n")
             #self.randomLevel()
             self.autoWave()
-            while Game.state == STATE_PREPARATION: 
-                Game.state = STATE_GAME

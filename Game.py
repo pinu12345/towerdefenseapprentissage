@@ -14,13 +14,8 @@ def main():
     
     Game.framesPerSecond = 48
     Game.speedModifier = 1
+    Game.autoMode = 0
     
-    mapWidth = 24
-    mapHeight = 16
-    tileSize = 32
-
-    cash = 2100
-    health = 100
     drawTick = 0
     Game.state = STATE_INITMENU
 
@@ -31,7 +26,10 @@ def main():
     layer = pygame.Surface(size)
     layer.set_colorkey(spritepink)
     layer.set_alpha(120)
+    
+    # Variables to tell Game what to draw
     Game.drawMouseOver = 0
+    Game.drawMessage = 0
     Game.repaintMap = 0
     Game.placedTower = 0
 
@@ -266,7 +264,6 @@ def main():
             
             ## Game Paused
             elif Game.state == STATE_PREPARATION:
-
                 ## Display
                 drawTick += 1
                 #print(clock.get_fps())
@@ -285,12 +282,13 @@ def main():
                 towers.target(shots)
 
                 ## Display
-                drawTick += 1
-                #print(clock.get_fps())
-                if drawTick >= clock.get_fps()/24:
+                if Game.autoMode:
+                    drawTick += 1
                     #print(clock.get_fps())
-                    drawTick = 0
-                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
+                    if drawTick >= clock.get_fps()/24:
+                        #print(clock.get_fps())
+                        drawTick = 0
+                        drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
 
         #Limit to 24 frames per second
         #print(pygame.time.get_ticks())
@@ -327,6 +325,9 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         else:
             drawTowerEmplacements(map, screen)
         Game.placedTower = 0
+    
+    if Game.drawMessage:
+        pass
     
     # Draw the towers
     # IF NEW TOWER...

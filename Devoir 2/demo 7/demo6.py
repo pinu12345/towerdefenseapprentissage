@@ -7,12 +7,12 @@ import numpy
 import random
 import pylab
 import time
-import perceptron as perceptron
-import classif_lineaire as classif_lineaire
-import utilitaires as utilitaires
-#import perceptron_corrige as perceptron
-#import classif_lineaire_corrige as classif_lineaire
-#import utilitaires_corrige as utilitaires
+#import perceptron as perceptron
+#import classif_lineaire as classif_lineaire
+#import utilitaires as utilitaires
+import perceptron_corrige as perceptron
+import classif_lineaire_corrige as classif_lineaire
+import utilitaires_corrige as utilitaires
 
 
 def run_non_linear_data():

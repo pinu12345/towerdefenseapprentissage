@@ -170,3 +170,6 @@ def run_iris():
         
     else:
         print 'Trop de dimensions (', len(train_cols),') pour pouvoir afficher la surface de decision'
+
+#run_iris()
+run_non_linear_data()

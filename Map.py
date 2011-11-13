@@ -134,13 +134,21 @@ class Map:
                     self.S[row].append(randImage)
         random.seed()
         
+        P = preciseMap(M)
+        print ''
+        for i in range(60):
+            print ' ',
+            for j in range(50):
+                print P[i][j]
+            print
+        
         entrance = findEntrance(self.M)
         self.entranceY = entrance[0][0]
         self.entranceX = entrance[0][1]
         self.entranceDirection = entrance[1]
 
-    def loadTestMap(self):
-        self.loadFileMap('testmap')
+    def loadBasicMap(self):
+        self.loadFileMap('basicmap')
     
     def loadRandomMap(self):
         self.loadMap(RandomMap.RandomMap().M)

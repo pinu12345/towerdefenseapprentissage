@@ -49,7 +49,7 @@ class RandomMap:
 		if prox < prox_min or prox > prox_max:
 			prox = prox_rec
 		
-		print "\n empl:", empl, "\n prox:", prox
+		#print "\n empl:", empl, "\n prox:", prox
 		
 		# Caracteres de la carte
 		empty, path, turret, base = \

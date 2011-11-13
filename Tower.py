@@ -79,6 +79,7 @@ class Tower(pygame.sprite.Sprite):
         self.delay = TowerStats[self.type][self.level][TowerDELAY]
         self.range = TowerStats[self.type][self.level][TowerRANGE]
         self.splash = TowerStats[self.type][self.level][TowerSPLASH]
+        #print self.row, self.column
         self.map.S[self.row][self.column] = Images.MapImages[MAPEMPLACEMENT][self.level]
         self.image = Images.TowerImages[self.type][0]
     

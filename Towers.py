@@ -10,7 +10,7 @@ class Towers():
         self.wave = wave
 
     def placeTower(self, map, towerType, towerLevel, row, column):
-        addedTower = Tower.Tower(row, column, towerType-1, towerLevel, self.map)
+        addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
         self.towers.add(addedTower)
         self.map.T[row][column] = addedTower
 

@@ -58,6 +58,26 @@ def findEntrance(M):
         if M[y][mapWidth-1] == car_path:
             return [[y, mapWidth-1], cardW]
 
+def preciseMap(M):
+    P = [[car_empty] * len(M[i]) for i in range(len(M))]
+    vcars = [car_path, car_base]
+    for i in range(len(P)):
+        for j in range(len(P[0])):
+            # le point precis est-il au milieu d'une case?
+            isq, jsq = i % tileSize, j % tileSize
+            if isq and jsq:
+                if pixelToMap(i, j) in vcars:
+                    P[i][j] = car_path
+            elif isq:
+                if pixelToMap(i, j) in vcars \
+                    and pixelToMap(i, j+1) in vcars:
+                    P[i][j] = car_path
+            elif jsq:
+                if pixelToMap(i, j) in vcars \
+                    and pixelToMap(i+1) in vcars:
+                    P[i][j] = car_path
+    return P
+            
 def emplacementValues(M):
     # renvoie une liste d'emplacements avec leurs coordonnees 
     #   et leur qualite pour chaque type et niveau de tourelle
@@ -68,26 +88,35 @@ def emplacementValues(M):
     for y in range(mapHeight):
         for x in range(mapWidth):
             if M[y][x] == car_turret:
-                cur_emp = [y, x, []]
+                cur_emp = [y, x]
                 #py, px = mapToPixel(y), mapToPixel(x)
-                for tower in range(len(TowerStats)):
-                    cur_emp[2].append([])
-                    for level in range(len(TowerStats[tower])):
-                        cur_emp[2][tower].append([])
-                        tower_range = TowerStats[tower][level][TowerRANGE]/tileSize
-                        tower_splash = TowerStats[tower][level][TowerSPLASH]/tileSize
-                        offset = max(tower_range, tower_splash)
-                        tower_reach = 0
-                        for ty in range(max(0, y-offset), \
-                            min(mapHeight-1, y+offset+1)):
-                            for tx in range(max(0, x-offset), \
-                                min(mapWidth-1, x+offset+1)):
-                                if M[ty][tx] == car_path:
-                                    dM = distMap(x, y, tx, ty)
-                                    if dM <= tower_range:
-                                        tower_reach += 1
-                                    elif dM <= tower_splash:
-                                        tower_reach += (tower_splash-dM)/tower_splash
-                        cur_emp[2][tower][level] = int(round(tower_reach))
+                cur_emp.append(singleEmpValue(M, y, x))
                 emplacements.append(cur_emp)
     return emplacements
+    
+def singleEmpValue(M, y, x):
+    empTV = []
+    for tower in range(len(TowerStats)):
+        empTV.append([])
+        for level in range(len(TowerStats[tower])):
+            empTV[tower].append([])
+            tower_reach = singleTowerEmpValue(M, y, x, tower, level)
+            empTV[tower][level] = int(round(tower_reach))
+    return empTV
+    
+def singleTowerEmpValue(M, y, x, tower, level):
+    tower_range = TowerStats[tower][level][TowerRANGE]/tileSize
+    tower_splash = TowerStats[tower][level][TowerSPLASH]/tileSize
+    offset = max(tower_range, tower_splash)
+    tower_reach = 0
+    for ty in range(max(0, y-offset), \
+        min(mapHeight-1, y+offset+1)):
+        for tx in range(max(0, x-offset), \
+            min(mapWidth-1, x+offset+1)):
+            if M[ty][tx] == car_path:
+                dM = distMap(x, y, tx, ty)
+                if dM <= tower_range:
+                    tower_reach += 1
+                elif dM <= tower_splash:
+                    tower_reach += (tower_splash-dM)/tower_splash
+    return tower_reach

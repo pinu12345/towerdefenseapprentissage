@@ -23,7 +23,7 @@ class TowerBar():
     #  Si une tour est selectionner dessine un arriere plan en or
     #  Sinon dessine un arriere plan noir
     def draw(self, screen):
-        print('Redrawing towerBar')
+        #print('Redrawing towerBar')
         for i in range(self.towerCount):
             if i == self.selectedTower-1:
                 screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)

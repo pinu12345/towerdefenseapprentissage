@@ -10,11 +10,12 @@ def main():
     # os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
     pygame.mouse.set_cursor(*pygame.cursors.tri_left)
-    os.environ['SDL_VIDEO_CENTERED'] = '1'
+    os.environ['SDL_VIDEO_CENTERED'] = '1'#
     
     Game.framesPerSecond = 48
     Game.speedModifier = 1
     Game.autoMode = 0
+    Game.balanceMode = 0
     
     drawTick = 0
     Game.state = STATE_INITMENU
@@ -35,12 +36,14 @@ def main():
 
     # Initialize the MainMenu
     mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
-               [('Start Random Map', 1, None),
-                ('Start Test Map', 2, None),
+               [('Start Automatic Tests', 1, None),
+                ('Start Basic Map', 2, None),
                 ('Start Map 1', 3, None),
                 ('Start Map 2', 4, None),
                 ('Start Map 3', 5, None),
-                ('Exit', 6, None)])
+                ('Start Test Map', 6, None),
+                ('Start Balance Tests', 7, None),
+                ('Exit', 8, None)])
     gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
                 ('Back to main menu (current progress will be lost!)', 2, None)])
@@ -52,7 +55,7 @@ def main():
 
     # Initialize the map
     map = Map.Map(mapWidth,mapHeight)
-
+    
     # Initialize the wave
     wave = Wave.Wave(map)
     
@@ -70,8 +73,6 @@ def main():
 
     # Initialize the level
     Game.level = Level.Level(map, wave, towers, towerBar, menu)
-    Game.level.randomLevel()
-    #Game.level.autoWave()
 
     # Set title of screen
     pygame.display.set_caption("4D tower defense - (c) POB + ND")
@@ -84,7 +85,7 @@ def main():
 
     # -------- Main Program Loop -----------
     while close_game == False:
-
+        
         ## Init menu
         if Game.state == STATE_INITMENU:
             screen.fill(background)
@@ -104,10 +105,11 @@ def main():
                 if mainMenustate == 0:
                     rect_list, mainMenustate = mainMenu.update(e, mainMenustate)
                 elif mainMenustate == 1:
-                    map.loadRandomMap()
                     Game.state = STATE_LOADGAME
+                    Game.autoMode = 1
+                    Game.level.autoWave()
                 elif mainMenustate == 2:
-                    map.loadFileMap('testmap')
+                    map.loadFileMap('basicmap')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 3:
                     map.loadFileMap('map1')
@@ -118,6 +120,13 @@ def main():
                 elif mainMenustate == 5:
                     Game.level.loadLevel('map3')
                     Game.state = STATE_LOADGAME
+                elif mainMenustate == 6:
+                    Game.level.loadLevel('testmap')
+                    Game.state = STATE_LOADGAME
+                elif mainMenustate == 7:
+                    Game.state = STATE_LOADGAME
+                    Game.balanceMode = 1
+                    Game.level.balanceWave()
                 else:
                     pygame.quit()
                     sys.exit()
@@ -196,10 +205,10 @@ def main():
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
-                                    towers.placeTower(map, towerBar.selectedTower, 0, row, column)
+                                    towers.placeTower(map, towerBar.selectedTower-1, 0, row, column)
                                     Game.placedTower = 1
                                 else:
-                                    towers.updateTower(map, towerBar.selectedTower, 0, row, column)
+                                    towers.updateTower(map, towerBar.selectedTower-1, 0, row, column)
                                     Game.placedTower = 1
 
                     # Inside Menu
@@ -232,11 +241,11 @@ def main():
                     elif event.key == pygame.K_6:
                         towerBar.selectTower(6)
                     elif event.key == pygame.K_EQUALS:
-                        if Game.speedModifier <= 8.0:
-                            Game.speedModifier *= 2
+                        if Game.speedModifier <= 25.0:
+                            Game.speedModifier *= 5
                     elif event.key == pygame.K_MINUS:
-                        if Game.speedModifier >= 0.5:
-                            Game.speedModifier /= 2
+                        if Game.speedModifier >= 0.2:
+                            Game.speedModifier /= 5
                     elif event.key == pygame.K_r:
                         towers.clear()
                         wave.clear()
@@ -264,14 +273,17 @@ def main():
             
             ## Game Paused
             elif Game.state == STATE_PREPARATION:
-                ## Display
-                drawTick += 1
-                #print(clock.get_fps())
-                if drawTick >= clock.get_fps()/24:
+                if Game.autoMode or Game.balanceMode:
+                    Game.state = STATE_GAME
+                else:
+                    ## Display
+                    drawTick += 1
                     #print(clock.get_fps())
-                    drawTick = 0
-                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
-
+                    if drawTick >= clock.get_fps()/24:
+                        #print(clock.get_fps())
+                        drawTick = 0
+                        drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
+                    
             ## Game Running
             elif Game.state == STATE_GAME:
                 # Spawn any new enemy in the wave queue
@@ -282,7 +294,7 @@ def main():
                 towers.target(shots)
 
                 ## Display
-                if Game.autoMode:
+                if not Game.autoMode:
                     drawTick += 1
                     #print(clock.get_fps())
                     if drawTick >= clock.get_fps()/24:

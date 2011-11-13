@@ -10,6 +10,7 @@
     Placer les graphiques de l'interface
     Bouton accelerer/decelerer le jeu
     Implanter les graphiques Radio
+    Fonction resetCooldowns
     
     [Nic]
     -- OU -- Fonction pour placer les tourelles choisies aux meileurs endroits

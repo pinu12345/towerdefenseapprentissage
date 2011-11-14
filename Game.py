@@ -121,7 +121,7 @@ def main():
                     Game.level.loadLevel('map3')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 6:
-                    Game.level.loadLevel('testmap')
+                    map.loadFileMap('testmap')
                     Game.state = STATE_LOADGAME
                 elif mainMenustate == 7:
                     Game.state = STATE_LOADGAME
@@ -201,14 +201,14 @@ def main():
 
                     # Inside Map
                     if (column < mapWidth) and (row < mapHeight):
-                        if towerBar.selectedTower != 0:
+                        if towerBar.selectedTower != -1:
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
-                                    towers.placeTower(map, towerBar.selectedTower-1, 0, row, column)
+                                    towers.placeTower(map, towerBar.selectedTower, 0, row, column)
                                     Game.placedTower = 1
                                 else:
-                                    towers.updateTower(map, towerBar.selectedTower-1, 0, row, column)
+                                    towers.updateTower(map, towerBar.selectedTower, 0, row, column)
                                     Game.placedTower = 1
 
                     # Inside Menu
@@ -229,17 +229,17 @@ def main():
                         elif Game.state == STATE_PREPARATION: 
                             Game.state = STATE_GAME
                     elif event.key == pygame.K_1:
-                        towerBar.selectTower(1)
+                        towerBar.selectTower(0)
                     elif event.key == pygame.K_2:
-                        towerBar.selectTower(2)
+                        towerBar.selectTower(1)
                     elif event.key == pygame.K_3:
-                        towerBar.selectTower(3)
+                        towerBar.selectTower(2)
                     elif event.key == pygame.K_4:
-                        towerBar.selectTower(4)
+                        towerBar.selectTower(3)
                     elif event.key == pygame.K_5:
-                        towerBar.selectTower(5)
+                        towerBar.selectTower(4)
                     elif event.key == pygame.K_6:
-                        towerBar.selectTower(6)
+                        towerBar.selectTower(5)
                     elif event.key == pygame.K_EQUALS:
                         if Game.speedModifier <= 25.0:
                             Game.speedModifier *= 5
@@ -372,13 +372,13 @@ def drawOnMouseOver(map, towerBar, screen):
                 ##  vvv  A MODIFER PAR P-O vvv
                 TowerLEVEL_TEMP = 0
                 ##  ^^^  A MODIFER PAR P-O ^^^
-                if TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] == 0:
-                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], 0)
+                if TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE] == 0:
+                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerSPLASH], 0)
                 else:
                     pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
-                    TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE], 0)
-                pygame.draw.circle(screen, ShotGraphs[towerBar.selectedTower-1][ShotCOLOR], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower-1][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
-                screen.blit(Images.TowerImages[towerBar.selectedTower-1][0], (tileSize*column,tileSize*row), None, 0)
+                    TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE], 0)
+                pygame.draw.circle(screen, ShotGraphs[towerBar.selectedTower][ShotCOLOR], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
+                screen.blit(Images.TowerImages[towerBar.selectedTower][0], (tileSize*column,tileSize*row), None, 0)
 
 def drawRoute(map, screen):
     for row in range(mapHeight):

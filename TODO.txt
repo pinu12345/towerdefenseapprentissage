@@ -13,18 +13,15 @@
     Fonction resetCooldowns
     
     [Nic]
-    -- OU -- Fonction pour placer les tourelles choisies aux meileurs endroits
-    -- OU -- Accepter une beaucoup plus grande variete de positions et compenser avec prog
-    Rouler des tonnes de niveaux au hasard et en extraire des donnees
-    
-    --Accompli par Nicolas depuis vendredi:
+    Equilibrer le jeu
+    Continuer l'apprentissage
     * Excel produit automatiquement les tableaux de stats en Python
     * Les nouvelles stats de tourelles et d'ennemis sont implantees
     * Les degats sont calcules de la nouvelle maniere (et splash graduel)
     * Les ennemis se deplacent fichtre vite
     * La barre de vie ennemie est de taille et position variables
     * Les graphiques aleatoires existent
-    * Fonction pour calculer la "valeur" de chaque emplacement
+    * Fonction pour calculer la "valeur" de chaque emplacement avec precision
     
     --Graphiques
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER

@@ -1,7 +1,8 @@
 import sys, os, Level, RandomMap
 from Global import *
-from random import *
 from Util import *
+from random import *
+from math import *
 
 class Level():
     def __init__(self, map, waves, towers, towerBar, menu):
@@ -46,12 +47,14 @@ class Level():
     
     
     def autoWave(self):
-        #print "\n\n --- Automatic Wave ---"
+        print "\n\n --- Automatic Wave Start ---"
         Game.speedModifier = 100000
         self.resetLevel()
         self.levelBudget = 1000000
         self.levelMap = RandomMap.RandomMap().M
         M = self.levelMap
+        P = precisePathMap(M)
+        print " --- Map generated ---"
         
         # Ennemis
         enemyType = randint(0, len(EnemyStats)-1)
@@ -66,13 +69,15 @@ class Level():
         
         self.levelWaves = [[enemyType, enemyNumber]]
         self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
+        print " --- Enemies chosen ---"
         
         # Tourelles
         self.levelUpgrades = randint(0, 2)
         #print "\n Allowed upgrades:", self.levelUpgrades
-        usableBudget = randint(2, 10) * enemyValue
+        usableBudget = randint(1, 8) * enemyValue
         spentBudget = 0
         #print " Available budget:", usableBudget
+        print " --- Determining available towers ---"
         availableTowers = []
         for i in range(len(TowerStats)):
             if getrandbits(1):
@@ -83,8 +88,10 @@ class Level():
         #for towerNum in availableTowers:
             #print TowerStats[towerNum][0][TowerNAME],
         #print
-        empVal = emplacementValues(M)
+        print " --- Calculating emplacement values ---"
+        empVal = emplacementValues(M, P)
         availableEmps = range(len(empVal))
+        print ' --- Starting tower placement ---'
         maxLoop = 0
         towerDataLog = ''
         self.start()
@@ -108,38 +115,47 @@ class Level():
                         break
         #print self.dataLog
         self.dataLog = '|'.join([self.dataLog, towerDataLog[1:]])
-        #print('Finished placing towers')
+        #print(' Finished placing towers')
+        print " --- Automatic Wave End ---\n"
 
     def balanceWave(self):
-        Game.speedModifier = 25
+        Game.speedModifier = 2500
         self.resetLevel()
         self.levelBudget = 1000000
         self.levelMap = open(os.path.join('Maps', 'BalanceMap.txt')).readlines()
         M = self.levelMap
+        P = precisePathMap(M)
         
-        # Ennemis
-        enemyType = 0
-        enemyStep = 4
-        benum = range(enemyStep, enemyStep*9, enemyStep)
-        enemyNumber = benum[self.BEINDEX]
+        ## Ennemis
+        #enemyType = 0
+        enemyType = randint(0, 8)
+        #benum = range(enemyStep, enemyStep*9, enemyStep)
+        #enemyStep = 4
+        enemyValue = EnemyStats[enemyType][EnemyVALUE]
+        enemyBudget = randint(1, 1000)
+        #enemyNumber = benum[self.BEINDEX]
+        enemyNumber = int(ceil(enemyBudget/enemyValue))
         self.levelWaves = [[enemyType, enemyNumber]]
-        self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
+        #self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
+        self.dataLog = [str(enemyType), str(enemyNumber)]
         
-        # Tourelles
-        bTower = 1
-        bLevel = 0
-        brows = range(13, \
-            max(0, 12-TowerStats[bTower][bLevel][TowerRANGE]//tileSize), -1)
-        bcols = [11, 12, 10, 13, 9, 14, 8, 15]
-        bcols = [11, 12, 10, 13]
-        towerDataLog = ''
+        ## Tourelles
+        #bTower = 1
+        bTower = randint(0, 5)
+        #bLevel = 0
+        bLevel = randint(0, 2)
+        #brows = range(13, \
+        #    max(0, 12-TowerStats[bTower][bLevel][TowerRANGE]//tileSize), -1)
+        #bcols = [11, 12, 10, 13, 9, 14, 8, 15]
+        #bcols = [11, 12, 10, 13]
+        #towerDataLog = ''
         self.start()
         for n in range(self.BTNUMBER):
             self.towers.placeTower(map, bTower, bLevel, brows[self.BSTEP], bcols[n])
-            sEV = singleEmpValue(M, brows[self.BSTEP], bcols[n])
-            #print sEV[bTower][bLevel]
+            sTEV = singleTowerEmpValue(P, brows[self.BSTEP], bcols[n], bTower, bLevel)
+            #print sTEV
             towerDataLog = ';'.join([towerDataLog, ','.join([ \
-                str(bTower), str(bLevel), str(sEV[bTower][bLevel])])])
+                str(bTower), str(bLevel), str(sTEV)])])
         if self.BTNUMBER < len(bcols):
             self.BTNUMBER += 1
         elif self.BEINDEX < len(benum)-1:
@@ -214,7 +230,7 @@ class Level():
         if Game.balanceMode:
             with open("BalanceData.txt", "a") as f:
                 f.write(''.join([self.dataLog, "\n"]))
-        else:
+        elif Game.autoMode:
             with open("LearningData.txt", "a") as f:
                 f.write(''.join([self.dataLog, "\n"]))
         #self.randomLevel()

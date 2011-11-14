@@ -16,12 +16,12 @@ class Towers():
 
     def updateTower(self, map, towerType, towerLevel, row, column):
         currentTower = map.T[row][column]
-        if towerType-1 == currentTower.type:
+        if towerType == currentTower.type:
             currentTower.upgrade()
         else:
             currentTower.resetEmplacement()
             currentTower.kill()
-            addedTower = Tower.Tower(row, column, towerType-1, towerLevel, self.map)
+            addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
             self.towers.add(addedTower)
             map.T[row][column] = addedTower
 

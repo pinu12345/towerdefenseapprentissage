@@ -27,7 +27,7 @@ def distPixel(a, b, c = -1000, d = -1000, map = 0):
     # ou a = y1, b = x1, c = y2, d = x2
     # input et output en pixels
     if c == -1000 or d == -1000:
-        return sqrt((a[0]-b[0])**2+(a[1]-b[1])**2) - .1*tileSize
+        return sqrt((a[0]-b[0])**2+(a[1]-b[1])**2) - .5
     else:
         return sqrt((a-c)**2+(b-d)**2) - 1
 
@@ -58,63 +58,97 @@ def findEntrance(M):
         if M[y][mapWidth-1] == car_path:
             return [[y, mapWidth-1], cardW]
 
-def preciseMap(M):
-    P = [[car_empty] * len(M[i]) for i in range(len(M))]
+def precisePathMap(M):
+    P = [[car_empty]*mapWidth*tileSize for i in range(mapHeight*tileSize)]
+    #print '\n\n'
+    #print mapHeight, mapWidth
+    #print len(P), len(P[0])
     vcars = [car_path, car_base]
     for i in range(len(P)):
         for j in range(len(P[0])):
             # le point precis est-il au milieu d'une case?
-            isq, jsq = i % tileSize, j % tileSize
+            isq, jsq = not i % tileSize, not j % tileSize
+            iM, jM = pixelToMap(i), pixelToMap(j)
+            curp = M[iM][jM]
             if isq and jsq:
-                if pixelToMap(i, j) in vcars:
+                if curp in vcars:
                     P[i][j] = car_path
             elif isq:
-                if pixelToMap(i, j) in vcars \
-                    and pixelToMap(i, j+1) in vcars:
+                if jM+1 < mapWidth:
+                    nexp = M[iM][jM+1]
+                else:
+                    nexp = curp
+                if curp in vcars and nexp in vcars:
                     P[i][j] = car_path
             elif jsq:
-                if pixelToMap(i, j) in vcars \
-                    and pixelToMap(i+1) in vcars:
+                if iM+1 < mapHeight:
+                    nexp = M[iM+1][jM]
+                else:
+                    nexp = curp
+                if curp in vcars and nexp in vcars:
                     P[i][j] = car_path
     return P
-            
-def emplacementValues(M):
+
+def emplacementList(M):
     # renvoie une liste d'emplacements avec leurs coordonnees 
-    #   et leur qualite pour chaque type et niveau de tourelle
+    emplacements = []
+    for y in range(mapHeight):
+        for x in range(mapWidth):
+            if M[y][x] == car_turret:
+                emplacements.append([y, x])
+    return emplacements
+                
+    
+def emplacementProximities(M):
+    # renvoie une liste d'emplacements avec leurs coordonnees 
+    #   et leur proximite au chemin
     #   coordonnees: empVal[num_emp][0], empVal[num_emp][1]
-    #   valeur d'emp: empVal[num_emp][2][tower_type][tower_level]
-    ## approximatives pour l'instant, pas au pixel pres
+    #   proximite: empVal[num_emp][2]
     emplacements = []
     for y in range(mapHeight):
         for x in range(mapWidth):
             if M[y][x] == car_turret:
                 cur_emp = [y, x]
                 #py, px = mapToPixel(y), mapToPixel(x)
-                cur_emp.append(singleEmpValue(M, y, x))
+                cur_emp.append(singleEmpValue(P, y, x))
                 emplacements.append(cur_emp)
     return emplacements
+
+def emplacementValues(M, P):
+    # renvoie une liste d'emplacements avec leurs coordonnees 
+    #   et leur qualite pour chaque type et niveau de tourelle
+    #   coordonnees: empVal[num_emp][0], empVal[num_emp][1]
+    #   valeur d'emp: empVal[num_emp][2][tower_type][tower_level]
+    ## approximatives pour l'instant, pas au pixel pres
+    emplacements = emplacementList(M)
+    for emp in emplacements:
+        y, x = emp[0], emp[1]
+        if M[y][x] == car_turret:
+            emp.append(singleEmpValue(P, y, x))
+    return emplacements
     
-def singleEmpValue(M, y, x):
+def singleEmpValue(P, y, x):
     empTV = []
     for tower in range(len(TowerStats)):
         empTV.append([])
         for level in range(len(TowerStats[tower])):
             empTV[tower].append([])
-            tower_reach = singleTowerEmpValue(M, y, x, tower, level)
+            tower_reach = singleTowerEmpValue(P, y, x, tower, level)
             empTV[tower][level] = int(round(tower_reach))
     return empTV
     
-def singleTowerEmpValue(M, y, x, tower, level):
-    tower_range = TowerStats[tower][level][TowerRANGE]/tileSize
-    tower_splash = TowerStats[tower][level][TowerSPLASH]/tileSize
+def singleTowerEmpValue(P, y, x, tower, level):
+    y, x = mapToPixel(y), mapToPixel(x)
+    tower_range = TowerStats[tower][level][TowerRANGE]
+    tower_splash = TowerStats[tower][level][TowerSPLASH]
     offset = max(tower_range, tower_splash)
     tower_reach = 0
     for ty in range(max(0, y-offset), \
-        min(mapHeight-1, y+offset+1)):
+        min(mapHeight*tileSize-1, y+offset+1)):
         for tx in range(max(0, x-offset), \
-            min(mapWidth-1, x+offset+1)):
-            if M[ty][tx] == car_path:
-                dM = distMap(x, y, tx, ty)
+            min(mapWidth*tileSize-1, x+offset+1)):
+            if P[ty][tx] == car_path:
+                dM = distPixel(x, y, tx, ty)
                 if dM <= tower_range:
                     tower_reach += 1
                 elif dM <= tower_splash:

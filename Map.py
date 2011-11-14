@@ -10,6 +10,7 @@ class Map:
         self.M = []
         self.O = []
         self.T = []
+        self.P = []
         self.currentOX = 0
         self.currentOY = 0
         self.baseX = 0
@@ -134,13 +135,21 @@ class Map:
                     self.S[row].append(randImage)
         random.seed()
         
-        P = preciseMap(M)
-        print ''
-        for i in range(60):
-            print ' ',
-            for j in range(50):
-                print P[i][j]
-            print
+        #print '\n Generating precise path map...'
+        self.P = precisePathMap(self.M)
+        #print ' Done.\n'
+        #print len(P), len(P[0])
+        #print
+        #stepSize = 16
+        #carPathCount = 0
+        #for i in range(0, len(self.P), stepSize):
+        #    temp = [' ']
+        #    for j in range(0, len(self.P[0]), stepSize):
+        #        temp.append(self.P[i][j])
+        #        if self.P[i][j] == car_path:
+        #            carPathCount += 1
+        #    print ''.join(temp)
+        #print '', carPathCount, '\n'
         
         entrance = findEntrance(self.M)
         self.entranceY = entrance[0][0]
@@ -155,7 +164,7 @@ class Map:
         
     def loadFileMap(self, map_name):
         textMap = open(os.path.join('Maps', map_name+'.txt')).readlines()
-        print textMap
+        #print textMap
         self.loadMap(textMap)
 
     def orientTile(self, x, y):

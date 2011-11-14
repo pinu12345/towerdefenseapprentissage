@@ -111,6 +111,8 @@ TowerDELAY = 4
 TowerSPLASH = 5
 TowerDAMAGE = 6
 
+TowerTYPES = len(TowerStats)*len(TowerStats[0])
+
 # [ ShotColor, ShotOffset, Width, ZoneColor1, ZoneColor2 ]
 ShotGraphs = [
     [ (255, 255, 255), 5, 1, 0 ],

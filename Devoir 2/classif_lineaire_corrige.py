@@ -12,25 +12,41 @@ class classif_lineaire:
           nb_example = train_data.shape[0]
           # application de la transformation des données sur les caratéristiques seules.
           traits = numpy.array(train_data[:,:-1])
+          print 'Traits'
+          print traits
           cibles =  numpy.array(train_data[:,-1])[:, numpy.newaxis]
+          print 'Cibles'
+          print cibles
           train_data_transform = numpy.concatenate((utilitaires.applyTranform(traits,type=type_transformation),cibles), axis=1)
+          print 'Train Data Transform'
+          print train_data_transform
 
+          print 'Initializing weights'
           self.weights = numpy.random.random(train_data_transform.shape[1])
+          print 'Shape : ',train_data_transform.shape[1]
           self.weights[-1] = 0
+          print 'Weights : ',self.weights
           datas = numpy.array(train_data_transform)
           datas[:,-1] = 1
+          print 'Datas : '
+          print datas
           n_iter = 0
           n_iter_max = nb_example*1000
           print n_iter_max
           done = False
           gradSum = numpy.zeros((self.weights.shape[0]))
+          print 'gradSum'
+          print gradSum
           seuil = numpy.exp(-20) 
+          print 'seuil'
+          print seuil
           i = 0
           while (not done and (n_iter < n_iter_max)):
                   # calcul du gradient pour l'exemple en cours
                   grad = -datas[i] * (train_data_transform[i,-1] - numpy.dot(datas[i], self.weights))
                   # accumulation des gradients sur l'ensemble d'entrainement
                   gradSum += grad
+                  #print i, n_iter, nb_example
                   # mise a jour des parametres
                   self.weights -= 2 * self.mu * grad          
                   # nous sommes passe au travers de l'ensemble d'entrainement
@@ -40,7 +56,14 @@ class classif_lineaire:
                                   # Fin de l'entrainement.
                                   done = True
                           else:
+                                  #print 'Current gradSum:'
+                                  #print linalg.norm(self.mu*gradSum/nb_example)
+                                  #print seuil
+                                  #print gradSum
                                   gradSum = numpy.zeros((self.weights.shape[0]))
+                                  #print gradSum
+                                  #print 'Weights :'
+                                  #print self.weights
 
                   i = (i + 1) % nb_example
                   n_iter += 1

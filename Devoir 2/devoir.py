@@ -194,28 +194,49 @@ def numero8(lam = 0, k = 1, type_transformation = 4):
     
 def main():
     #Pour le numero 4 on produit uniquement un graphique avec lam = 0, k = 1
-    if 0:
+    if 1:
+        print 'Numero 4 :'
         numero4()
+        print 'Fin du Numero 4'
+        print ''
     
     #Pour le numero 5 on produit des graphiques pour lam = 0.0001, 0.0007 avec k = 1
-    if 0:
-        for vallam in [0.001,0.007]:
+    if 1:
+        print 'Numero 5 :'
+        for vallam in [0.001, 0.007]:
+            print 'Lambda = ' + str(vallam)
             numero5(lam = vallam)
+        print 'Fin du Numero 5'
+        print ''
 
     #Pour le numero 6 on produit des graphiques avec lam = 0 pour k = 1, 2, 3
     if 1:
-        for valk in [1,2,3]:
+        print 'Numero 6 :'
+        for valk in [1, 2, 3]:
+            print 'K = ' + str(valk)
             numero6(lam = 0, k = valk)
+        print 'Fin du Numero 6'
+        print ''
 
     #Pour le numero 7 on produit des graphiques avec lam = 0, 5, 20 pour k = 1, 2, 3, 10
-    if 0:
-        for valk in [1,2,3,10]:
+    if 1:
+        print 'Numero 7 :'
+        for valk in [1, 2, 3, 10]:
             for vallam in [0, 5, 20]:
+                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
                 numero7(lam = vallam, k = valk)
+        print 'Fin du Numero 7'
+        print ''
 
-    #Pour le numero 8 on produit des graphiques sur ellipse.txt avec lam = , pour k = 
-    if 0:
-        numero8(lam = 0, k = valk)
+    #Pour le numero 8 on produit des graphiques sur ellipse.txt avec lam = 0, 5, 20 pour k = 1, 2, 3, 4
+    if 1:
+        print 'Numero 8 :'
+        for valk in [1, 2, 3, 4]:
+            for vallam in [0, 5, 20]:
+                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
+                numero8(lam = vallam, k = valk)
+        print 'Fin du Numero 8'
+        print ''
 
 if __name__ == "__main__":
     main()

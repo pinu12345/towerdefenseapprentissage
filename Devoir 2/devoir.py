@@ -69,7 +69,7 @@ def regression_gradient(Dn, lam = 0.0001, type_transformation = -1, k = 0, mu = 
                 gradSum = numpy.zeros((weights.shape[0]))
         i = (i + 1) % nb_example
         n_iter += 1
-    print 'Regression Gradient : ', weights
+    print 'Regression Gradient [w*, b*]: ', weights
     return weights
     
 def regression_analytique(Dn, lam = 1, type_transformation = -1, k = 0):
@@ -79,17 +79,72 @@ def regression_analytique(Dn, lam = 1, type_transformation = -1, k = 0):
     I = numpy.eye(X.shape[1])
     I[0][0] = 0
     result = numpy.dot(linalg.inv(numpy.dot(Xt, X) + lam * I), numpy.dot(Xt, t))
-    print 'Regression Analytique : ', result
+    print 'Regression Analytique [b*, w*]: ', result
     return result 
 
-def numero4():
-    # Parametres
-    lam = 0
-    type_transformation = 4
-    k = 4
-
+def numero4(lam = 0, k = 1, type_transformation = -1):
     # On genere Dn
-    Dn = generateDn(4)
+    Dn = generateDn(15)
+    
+    # On genere les points pour la fonction h(x)
+    x = numpy.arange(-10, 10, 0.1)
+
+    # On genere le w et b par regression analytique
+    analytique = regression_analytique(Dn, lam, type_transformation, k)
+    analPlot = analytique[0]
+    for i in range(1, len(analytique)):
+        analPlot += x ** i * analytique[i]
+    
+    # On genere le w et b par regression lineaire regularisee
+    reglinreg = regression_gradient(Dn, lam, type_transformation, k)
+    gradPlot = reglinreg[-1]
+    for i in range(0, len(reglinreg)-1):
+        gradPlot += x ** (i+1) * reglinreg[i]
+    
+    pylab.plot(Dn[:,0],Dn[:,1], 'ro', x, h(x), 'k', x, analPlot, 'b', x, gradPlot, 'r')
+
+    #Show the graph
+    labels = ['Dn','h(x)', 'Analytique', 'Regression Lineaire']
+    pylab.title('Lambda = ' + str(lam))
+    pylab.legend(labels)
+    pylab.grid(True)
+    pylab.axis([-10,10,-10,10])
+    pylab.show()
+    
+def numero5(lam = 0):
+    numero4(lam)
+
+def numero6(lam = 0, k = 1, type_transformation = 4):
+    # On genere Dn
+    Dn = generateDn(8)
+    
+    # On genere les points pour la fonction h(x)
+    x = numpy.arange(-10, 10, 0.1)
+
+    # On genere le w et b par regression analytique
+    analytique = regression_analytique(Dn, lam, type_transformation, k)
+    analPlot = analytique[0]
+    for i in range(1, len(analytique)):
+        analPlot += x ** i * analytique[i]
+    
+    # On genere le w et b par regression lineaire regularisee
+    reglinreg = regression_gradient(Dn, lam, type_transformation, k)
+    gradPlot = reglinreg[-1]
+    for i in range(0, len(reglinreg)-1):
+        gradPlot += x ** (i+1) * reglinreg[i]
+
+    #Show the graph
+    pylab.plot(Dn[:,0],Dn[:,1], 'ro', x, h(x), 'k', x, analPlot, 'b', x, gradPlot, 'r')
+    labels = ['Dn','h(x)', 'Analytique', 'Regression Lineaire']
+    pylab.title('K = ' + str(k) + ', Lambda = ' + str(lam))
+    pylab.legend(labels)
+    pylab.grid(True)
+    pylab.axis([-10,10,-10,10])
+    pylab.show()
+
+def numero7(lam = 0, k = 1, type_transformation = 4):
+    # On genere Dn
+    Dn = generateDn(15)
     
     # On genere les points pour la fonction h(x)
     x = numpy.arange(-10, 10, 0.1)
@@ -100,63 +155,67 @@ def numero4():
     for i in range(1, len(analytique)):
         analPlot += x ** i * analytique[i]
     pylab.plot(Dn[:,0],Dn[:,1], 'ro', x, h(x), 'k', x, analPlot, 'b')
-    
-    # On genere le w et b par regression lineaire regularisee
-    #reglinreg = regression_gradient(Dn, lam, type_transformation, k)
-    #gradPlot = reglinreg[-1]
-    #for i in range(0, len(reglinreg)-1):
-        #gradPlot += x ** (i+1) * reglinreg[i]
-    #pylab.plot(Dn[:,0],Dn[:,1], 'ro', x, h(x), 'k', x, gradPlot, 'b')
 
-    #Show the graph
-    #labels = ['Dn','h(x)', 'Analytique (lambda = 0.001)', 'Regression Lineaire (lambda = 0.001)']
-    #labels = ['Dn','h(x)', 'Analytique (k = ' + str(k) + ')', 'Regression Lineaire (k = ' + str(k) + ')']
-    labels = ['Dn','h(x)', 'Analytique (k = ' + str(k) + ')']
-    #labels = ['Dn','h(x)', 'Regression Lineaire (k = ' + str(k) + ')']
+    labels = ['Dn','h(x)', 'Analytique']
+    pylab.title('K = ' + str(k) + ', Lambda = ' + str(lam))
     pylab.legend(labels)
     pylab.grid(True)
     pylab.axis([-10,10,-10,10])
     pylab.show()
 
-def numero8():
-    # Parametres
-    lam = 20
-    type_transformation = 4
-    k = 4
-    x = numpy.arange(-10, 10, 0.1)
-    
+def numero8(lam = 0, k = 1, type_transformation = 4):
     # On load ellipse.txt
+    x = numpy.arange(-10, 10, 0.1)
     data = numpy.loadtxt('ellipse.txt')
     train_cols = [0]
     target_ind = [data.shape[1] - 2]
     n_classes = 2
     n_train = 4 #Peu de points d'apprentissage pour voir l'effet de la regularisation
-    
+
     random.seed(3395)
-    
+
     inds = range(data.shape[0])
     random.shuffle(inds)
     train_inds = inds[:n_train]
     train_set = data[train_inds,:]
     train_set = train_set[:,train_cols + target_ind]
 
-    print 'Train_set :'
-    print train_set
-    
     analytique = regression_analytique(train_set, lam, type_transformation, k)
     analPlot = analytique[0]
     for i in range(1, len(analytique)):
         analPlot += x ** i * analytique[i]
     pylab.plot(train_set[:,0], train_set[:,1], 'ro', x, analPlot, 'b')
-    labels = ['4 Points d\'ellipse.txt', 'Analytique (k = ' + str(k) + ', lambda = ' + str(lam) + ')']
+    labels = ['4 Points d\'ellipse.txt', 'Analytique']
+    pylab.title('K = ' + str(k) + ', Lambda = ' + str(lam))
     pylab.legend(labels)
     pylab.grid(True)
     pylab.axis([-10,10,-20,20])
     pylab.show()
     
 def main():
-    #numero4()
-    numero8()
+    #Pour le numero 4 on produit uniquement un graphique avec lam = 0, k = 1
+    if 0:
+        numero4()
+    
+    #Pour le numero 5 on produit des graphiques pour lam = 0.0001, 0.0007 avec k = 1
+    if 0:
+        for vallam in [0.001,0.007]:
+            numero5(lam = vallam)
+
+    #Pour le numero 6 on produit des graphiques avec lam = 0 pour k = 1, 2, 3
+    if 1:
+        for valk in [1,2,3]:
+            numero6(lam = 0, k = valk)
+
+    #Pour le numero 7 on produit des graphiques avec lam = 0, 5, 20 pour k = 1, 2, 3, 10
+    if 0:
+        for valk in [1,2,3,10]:
+            for vallam in [0, 5, 20]:
+                numero7(lam = vallam, k = valk)
+
+    #Pour le numero 8 on produit des graphiques sur ellipse.txt avec lam = , pour k = 
+    if 0:
+        numero8(lam = 0, k = valk)
 
 if __name__ == "__main__":
     main()

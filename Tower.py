@@ -131,12 +131,15 @@ class Tower(pygame.sprite.Sprite):
                         break
                 # si oui, on attaque tous les ennemis a portee
                 if enemy_in_range:
+                    DataSHOTS += 1
                     shots.newShot(self.x, self.y, self.x, self.y, self.type, self.level, self.direction)
                     for enemy in enemies:
                         distEnemy = distPixel(self.x, self.y, enemy.x, enemy.y)
                         if distEnemy <= self.splash:
-                            enemy.takeDamage(int(self.damage[enemy.type] \
-                                *(1-1.0*distEnemy/self.splash)))
+                            damageDealt = int(self.damage[enemy.type] \
+                                *(1-1.0*distEnemy/self.splash))
+                            DataDAMAGE += max(damageDealt, enemy.HP)
+                            enemy.takeDamage(damageDealt)
                     self.firing = 1
                     self.cooldown += self.delay
             else:
@@ -151,6 +154,7 @@ class Tower(pygame.sprite.Sprite):
                             break
                     # si oui, on trouve quel ennemi attaquer pour maximiser les degats
                     if enemy_in_range:
+                        DataSHOTS += 1
                         hittable_enemies = []
                         splashable_enemies = []
                         for enemy in enemies:
@@ -179,8 +183,10 @@ class Tower(pygame.sprite.Sprite):
                             distEnemy = distPixel(target_enemy.x, target_enemy.y, \
                                 enemy.x, enemy.y)
                             if distEnemy <= self.splash:
-                                enemy.takeDamage(int(self.damage[enemy.type] \
-                                *(1-1.0*distEnemy/self.splash)))
+                                damageDealt = int(self.damage[enemy.type] \
+                                    *(1-1.0*distEnemy/self.splash))
+                                DataDAMAGE += max(damageDealt, enemy.HP)
+                                enemy.takeDamage(damageDealt)
                         self.firing = 1
                         self.cooldown += self.delay
                         self.getFacing(target_enemy)
@@ -203,7 +209,11 @@ class Tower(pygame.sprite.Sprite):
                                 max_damage = potential_damage
                     # si on en a trouve un, on l'attaque
                     if max_damage > 0:
-                        target_enemy.takeDamage(self.damage[enemy.type])
+                        DataSHOTS += 1
+                        enemy = target_enemy
+                        damageDealt = self.damage[enemy.type]
+                        DataDAMAGE += max(damageDealt, enemy.HP)
+                        enemy.takeDamage(damageDealt)
                         self.firing = 1
                         self.cooldown += self.delay
                         self.getFacing(target_enemy)

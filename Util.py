@@ -126,7 +126,7 @@ def emplacementValues(M, P):
         if M[y][x] == car_turret:
             emp.append(singleEmpValue(P, y, x))
     return emplacements
-    
+
 def singleEmpValue(P, y, x):
     empTV = []
     for tower in range(len(TowerStats)):
@@ -149,6 +149,43 @@ def singleTowerEmpValue(P, y, x, tower, level):
             min(mapWidth*tileSize-1, x+offset+1)):
             if P[ty][tx] == car_path:
                 dM = distPixel(x, y, tx, ty)
+                if dM <= tower_range:
+                    tower_reach += 1
+                elif dM <= tower_splash:
+                    tower_reach += (tower_splash-dM)/tower_splash
+    return tower_reach
+    
+def AemplacementValues(M):
+    # Approximatif
+    emplacements = emplacementList(M)
+    for emp in emplacements:
+        y, x = emp[0], emp[1]
+        if M[y][x] == car_turret:
+            emp.append(AsingleEmpValue(M, y, x))
+    return emplacements
+
+def AsingleEmpValue(M, y, x):
+    empTV = []
+    for tower in range(len(TowerStats)):
+        empTV.append([])
+        for level in range(len(TowerStats[tower])):
+            empTV[tower].append([])
+            tower_reach = AsingleTowerEmpValue(M, y, x, tower, level)
+            empTV[tower][level] = int(round(tower_reach))
+    return empTV
+
+def AsingleTowerEmpValue(M, y, x, tower, level):
+    y, x = mapToPixel(y), mapToPixel(x)
+    tower_range = TowerStats[tower][level][TowerRANGE] // tileSize
+    tower_splash = TowerStats[tower][level][TowerSPLASH] // tileSize
+    offset = max(tower_range, tower_splash)
+    tower_reach = 0
+    for ty in range(max(0, y-offset), \
+        min(mapHeight-1, y+offset+1)):
+        for tx in range(max(0, x-offset), \
+            min(mapWidth-1, x+offset+1)):
+            if M[ty][tx] == car_path:
+                dM = distMap(x, y, tx, ty)
                 if dM <= tower_range:
                     tower_reach += 1
                 elif dM <= tower_splash:

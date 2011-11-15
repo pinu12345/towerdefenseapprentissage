@@ -135,37 +135,67 @@ class Level():
         enemyBudget = randint(1, 1000)
         #enemyNumber = benum[self.BEINDEX]
         enemyNumber = int(ceil(enemyBudget/enemyValue))
+        enemyBudget = enemyNumber * enemyValue
         self.levelWaves = [[enemyType, enemyNumber]]
         #self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
         self.dataLog = [str(enemyType), str(enemyNumber)]
         
         ## Tourelles
-        #bTower = 1
-        bTower = randint(0, 5)
-        #bLevel = 0
-        bLevel = randint(0, 2)
+        bTower = 0
+        #bTower = randint(0, 5)
+        bLevel = 0
+        #bLevel = randint(0, 2)
         #brows = range(13, \
         #    max(0, 12-TowerStats[bTower][bLevel][TowerRANGE]//tileSize), -1)
         #bcols = [11, 12, 10, 13, 9, 14, 8, 15]
         #bcols = [11, 12, 10, 13]
         #towerDataLog = ''
         self.start()
-        for n in range(self.BTNUMBER):
-            self.towers.placeTower(map, bTower, bLevel, brows[self.BSTEP], bcols[n])
-            sTEV = singleTowerEmpValue(P, brows[self.BSTEP], bcols[n], bTower, bLevel)
-            #print sTEV
-            towerDataLog = ';'.join([towerDataLog, ','.join([ \
-                str(bTower), str(bLevel), str(sTEV)])])
-        if self.BTNUMBER < len(bcols):
-            self.BTNUMBER += 1
-        elif self.BEINDEX < len(benum)-1:
-            self.BEINDEX += 1
-        elif self.BSTEP < len(brows)-1:
-            self.BTNUMBER = 1
-            self.BEINDEX = 0
-            self.BSTEP += 1
-        else:
-            self.BCONTINUE = 0
+        if 0:
+            #for n in range(self.BTNUMBER):
+            #    self.towers.placeTower(map, bTower, bLevel, brows[self.BSTEP], bcols[n])
+            #    sTEV = singleTowerEmpValue(P, brows[self.BSTEP], bcols[n], bTower, bLevel)
+            #    #print sTEV
+            #    towerDataLog = ';'.join([towerDataLog, ','.join([ \
+            #        str(bTower), str(bLevel), str(sTEV)])])
+            #if self.BTNUMBER < len(bcols):
+            #    self.BTNUMBER += 1
+            #elif self.BEINDEX < len(benum)-1:
+            #    self.BEINDEX += 1
+            #elif self.BSTEP < len(brows)-1:
+            #    self.BTNUMBER = 1
+            #    self.BEINDEX = 0
+            #    self.BSTEP += 1
+            #else:
+            #    self.BCONTINUE = 0
+            pass
+        print ' --- Starting tower placement ---'
+        #empList = emplacementList(M)
+        availableEmps = range(len(empList))
+        maxLoop = 0
+        towerDataLog = ''
+        usableBudget = randint(1, 8) * enemyBudget
+        self.start()
+        while spentBudget < usableBudget and len(availableEmps) > 0:
+            maxLoop += 1
+            #print ('Placing towers : ', spentBudget, usableBudget, len(availableEmps), maxLoop)
+            rEmp = randint(0, len(empVal))
+            if rEmp in availableEmps:
+                rTower = availableTowers[randint(0, len(availableTowers)-1)]
+                rLevel = randint(0, self.levelUpgrades)
+                #print ('rEmp', rEmp, rTower, rLevel)
+                if empVal[rEmp][2][rTower][rLevel]:
+                    #print 'empVal'
+                    self.towers.placeTower(map, rTower, rLevel, \
+                        empVal[rEmp][0], empVal[rEmp][1])
+                    spentBudget += TowerStats[rTower][rLevel][TowerPRICE]
+                    availableEmps.remove(rEmp)
+                    towerDataLog = ';'.join([towerDataLog, ','.join([str(rTower), str(rLevel), str(empVal[rEmp][2][rTower][rLevel])])])
+                else:
+                    if maxLoop > 200:
+                        break
+        
+        
         self.dataLog = '|'.join([self.dataLog, towerDataLog[1:]])
     
     def loadLevel(self, levelName, levelMap = 'levelMap'):

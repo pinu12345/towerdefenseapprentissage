@@ -1,4 +1,4 @@
-import EnemyData, TowerData
+import EnemyData, TowerData, numpy
 
 # Tower States
 NORMAL = 0
@@ -111,7 +111,22 @@ TowerDELAY = 4
 TowerSPLASH = 5
 TowerDAMAGE = 6
 
-TowerTYPES = len(TowerStats)*len(TowerStats[0])
+TowerTYPES = len(TowerStats)*len(TowerStats[0]) # en pratique: 18
+TowerPlaceImportance = numpy.zeros(TowerTYPES)
+for i in range(TowerTYPES):
+    t = i / 3
+    l = i % 3
+    TowerPlaceImportance[i] = (TowerStats[t][l][TowerRANGE]+1) \
+        / numpy.log(TowerStats[t][l][TowerPRICE])
+TowerPlaceOrder = []
+for i in range(TowerTYPES):
+    t = TowerPlaceImportance.argmin()
+    TowerPlaceOrder.append(t)
+    TowerPlaceImportance[t] = 1000000
+
+DataSHOTS = 0
+DataDAMAGE = 0
+
 
 # [ ShotColor, ShotOffset, Width, ZoneColor1, ZoneColor2 ]
 ShotGraphs = [

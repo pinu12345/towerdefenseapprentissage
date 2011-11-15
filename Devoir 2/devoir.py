@@ -1,11 +1,66 @@
-from GenerateDn import *
 from scipy import linalg
-import pylab, numpy
+import pylab, numpy, math, random
 
 numpy.random.seed(100)
 
+def main():
+    #Pour le numero 4 on produit uniquement un graphique avec lam = 0, k = 1
+    if 1:
+        print 'Numero 4 :'
+        numero4()
+        print 'Fin du Numero 4'
+        print ''
+    
+    #Pour le numero 5 on produit des graphiques pour lam = 0.0001, 0.0007 avec k = 1
+    if 1:
+        print 'Numero 5 :'
+        for vallam in [0.001, 0.007]:
+            print 'Lambda = ' + str(vallam)
+            numero5(lam = vallam)
+        print 'Fin du Numero 5'
+        print ''
+
+    #Pour le numero 6 on produit des graphiques avec lam = 0 pour k = 1, 2, 3
+    if 1:
+        print 'Numero 6 :'
+        for valk in [1, 2, 3]:
+            print 'K = ' + str(valk)
+            numero6(lam = 0, k = valk)
+        print 'Fin du Numero 6'
+        print ''
+
+    #Pour le numero 7 on produit des graphiques avec lam = 0, 5, 20 pour k = 1, 2, 3, 10
+    if 1:
+        print 'Numero 7 :'
+        for valk in [1, 2, 3, 10]:
+            for vallam in [0, 5, 20]:
+                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
+                numero7(lam = vallam, k = valk)
+        print 'Fin du Numero 7'
+        print ''
+
+    #Pour le numero 8 on produit des graphiques sur ellipse.txt avec lam = 0, 5, 20 pour k = 1, 2, 3, 4
+    if 1:
+        print 'Numero 8 :'
+        for valk in [1, 2, 3, 4]:
+            for vallam in [0, 5, 20]:
+                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
+                numero8(lam = vallam, k = valk)
+        print 'Fin du Numero 8'
+        print ''
+
 def h(x):
     return numpy.sin(x) + 0.3 * x - 1
+    
+##Generation de Dn pour le numero 3 (Dn = generateDn(15))
+def generateDn(n):
+    random.seed(100)
+    Dn = numpy.zeros([n,2])
+    for i in range(n):
+        x = random.uniform(-5,5)
+        Dn[i,0] = x
+        Dn[i,1] = h(x)
+    return Dn
 
 def applyTranform(data, sigma=0, type=2, k=1):
         transformData = []
@@ -191,52 +246,6 @@ def numero8(lam = 0, k = 1, type_transformation = 4):
     pylab.grid(True)
     pylab.axis([-10,10,-20,20])
     pylab.show()
-    
-def main():
-    #Pour le numero 4 on produit uniquement un graphique avec lam = 0, k = 1
-    if 1:
-        print 'Numero 4 :'
-        numero4()
-        print 'Fin du Numero 4'
-        print ''
-    
-    #Pour le numero 5 on produit des graphiques pour lam = 0.0001, 0.0007 avec k = 1
-    if 1:
-        print 'Numero 5 :'
-        for vallam in [0.001, 0.007]:
-            print 'Lambda = ' + str(vallam)
-            numero5(lam = vallam)
-        print 'Fin du Numero 5'
-        print ''
-
-    #Pour le numero 6 on produit des graphiques avec lam = 0 pour k = 1, 2, 3
-    if 1:
-        print 'Numero 6 :'
-        for valk in [1, 2, 3]:
-            print 'K = ' + str(valk)
-            numero6(lam = 0, k = valk)
-        print 'Fin du Numero 6'
-        print ''
-
-    #Pour le numero 7 on produit des graphiques avec lam = 0, 5, 20 pour k = 1, 2, 3, 10
-    if 1:
-        print 'Numero 7 :'
-        for valk in [1, 2, 3, 10]:
-            for vallam in [0, 5, 20]:
-                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
-                numero7(lam = vallam, k = valk)
-        print 'Fin du Numero 7'
-        print ''
-
-    #Pour le numero 8 on produit des graphiques sur ellipse.txt avec lam = 0, 5, 20 pour k = 1, 2, 3, 4
-    if 1:
-        print 'Numero 8 :'
-        for valk in [1, 2, 3, 4]:
-            for vallam in [0, 5, 20]:
-                print 'K = ' + str(valk) + ', Lambda = ' + str(vallam)
-                numero8(lam = vallam, k = valk)
-        print 'Fin du Numero 8'
-        print ''
 
 if __name__ == "__main__":
     main()

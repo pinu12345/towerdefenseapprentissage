@@ -120,9 +120,9 @@ def numero4():
 
 def numero8():
     # Parametres
-    lam = 100
+    lam = 20
     type_transformation = 4
-    k = 1
+    k = 4
     x = numpy.arange(-10, 10, 0.1)
     
     # On load ellipse.txt
@@ -131,6 +131,9 @@ def numero8():
     target_ind = [data.shape[1] - 1]
     n_classes = 2
     n_train = 4 #Peu de points d'apprentissage pour voir l'effet de la regularisation
+    
+    random.seed(3395)
+    
     inds = range(data.shape[0])
     random.shuffle(inds)
     train_inds = inds[:n_train]
@@ -145,7 +148,7 @@ def numero8():
     labels = ['Analytique (k = ' + str(k) + ')']
     pylab.legend(labels)
     pylab.grid(True)
-    pylab.axis([-20,20,-20,20])
+    pylab.axis([-10,10,-20,20])
     pylab.show()
     
 def main():

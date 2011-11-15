@@ -18,17 +18,13 @@ class classif_lineaire:
           print 'Cibles'
           print cibles
           train_data_transform = numpy.concatenate((utilitaires.applyTranform(traits,type=type_transformation),cibles), axis=1)
-          print 'Train Data Transform'
-          print train_data_transform
-
-          print 'Initializing weights'
           self.weights = numpy.random.random(train_data_transform.shape[1])
           print 'Shape : ',train_data_transform.shape[1]
           self.weights[-1] = 0
           print 'Weights : ',self.weights
           datas = numpy.array(train_data_transform)
           datas[:,-1] = 1
-          print 'Datas : '
+          print 'Train Data : '
           print datas
           n_iter = 0
           n_iter_max = nb_example*1000
@@ -38,6 +34,7 @@ class classif_lineaire:
           print 'gradSum'
           print gradSum
           seuil = numpy.exp(-20) 
+          #seuil = 0.0000000000001
           print 'seuil'
           print seuil
           i = 0
@@ -48,23 +45,27 @@ class classif_lineaire:
                   gradSum += grad
                   #print i, n_iter, nb_example
                   # mise a jour des parametres
-                  self.weights -= 2 * self.mu * grad          
+                  
+                  ## Self.weights doit etre self.mu * somme des grads? + lambda[Hyperparametre] sigma(teta)
+                  ##-> Mettre lorsque l'on a parcouru tous les points? self.weights -= ...
+                  self.weights -= 2 * self.mu * grad
                   # nous sommes passe au travers de l'ensemble d'entrainement
                   # alors on verifie si la norme de mu * la somme des gradient est plus petite qu'un certain seuil (proche de zero)
                   if (i + 1) == nb_example:
-                          if linalg.norm(self.mu*gradSum/nb_example) < seuil:
-                                  # Fin de l'entrainement.
-                                  done = True
-                          else:
-                                  #print 'Current gradSum:'
-                                  #print linalg.norm(self.mu*gradSum/nb_example)
-                                  #print seuil
-                                  #print gradSum
-                                  gradSum = numpy.zeros((self.weights.shape[0]))
-                                  #print gradSum
-                                  #print 'Weights :'
-                                  #print self.weights
-
+                      if linalg.norm(self.mu*gradSum/nb_example) < seuil:
+                          # Fin de l'entrainement.
+                          print 'SEUIL ATTEINT'
+                          done = True
+                      else:
+                          #self.weights -= 2 * self.mu * gradSum
+                          print 'Current gradSum:'
+                          print linalg.norm(self.mu*gradSum/nb_example)
+                          print seuil
+                          print gradSum
+                          gradSum = numpy.zeros((self.weights.shape[0]))
+                          #print gradSum
+                          print 'Weights :'
+                          print self.weights
                   i = (i + 1) % nb_example
                   n_iter += 1
           print n_iter

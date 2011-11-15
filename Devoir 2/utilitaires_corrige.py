@@ -103,6 +103,9 @@ def applyTranform(data, sigma=0, type=2):
           addedTrait = numpy.array(numpy.sum(data**2, axis=1)) * sigma
           addedTrait = addedTrait[:,numpy.newaxis]
           transformData = numpy.concatenate((data,addedTrait), axis=1)
+        # transformation 
+        elif type == 4:
+            pass
         # no transformation
         else:
           transformData = numpy.array(data)

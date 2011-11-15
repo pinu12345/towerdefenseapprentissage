@@ -5,15 +5,16 @@ import random
 import pylab
 import time
 import perceptron_corrige as perceptron
-import classif_lineaire_corrige as classif_lineaire
+import regression_lineaire as classif_lineaire
 import utilitaires_corrige as utilitaires
 
 
 def run_non_linear_data():
     # charger les donnees
-    data = numpy.loadtxt('ellipse.txt')
+    #data = numpy.loadtxt('ellipse.txt')
     #data = numpy.loadtxt('cercle.txt')
-    type_transformation=2
+    data = numpy.loadtxt('Dn.py')
+    type_transformation=1
 
     # Les colonnes (traits/caracteristiques) sur lesqueles on va entrainer notre modele
     # Pour que gridplot fonctionne, len(train_cols) devrait etre 2
@@ -24,7 +25,7 @@ def run_non_linear_data():
     # Nombre de classes
     n_classes = 2
     # Nombre de points d'entrainement
-    n_train = 1500
+    n_train = 10
     # Taille de la grille = grid_size x grid_size
     grid_size = 50
 

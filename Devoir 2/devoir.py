@@ -127,8 +127,8 @@ def numero8():
     
     # On load ellipse.txt
     data = numpy.loadtxt('ellipse.txt')
-    train_cols = [0, 1]
-    target_ind = [data.shape[1] - 1]
+    train_cols = [0]
+    target_ind = [data.shape[1] - 2]
     n_classes = 2
     n_train = 4 #Peu de points d'apprentissage pour voir l'effet de la regularisation
     
@@ -139,13 +139,16 @@ def numero8():
     train_inds = inds[:n_train]
     train_set = data[train_inds,:]
     train_set = train_set[:,train_cols + target_ind]
+
+    print 'Train_set :'
+    print train_set
     
     analytique = regression_analytique(train_set, lam, type_transformation, k)
     analPlot = analytique[0]
     for i in range(1, len(analytique)):
         analPlot += x ** i * analytique[i]
-    pylab.plot(x, analPlot, 'b')
-    labels = ['Analytique (k = ' + str(k) + ')']
+    pylab.plot(train_set[:,0], train_set[:,1], 'ro', x, analPlot, 'b')
+    labels = ['4 Points d\'ellipse.txt', 'Analytique (k = ' + str(k) + ', lambda = ' + str(lam) + ')']
     pylab.legend(labels)
     pylab.grid(True)
     pylab.axis([-10,10,-20,20])

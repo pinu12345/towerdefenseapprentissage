@@ -82,15 +82,9 @@ def applyTranform(data, sigma=0, type=2, k=1):
         # transformation 
         elif type == 4:
           for i in range(1,k+1):
-            #print 'Data:', k
-            #print data
-            #print data**i
             addedTrait = numpy.array(data**i)
             if transformData == []:
-                #print 'addedTrait'
-                #print addedTrait
                 transformData = addedTrait
-                #print transformData
             else:
                 transformData = numpy.concatenate((transformData, addedTrait), axis=1)
         # no transformation

@@ -160,6 +160,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#http://mechanistician.blogspot.com/2009/02/lecture-2-linear-regression-part-2.html
-#http://pyml.sourceforge.net/tutorial.html

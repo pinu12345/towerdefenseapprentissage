@@ -60,6 +60,7 @@ def main():
     
     # Initialize the Towers class
     towers = Towers.Towers(map, wave)
+    wave.setTowers(towers)
     
     # Initialize the shot graphics
     shots = Shots()

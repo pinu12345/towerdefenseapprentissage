@@ -1,20 +1,20 @@
 ﻿TODOLIST:
 
-    --Objectifs
-    Faire plein de games super vite pour avoir des stats sur la balance
-    
     [P]
-    Ajouter des levels a level.py
-    Efface et upgrade universel
-    Afficher un popup avec du text au milieu
     Placer les graphiques de l'interface
-    Bouton accelerer/decelerer le jeu
-    Implanter les graphiques Radio
+    Bouton accelerer/decelerer le jeu [Effets graphiques]
+    Implanter les graphiques Radio [le splash de la tourelle radioactive]
     Fonction resetCooldowns
+    Efface et upgrade universel
+    Travailler le menu [le noir derriere les choix]
+    
+    Afficher un popup avec du text au milieu
+    En vue de la campagne
     
     [Nic]
     Equilibrer le jeu
     Continuer l'apprentissage
+    Regrouper les tuiles random
     * Excel produit automatiquement les tableaux de stats en Python
     * Les nouvelles stats de tourelles et d'ennemis sont implantees
     * Les degats sont calcules de la nouvelle maniere (et splash graduel)
@@ -22,8 +22,8 @@
     * La barre de vie ennemie est de taille et position variables
     * Les graphiques aleatoires existent
     * Fonction pour calculer la "valeur" de chaque emplacement avec precision
-    
-    --Graphiques
+
+    [Graphiques]
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
     S'assurer que la TowerBar ne soit pas affectee par le jeu
     Afficher

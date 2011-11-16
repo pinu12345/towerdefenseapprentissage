@@ -13,7 +13,11 @@ class Wave():
         self.map = map
         self.enemies = pygame.sprite.OrderedUpdates()
 
+    def setTowers(self, towers):
+        self.towers = towers
+
     def newSpawn(self, type, count):
+        self.towers.resetCooldowns()
         self.spawnType = type
         self.spawnCount = count
         Game.enemyCount = count

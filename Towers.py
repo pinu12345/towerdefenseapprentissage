@@ -24,8 +24,7 @@ class Towers():
             addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
             self.towers.add(addedTower)
             map.T[row][column] = addedTower
-
-        
+    
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle
         empVal = AemplacementValues(M)
@@ -65,7 +64,13 @@ class Towers():
     def draw(self, screen):
         for tower in self.towers:
             tower.draw(screen)
-    
+
+    def resetCooldowns(self):
+        for tower in self.towers:
+            tower.firing = 0
+            tower.cooldown = 1
+            
+
     def clear(self):
         Game.placedTower = 1
         self.map.clearTowers()

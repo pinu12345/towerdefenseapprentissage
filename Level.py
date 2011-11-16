@@ -29,7 +29,6 @@ class Level():
         self.levelMap = []
         self.levelMessages = []
 
-        
     def randomLevel(self):
         #print '\n\n --- Random Level --- \n'
         self.resetLevel()
@@ -44,8 +43,7 @@ class Level():
         self.levelMessages = []
         self.levelMap = RandomMap.RandomMap().M
         self.start()
-    
-    
+
     def autoWave(self):
         print "\n\n --- Automatic Wave Start ---"
         Game.speedModifier = 100000
@@ -243,6 +241,7 @@ class Level():
         self.nextWave()
     
     def restartWave(self):
+        self.towers.resetCooldowns()
         self.startWave()
     
     def nextWave(self):
@@ -250,7 +249,8 @@ class Level():
         ## Verify if there is a message at currentWave
         if self.levelMessages != []:
             pass
-        self.logWave(1)
+        #self.logWave(1)
+        self.towers.resetCooldowns()
         self.startWave()
     
     def logWave(self, success):

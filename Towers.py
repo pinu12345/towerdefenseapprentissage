@@ -29,7 +29,7 @@ class Towers():
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle
         empVal = AemplacementValues(M)
-        emp_available = range(len(empVal))
+        emp_available = len(empVal)
         nbPlaced = 0
         toPlace = []
         beenPlaced = []
@@ -48,8 +48,11 @@ class Towers():
                         bestEmp = emp
                         bestEmpValue = emp[2][t][l]
                 if bestEmpValue:
+                    emp = bestEmp
+                    emp_available -= 1
+                    empVal.remove(emp)
                     self.placeTower(M, t, l, emp[0], emp[1])
-                    beenPlaced.append[num]
+                    beenPlaced.append(num)
         Tplaced = [0 for i in range(len(T))]
         for num in beenPlaced:
             Tplaced[num] += 1

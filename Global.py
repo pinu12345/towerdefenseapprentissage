@@ -126,6 +126,7 @@ for i in range(TowerTYPES):
 
 DataSHOTS = 0
 DataDAMAGE = 0
+BalanceWAVE = 0
 
 
 # [ ShotColor, ShotOffset, Width, ZoneColor1, ZoneColor2 ]

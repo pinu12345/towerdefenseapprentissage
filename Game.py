@@ -5,7 +5,6 @@ from MainMenu import *
 from Shots import *
 
 def main():
-
     # Initialize pygame
     # os.environ['SDL_VIDEODRIVER'] = 'windib'
     pygame.init()
@@ -75,7 +74,7 @@ def main():
     Game.level = Level.Level(map, wave, towers, towerBar, menu)
 
     # Set title of screen
-    pygame.display.set_caption("4D tower defense - (c) POB + ND")
+    pygame.display.set_caption("AI Tower Defense -- (c) POB & ND")
 
     #Loop until the user clicks the close button.
     close_game = False
@@ -294,7 +293,7 @@ def main():
                 towers.target(shots)
 
                 ## Display
-                if not Game.autoMode:
+                if not Game.autoMode and not Game.balanceMode:
                     drawTick += 1
                     #print(clock.get_fps())
                     if drawTick >= clock.get_fps()/24:

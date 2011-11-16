@@ -175,7 +175,6 @@ def AsingleEmpValue(M, y, x):
     return empTV
 
 def AsingleTowerEmpValue(M, y, x, tower, level):
-    y, x = mapToPixel(y), mapToPixel(x)
     tower_range = TowerStats[tower][level][TowerRANGE] // tileSize
     tower_splash = TowerStats[tower][level][TowerSPLASH] // tileSize
     offset = max(tower_range, tower_splash)

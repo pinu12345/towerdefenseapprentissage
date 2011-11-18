@@ -10,14 +10,12 @@ class Level():
         self.waves = waves
         self.towers = towers
         self.towerBar = towerBar
-        self.menu = menu
         self.resetLevel()
         self.dataLog = ''
         self.BSTEP = 0
         self.BTNUMBER = 1
         self.BEINDEX = 0
         self.BCONTINUE = 1
-
 
     def resetLevel(self):
         self.towers.clear()
@@ -39,7 +37,7 @@ class Level():
         #print "\n Random enemy type:", enemyType
         enemyNumber = randint(1, int(1000/EnemyStats[enemyType][EnemyVALUE]))
         self.levelWaves = [[enemyType, enemyNumber]]
-        self.levelTowers = [1, 2, 3, 4, 5, 6]
+        self.levelTowers = [0, 1, 2, 3, 4, 5]
         self.levelMessages = []
         self.levelMap = RandomMap.RandomMap().M
         self.start()

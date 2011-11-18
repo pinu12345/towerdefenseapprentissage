@@ -230,17 +230,23 @@ def main():
                         elif Game.state == STATE_PREPARATION: 
                             Game.state = STATE_GAME
                     elif event.key == pygame.K_1:
-                        towerBar.selectTower(0)
+                        if 0 in Game.level.levelTowers:
+                            towerBar.selectTower(0)
                     elif event.key == pygame.K_2:
-                        towerBar.selectTower(1)
+                        if 1 in Game.level.levelTowers:
+                            towerBar.selectTower(1)
                     elif event.key == pygame.K_3:
-                        towerBar.selectTower(2)
+                        if 2 in Game.level.levelTowers:
+                            towerBar.selectTower(2)
                     elif event.key == pygame.K_4:
-                        towerBar.selectTower(3)
+                        if 3 in Game.level.levelTowers:
+                            towerBar.selectTower(3)
                     elif event.key == pygame.K_5:
-                        towerBar.selectTower(4)
+                        if 4 in Game.level.levelTowers:
+                            towerBar.selectTower(4)
                     elif event.key == pygame.K_6:
-                        towerBar.selectTower(5)
+                        if 5 in Game.level.levelTowers:
+                            towerBar.selectTower(5)
                     elif event.key == pygame.K_EQUALS:
                         if Game.speedModifier <= 25.0:
                             Game.speedModifier *= 5

@@ -1,4 +1,4 @@
-import pygame, Map, os, Images
+import pygame, Map, os, Images, Game
 from Global import *
 
 # Colors
@@ -45,7 +45,7 @@ class TowerBar():
                 screen.blit(Images.InterfaceBGbright, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
                 screen.blit(Images.TowerImages[i][0], (drawX , drawY), None, 0)
             else:
-                if i == 4 or i == 1 or i == 2 or i == 3 or i == 0:
+                if i in Game.level.levelTowers:
                     screen.blit(Images.InterfaceBGwashed, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
                     screen.blit(Images.TowerImages[i][0], (drawX, drawY), None, 0)
                 else:
@@ -59,7 +59,8 @@ class TowerBar():
         y = (pos[1] - self.origY - 24) // (tileSize + self.space)
         if (x >= 0) and (x < 3):
             if (y >= 0) and (y < 2):
-                self.selectTower(x+(3*y))
+                if (x+(3*y)) in Game.level.levelTowers:
+                    self.selectTower(x+(3*y))
         #Upgrade and erase
         elif (pos[0] >= self.origX + 150) and (pos[0] <= self.origY + 178):
             if (pos[1] >= self.origY + 27) and (pos[1] <= self.origY + 54):

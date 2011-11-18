@@ -117,10 +117,8 @@ class Tower(pygame.sprite.Sprite):
     
     def target(self, enemies, shots):
         if self.cooldown > 0:
-            print 'Cooldown : ', self.cooldown
             self.cooldown -= 1
         else:
-            print 'Targetting'
             ## juste splash
             if self.range == 0:
                 # y a-t-il au moins un ennemi a portee?
@@ -132,7 +130,6 @@ class Tower(pygame.sprite.Sprite):
                         break
                 # si oui, on attaque tous les ennemis a portee
                 if enemy_in_range:
-                    print '+Cooldown1'
                     self.firing = 1
                     self.cooldown += self.delay
                     Global.DataSHOTS += 1
@@ -156,7 +153,6 @@ class Tower(pygame.sprite.Sprite):
                             break
                     # si oui, on trouve quel ennemi attaquer pour maximiser les degats
                     if enemy_in_range:
-                        print '+Cooldown2'
                         self.firing = 1
                         self.cooldown += self.delay
                         Global.DataSHOTS += 1
@@ -212,7 +208,6 @@ class Tower(pygame.sprite.Sprite):
                                 max_damage = potential_damage
                     # si on en a trouve un, on l'attaque
                     if max_damage > 0:
-                        print '+Cooldown3'
                         self.firing = 1
                         self.cooldown += self.delay
                         Global.DataSHOTS += 1

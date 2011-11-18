@@ -29,7 +29,6 @@ class Tower(pygame.sprite.Sprite):
     def draw(self, screen):
         self.rect.x = self.x
         self.rect.y = self.y
-        
         if self.drawDirection != self.direction or self.firing or self.justFired:
             if self.direction == cardN:
                 self.image = pygame.transform.rotate(
@@ -118,8 +117,10 @@ class Tower(pygame.sprite.Sprite):
     
     def target(self, enemies, shots):
         if self.cooldown > 0:
+            print 'Cooldown : ', self.cooldown
             self.cooldown -= 1
         else:
+            print 'Targetting'
             ## juste splash
             if self.range == 0:
                 # y a-t-il au moins un ennemi a portee?
@@ -131,6 +132,9 @@ class Tower(pygame.sprite.Sprite):
                         break
                 # si oui, on attaque tous les ennemis a portee
                 if enemy_in_range:
+                    print '+Cooldown1'
+                    self.firing = 1
+                    self.cooldown += self.delay
                     Global.DataSHOTS += 1
                     shots.newShot(self.x, self.y, self.x, self.y, self.type, self.level, self.direction)
                     for enemy in enemies:
@@ -140,8 +144,6 @@ class Tower(pygame.sprite.Sprite):
                                 *(1-1.0*distEnemy/self.splash))
                             Global.DataDAMAGE += min(damageDealt, enemy.HP)
                             enemy.takeDamage(damageDealt)
-                    self.firing = 1
-                    self.cooldown += self.delay
             else:
                 ## distance, splash
                 if self.splash > 0:                   
@@ -154,6 +156,9 @@ class Tower(pygame.sprite.Sprite):
                             break
                     # si oui, on trouve quel ennemi attaquer pour maximiser les degats
                     if enemy_in_range:
+                        print '+Cooldown2'
+                        self.firing = 1
+                        self.cooldown += self.delay
                         Global.DataSHOTS += 1
                         hittable_enemies = []
                         splashable_enemies = []
@@ -187,8 +192,6 @@ class Tower(pygame.sprite.Sprite):
                                     *(1-1.0*distEnemy/self.splash))
                                 Global.DataDAMAGE += min(damageDealt, enemy.HP)
                                 enemy.takeDamage(damageDealt)
-                        self.firing = 1
-                        self.cooldown += self.delay
                         self.getFacing(target_enemy)
                         shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type, self.level, self.direction)
                 ## distance, 1 ennemi
@@ -209,13 +212,14 @@ class Tower(pygame.sprite.Sprite):
                                 max_damage = potential_damage
                     # si on en a trouve un, on l'attaque
                     if max_damage > 0:
+                        print '+Cooldown3'
+                        self.firing = 1
+                        self.cooldown += self.delay
                         Global.DataSHOTS += 1
                         enemy = target_enemy
                         damageDealt = self.damage[enemy.type]
                         Global.DataDAMAGE += min(damageDealt, enemy.HP)
                         enemy.takeDamage(damageDealt)
-                        self.firing = 1
-                        self.cooldown += self.delay
                         self.getFacing(target_enemy)
                         shots.newShot(self.x, self.y, target_enemy.x, target_enemy.y, self.type, self.level, self.direction)
                         

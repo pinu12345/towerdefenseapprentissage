@@ -68,8 +68,7 @@ class Towers():
     def resetCooldowns(self):
         for tower in self.towers:
             tower.firing = 0
-            tower.cooldown = 1
-            
+            tower.cooldown = 0
 
     def clear(self):
         Game.placedTower = 1

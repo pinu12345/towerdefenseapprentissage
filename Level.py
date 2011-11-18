@@ -241,7 +241,6 @@ class Level():
         self.nextWave()
     
     def restartWave(self):
-        self.towers.resetCooldowns()
         self.startWave()
     
     def nextWave(self):
@@ -250,7 +249,6 @@ class Level():
         if self.levelMessages != []:
             pass
         #self.logWave(1)
-        self.towers.resetCooldowns()
         self.startWave()
     
     def logWave(self, success):

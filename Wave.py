@@ -17,7 +17,14 @@ class Wave():
         self.towers = towers
 
     def newSpawn(self, type, count):
+        print 'Before resetting cooldowns'
+        for tower in self.towers.towers:
+            print tower.cooldown
+        print 'Resetting cooldowns'
         self.towers.resetCooldowns()
+        for tower in self.towers.towers:
+            print tower.cooldown
+        
         self.spawnType = type
         self.spawnCount = count
         Game.enemyCount = count

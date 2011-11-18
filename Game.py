@@ -247,6 +247,8 @@ def main():
                     elif event.key == pygame.K_MINUS:
                         if Game.speedModifier >= 0.2:
                             Game.speedModifier /= 5
+                    elif event.key == pygame.K_c:
+                        towers.resetCooldowns()
                     elif event.key == pygame.K_r:
                         towerBar.selectTower(-2)
                     elif event.key == pygame.K_e:

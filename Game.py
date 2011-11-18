@@ -50,6 +50,7 @@ def main():
 
     menubackground = Images.Background
     interfaceBGwashed = Images.InterfaceBGwashed
+    InterfaceBGopaque = Images.InterfaceBGopaque
     rect_list = []
 
     # Initialize the map
@@ -66,7 +67,7 @@ def main():
     shots = Shots()
 
     # Initialize the tower bar
-    towerBar = TowerBar.TowerBar(16, mapHeight*tileSize + 24)
+    towerBar = TowerBar.TowerBar(0, mapHeight*tileSize)
 
     # Initialize the menu
     menu = Menu.Menu(map, wave, towers)
@@ -178,7 +179,7 @@ def main():
                 # User moves over the mouse 
                 elif event.type == pygame.MOUSEMOTION:
                     Game.drawMouseOver = 0
-                    if towerBar.selectedTower != -1:
+                    if towerBar.selectedTower > -1:
                         pos = pygame.mouse.get_pos()                
                         column = pos[0] // tileSize
                         row = pos[1] // tileSize
@@ -201,7 +202,7 @@ def main():
 
                     # Inside Map
                     if (column < mapWidth) and (row < mapHeight):
-                        if towerBar.selectedTower != -1:
+                        if towerBar.selectedTower > -1:
                             if map.M[row][column] == car_turret:
                                 if map.T[row][column] == 0:
                                     #TODO : money check
@@ -247,6 +248,10 @@ def main():
                         if Game.speedModifier >= 0.2:
                             Game.speedModifier /= 5
                     elif event.key == pygame.K_r:
+                        towerBar.selectTower(-2)
+                    elif event.key == pygame.K_e:
+                        towerBar.selectTower(-3)
+                    elif event.key == pygame.K_a:
                         towers.clear()
                         wave.clear()
                         shots.clear()
@@ -256,7 +261,7 @@ def main():
             
             ## Init Game
             if Game.state == STATE_LOADGAME:
-                screen.blit(interfaceBGwashed, (0, 0))
+                screen.blit(InterfaceBGopaque, (0, 0))
                 #screen.fill(background)
                 #pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
                 #pygame.draw.rect(screen, background, ([0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize]))

@@ -21,8 +21,9 @@ class Menu():
         self.map = map
         self.wave = wave
         self.towers = towers
-        self.menu = pygame.sprite.Group(self.btnStart, self.btnRandom, self.btnBack, self.btnExit, self.btnRandomSpawn)
-        self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
+        self.menu = pygame.sprite.Group()
+        #self.menu.add(self.btnStart, self.btnRandom, self.btnBack, self.btnExit, self.btnRandomSpawn)
+        #self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
 
     def draw(self, screen):
         self.menu.draw(screen)

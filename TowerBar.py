@@ -8,7 +8,7 @@ class TowerBar():
     def __init__(self, origX, origY):
         self.origX = origX
         self.origY = origY
-        self.space = 16
+        self.space = 8
         self.towerCount = len(Images.TowerImages)
         self.selectedTower = -1
         self.redraw = 1
@@ -18,26 +18,33 @@ class TowerBar():
     #  Fill la nouvelle tour en or et la redessine par dessu
     def update(self, screen):
         self.previousSelected = self.selectedTower
-    
+
     # Dessine les tours dans la barre
     #  Si une tour est selectionner dessine un arriere plan en or
     #  Sinon dessine un arriere plan noir
     def draw(self, screen):
         #print('Redrawing towerBar')
         for i in range(self.towerCount):
+            drawX = self.origX + ((i%(self.towerCount/2)) * (tileSize + self.space))
+            drawY = self.origY + (i/3 * (tileSize + self.space))
             if i == self.selectedTower:
-                screen.fill(selected, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
-                screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
+                screen.blit(Images.InterfaceBGbright, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
+                screen.blit(Images.TowerImages[i][0], (drawX , drawY), None, 0)
             else:
-                screen.blit(Images.InterfaceBGwashed, (self.origX + i * (tileSize + self.space) - 5, self.origY - 5) , (self.origX + i * (tileSize + self.space) - 5, self.origY - 5, tileSize + 10, tileSize + 10), 0)
-                screen.blit(Images.TowerImages[i][0], (self.origX + i * (tileSize + self.space), self.origY), None, 0)
+                if i == 4 or i == 1 or i == 2 or i == 3 or i == 0:
+                    screen.blit(Images.InterfaceBGopaque, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
+                    screen.blit(Images.TowerImages[i][0], (drawX, drawY), None, 0)
+                else:
+                    screen.blit(Images.InterfaceBGwashed, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
+                    #screen.blit(Images.TowerImages[i][0], (drawX, drawY), None, 0)
         self.redraw = 0
 
     def onClick(self, pos):
-        if (pos[1] > self.origY) and (pos[1] <= self.origY + tileSize):
-            x = (pos[0] - self.origX) // (tileSize + self.space)
-            if (x >= 0) and (x < self.towerCount) and (pos[0] - self.origX - x * (tileSize + self.space) < tileSize):
-                self.selectTower(x)
+        x = (pos[0] - self.origX) // (tileSize + self.space)
+        y = (pos[1] - self.origY) // (tileSize + self.space)
+        if (x >= 0) and (x < 3):
+            if (y >= 0) and (y < 2):
+                self.selectTower(x+(3*y))
 
     def selectTower(self, tower):
         self.selectedTower = tower

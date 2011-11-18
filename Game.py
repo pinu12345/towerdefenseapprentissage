@@ -66,7 +66,7 @@ def main():
     shots = Shots()
 
     # Initialize the tower bar
-    towerBar = TowerBar.TowerBar(17, mapHeight*(tileSize+1)+35)
+    towerBar = TowerBar.TowerBar(16, mapHeight*tileSize + 24)
 
     # Initialize the menu
     menu = Menu.Menu(map, wave, towers)

@@ -20,7 +20,7 @@ def main():
     Game.state = STATE_INITMENU
 
     # Set the height and width of the screen
-    size = [mapWidth*(tileSize+1) + rightMenuSize, mapHeight*(tileSize+1) + bottomMenuSize]
+    size = [mapWidth*tileSize + rightMenuSize, mapHeight*tileSize + bottomMenuSize]
     screen = pygame.display.set_mode(size)
     screen.fill(background)
     layer = pygame.Surface(size)
@@ -144,7 +144,7 @@ def main():
             gameMenustate = 0
             gameMenuprev_state = 1
             Game.state = STATE_GAMEMENU
-        
+
         ## Game Menu
         elif Game.state == STATE_GAMEMENU:
             if gameMenuprev_state != gameMenustate:
@@ -276,8 +276,10 @@ def main():
                 
                 # Draw the map
                 drawMap(map, screen)
+
                 # Draw the game information menu
                 menu.draw(screen)
+
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
                 
@@ -375,7 +377,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     # Update the towerbar portion of the screen
     if towerBar.redraw:
         towerBar.draw(screen)
-        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize, bottomMenuSize)
+        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
 
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over

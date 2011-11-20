@@ -20,6 +20,7 @@ background    = (   0,   0,   0)
 rangeCircle   = ( 255, 255, 255)
 pink          = ( 255,   0, 255)
 spritepink    = ( 255, 127, 255)
+barColor      = (   0, 128, 153)
 
 # dimensions de carte
 mapWidth = 24
@@ -28,8 +29,8 @@ showGrid = 0
 tileSize = 32
 gridSize = 1
 
-rightMenuSize = 200
-bottomMenuSize = 100
+rightMenuSize = 224
+bottomMenuSize = 116
 
 # carte .txt: caracteres vide, chemin, emplacement et base
 car_empty  = '-'

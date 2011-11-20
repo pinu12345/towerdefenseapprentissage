@@ -59,18 +59,14 @@ class TowerBar():
     def showNothing(self, screen):
         ##Largeur : 796, hauteur : 116
         ##Position: 196
-        print 'Show Nothing'
         screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
 
     def showUpgrade(self, screen):
-        print 'Show Upgrade'
         screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
 
     def showTower(self, screen, tower):
-        print 'Show Tower'
         screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
         for i in range(len(Images.EnemyImages)):
-            print 'Enemy : ', i
             size = random.randint(1,38)
             screen.fill(barColor, (654 + i*36, 574 - size, 28, size), 0)
             screen.blit(Images.EnemyImages[i], (652 + i*36, 576), (0, 0, tileSize, tileSize), 0)

@@ -3,6 +3,65 @@ import pygame.examples.aliens
 from Global import *
 from MainMenu import *
 from Shots import *
+from pgu import gui
+
+class SiampleDialog(gui.Dialog):
+    def __init__(self):
+        title = gui.Label("Popup")
+        main = gui.Container(width=20, height=20)
+        super(SimpleDialog, self).__init__(title, main, width=40, height=40)
+
+    def close(self, *args, **kwargs):
+        print "closing"
+        Game.state = STATE_LOADGAME
+        return super(SimpleDialog, self).close(*args, **kwargs)
+
+class SimpleDialog(gui.Dialog):
+    def __init__(self,**params):
+        title = gui.Label("PopUpTitle")
+        width = 400
+        height = 200
+        doc = gui.Document(width=width)
+        space = title.style.font.size(" ")
+        
+        doc.block(align=0)
+        
+        for word in """First PopUp""".split(" "): 
+            doc.add(gui.Label(word))
+            doc.space(space)
+        doc.br(space[1])
+        
+        doc.block(align=-1)
+        for word in """Lawlolawl.""".split(" "): 
+            doc.add(gui.Label(word))
+            doc.space(space)
+        doc.br(space[1])
+        
+        doc.block(align=-1)
+        for word in """Really awesome!""".split(" "): 
+            doc.add(gui.Label(word))
+            doc.space(space)
+
+        for i in range(0,10):
+            doc.block(align=-1)
+            for word in """This text has been added so we can show off our ScrollArea widget.  It is a very nice widget :-)!""".split(" "):
+                doc.add(gui.Label(word))
+                doc.space(space)
+            doc.br(space[1])
+                
+        gui.Dialog.__init__(self,title,gui.ScrollArea(doc,width,height))
+
+    def close(self, *args, **kwargs):
+        print "closing"
+        Game.state = STATE_LOADGAME
+        return super(SimpleDialog, self).close(*args, **kwargs)
+
+def newPopup():
+    #Create popup
+    dialog = SimpleDialog()
+    Game.popUp = gui.App()
+    Game.popUp.init(dialog)
+    Game.state = STATE_INITPOPUP
 
 def main():
     # Initialize pygame
@@ -10,7 +69,7 @@ def main():
     pygame.init()
     pygame.mouse.set_cursor(*pygame.cursors.tri_left)
     os.environ['SDL_VIDEO_CENTERED'] = '1'#
-    
+
     Game.framesPerSecond = 48
     Game.speedModifier = 1
     Game.autoMode = 0
@@ -83,10 +142,9 @@ def main():
 
     # Used to manage how fast the screen updates
     clock = pygame.time.Clock()
-
+    
     # -------- Main Program Loop -----------
     while close_game == False:
-        
         ## Init menu
         if Game.state == STATE_INITMENU:
             screen.fill(background)
@@ -110,20 +168,20 @@ def main():
                     Game.autoMode = 1
                     Game.level.autoWave()
                 elif mainMenustate == 2:
+                    Game.state = STATE_LOADGAME
                     map.loadFileMap('basicmap')
-                    Game.state = STATE_LOADGAME
                 elif mainMenustate == 3:
+                    Game.state = STATE_LOADGAME
                     map.loadFileMap('map1')
-                    Game.state = STATE_LOADGAME
                 elif mainMenustate == 4:
+                    Game.state = STATE_LOADGAME
                     map.loadFileMap('map2')
-                    Game.state = STATE_LOADGAME
                 elif mainMenustate == 5:
+                    Game.state = STATE_LOADGAME
                     Game.level.loadLevel('map3')
-                    Game.state = STATE_LOADGAME
                 elif mainMenustate == 6:
-                    map.loadFileMap('testmap')
                     Game.state = STATE_LOADGAME
+                    map.loadFileMap('testmap')
                 elif mainMenustate == 7:
                     Game.state = STATE_LOADGAME
                     Game.balanceMode = 1
@@ -168,7 +226,35 @@ def main():
                 pygame.quit()
                 sys.exit()
             pygame.display.update(rect_list)
-        
+
+        ## POP UP
+        if Game.state == STATE_INITPOPUP:
+            print 'Popup Init'
+            Game.state = STATE_POPUP
+            screen.blit(InterfaceBGopaque, (0, 0))
+            drawMap(map, screen)
+            menu.draw(screen)
+            towerBar.draw(screen)
+            pygame.display.flip()
+
+        elif Game.state == STATE_POPUP:
+
+            drawTick += 1
+            if drawTick >= clock.get_fps()/24:
+                drawTick = 0
+                Game.popUp.paint(screen)
+                pygame.display.update(267,190,458,400)
+
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 3:
+                        dialog.open()
+                    else:
+                        Game.popUp.event(event)
+                elif event.type == pygame.QUIT:
+                    sys.exit()
+                else:
+                    Game.popUp.event(event)
         else:
             for event in pygame.event.get(): # User did something
                 # If user clicked close
@@ -269,6 +355,7 @@ def main():
             
             ## Init Game
             if Game.state == STATE_LOADGAME:
+                Game.state = STATE_PREPARATION
                 screen.blit(InterfaceBGopaque, (0, 0))
                 #screen.fill(background)
                 #pygame.draw.rect(screen, background, ([mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize]))
@@ -283,7 +370,6 @@ def main():
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
                 
-                Game.state = STATE_PREPARATION
                 pygame.display.flip()
             
             ## Game Paused
@@ -324,7 +410,6 @@ def main():
     pygame.quit()
 
 def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
-
     # Empty layer 2 (MOUSE OVER WENT OUTSIDE A TURRET SPOT...)
     layer.fill(spritepink)
 

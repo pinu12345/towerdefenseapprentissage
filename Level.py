@@ -231,7 +231,8 @@ class Level():
         self.map.loadMap(self.levelMap)
         ## Verify if there is a message at 0
         if self.levelMessages != []:
-            pass
+            print 'MESSAGE'
+            Game.newPopup()
         self.startWave()
 
     def restart(self):

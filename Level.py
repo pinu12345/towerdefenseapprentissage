@@ -10,16 +10,23 @@ class Level():
         self.waves = waves
         self.towers = towers
         self.towerBar = towerBar
-        self.resetLevel()
-        self.dataLog = ''
+        self.menu = menu
+        #self.dataLog = ''
+        self.currentWave = 0
+        self.menu.redraw = 1
+        self.maxWave = 0
         self.BSTEP = 0
         self.BTNUMBER = 1
         self.BEINDEX = 0
         self.BCONTINUE = 1
+        self.resetLevel()
 
     def resetLevel(self):
         self.towers.clear()
         self.waves.clear()
+        self.currentWave = 0
+        self.menu.redraw = 1
+        self.maxWave = 0
         self.levelBudget = 0
         self.levelUpgrades = 0
         self.levelWaves = []
@@ -70,7 +77,7 @@ class Level():
         #print " Final enemy value:", enemyValue
         
         self.levelWaves = [[enemyType, enemyNumber]]
-        self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
+        #self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
         print " --- Enemies chosen ---"
         
         # Tourelles
@@ -116,7 +123,7 @@ class Level():
                     if maxLoop > 200:
                         break
         #print self.dataLog
-        self.dataLog = '|'.join([self.dataLog, towerDataLog[1:]])
+        #self.dataLog = '|'.join([self.dataLog, towerDataLog[1:]])
         #print(' Finished placing towers')
         print " --- Automatic Wave End ---\n"
 
@@ -145,7 +152,7 @@ class Level():
         enemyBudget = enemyNumber * enemyValue
         self.levelWaves = [[enemyType, enemyNumber]]
         #self.dataLog = ','.join([str(enemyType), str(enemyNumber)])
-        self.dataLog = [str(enemyType), str(enemyNumber)]
+        #self.dataLog = [str(enemyType), str(enemyNumber)]
         
         ## Tourelles
         #bTower = 0
@@ -235,6 +242,7 @@ class Level():
     def start(self):
         self.currentWave = 0
         self.maxWave = len(self.levelWaves)
+        self.menu.redraw = 1
         self.money = self.levelBudget
         self.map.loadMap(self.levelMap)
         ## Verify if there is a message at 0
@@ -245,6 +253,7 @@ class Level():
 
     def restart(self):
         self.currentWave = 0
+        self.menu.redraw = 1
         self.nextWave()
     
     def restartWave(self):
@@ -252,28 +261,29 @@ class Level():
     
     def nextWave(self):
         self.currentWave += 1
+        self.menu.redraw = 1
         ## Verify if there is a message at currentWave
         if self.levelMessages != []:
             pass
         #self.logWave(1)
         self.startWave()
-    
-    def logWave(self, success):
+
+    #def logWave(self, success):
         #if success:
             #print '\n --- SUCCESS ---\n'
         #else:
             #print '\n --- FAILURE ---\n'
-        self.dataLog.extend([Global.DataSHOTS, Global.DataDAMAGE, success])
-        Global.DataSHOTS, Global.DataDAMAGE = 0, 0
-        self.dataLog = ' '.join(map(str, self.dataLog))
-        if Game.balanceMode:
-            with open("BalanceData.txt", "a") as f:
-                f.write(''.join([self.dataLog, "\n"]))
-        elif Game.autoMode:
-            with open("LearningData.txt", "a") as f:
-                f.write(''.join([self.dataLog, "\n"]))
+        #self.dataLog.extend([Global.DataSHOTS, Global.DataDAMAGE, success])
+        #Global.DataSHOTS, Global.DataDAMAGE = 0, 0
+        #self.dataLog = ' '.join(map(str, self.dataLog))
+        #if Game.balanceMode:
+            #with open("BalanceData.txt", "a") as f:
+                #f.write(''.join([self.dataLog, "\n"]))
+        #elif Game.autoMode:
+            #with open("LearningData.txt", "a") as f:
+                #f.write(''.join([self.dataLog, "\n"]))
         #self.randomLevel()
-    
+
     def startWave(self):
         if self.currentWave < self.maxWave and self.BCONTINUE:
             self.waves.newSpawn(self.levelWaves[self.currentWave][0], self.levelWaves[self.currentWave][1])

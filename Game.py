@@ -456,9 +456,10 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     pygame.display.update(0, 0, mapWidth*tileSize, mapHeight*tileSize)
     
     # Update the right menu portion of the screen
-    if 0:
+    if menu.redraw:
+        menu.draw(screen)
         pygame.display.update(mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize)
-        
+
     # Update the towerbar portion of the screen
     if towerBar.redraw:
         towerBar.draw(screen)

@@ -105,7 +105,7 @@ class Enemy(pygame.sprite.Sprite):
             #print 'An enemy has passed, restarting level...'
             #Game.level.restart()
             #Game.level.restartWave()
-            Game.level.logWave(0)
+            #Game.level.logWave(0)
             if Game.balanceMode:
                 Game.level.balanceWave()
             else:

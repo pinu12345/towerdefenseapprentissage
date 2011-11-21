@@ -1,10 +1,9 @@
 ﻿TODOLIST:
 
     [P]
-    Travailler le menu [le noir derriere les choix]
-    Finir de placer les graphiques de l'interface
+    Travailler le menu [Le nombre denemies, les stats, budget, valeur, txt nextwave etc. boutons en haut a droite]
     Bouton accelerer/decelerer le jeu [Effets graphiques]
-    Efface et upgrade universel [Fonctionnement]
+    Efface et upgrade universel [Fonctionnement] + montre en bas le upgrade
     Implanter les graphiques Radio [le splash de la tourelle radioactive]
 
     [Nic]

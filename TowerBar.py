@@ -64,19 +64,20 @@ class TowerBar():
     def showUpgrade(self, screen):
         screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
 
-    def showTower(self, screen, tower):
+    def showTower(self, screen, tower, level = 0):
         screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
         x = 206
         y = 524
         screen.blit(pygame.transform.scale2x(Images.TowerImages[tower][0]), (x, y), None, 0)
+        screen.blit(Images.InterfaceLevels[level], (x + 48, y + 68), None, 0)
         for i in range(len(Images.EnemyImages)):
-            size = random.randint(1,38)
+            size = TowerStats[tower][level][11][i]
             screen.fill(barColor, (654 + i*36, 574 - size, 28, size), 0)
             screen.blit(Images.EnemyImages[i], (652 + i*36, 576), (0, 0, tileSize, tileSize), 0)
         for j in range(4):
-            size = TowerStats[tower][0][7+j]
+            size = TowerStats[tower][level][7+j]
             screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
-        
+
 
     def onClick(self, pos):
         #6 Towers

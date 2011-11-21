@@ -18,7 +18,7 @@ class SiampleDialog(gui.Dialog):
 
 class SimpleDialog(gui.Dialog):
     def __init__(self,**params):
-        title = gui.Label("PopUpTitle")
+        title = gui.Label("Map 3")
         width = 400
         height = 200
         doc = gui.Document(width=width)
@@ -26,29 +26,17 @@ class SimpleDialog(gui.Dialog):
         
         doc.block(align=0)
         
-        for word in """First PopUp""".split(" "): 
+        for word in """Welcome to map 3""".split(" "): 
             doc.add(gui.Label(word))
             doc.space(space)
         doc.br(space[1])
         
         doc.block(align=-1)
-        for word in """Lawlolawl.""".split(" "): 
+        for word in """Good luck, have fun etc.""".split(" "): 
             doc.add(gui.Label(word))
             doc.space(space)
         doc.br(space[1])
-        
-        doc.block(align=-1)
-        for word in """Really awesome!""".split(" "): 
-            doc.add(gui.Label(word))
-            doc.space(space)
 
-        for i in range(0,10):
-            doc.block(align=-1)
-            for word in """This text has been added so we can show off our ScrollArea widget.  It is a very nice widget :-)!""".split(" "):
-                doc.add(gui.Label(word))
-                doc.space(space)
-            doc.br(space[1])
-                
         gui.Dialog.__init__(self,title,gui.ScrollArea(doc,width,height))
 
     def close(self, *args, **kwargs):
@@ -231,6 +219,7 @@ def main():
         if Game.state == STATE_INITPOPUP:
             print 'Popup Init'
             Game.state = STATE_POPUP
+            #Add a background or the game behind the text...
             screen.blit(InterfaceBGopaque, (0, 0))
             drawMap(map, screen)
             menu.draw(screen)
@@ -238,12 +227,11 @@ def main():
             pygame.display.flip()
 
         elif Game.state == STATE_POPUP:
-
             drawTick += 1
             if drawTick >= clock.get_fps()/24:
                 drawTick = 0
                 Game.popUp.paint(screen)
-                pygame.display.update(267,190,458,400)
+                pygame.display.update(267,190,458,265)
 
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:

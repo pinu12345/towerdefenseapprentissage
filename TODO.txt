@@ -1,16 +1,12 @@
 ﻿TODOLIST:
 
     [P]
-    Placer les graphiques de l'interface
-    Bouton accelerer/decelerer le jeu [Effets graphiques]
-    Implanter les graphiques Radio [le splash de la tourelle radioactive]
-    Fonction resetCooldowns
-    Efface et upgrade universel
     Travailler le menu [le noir derriere les choix]
-    
-    Afficher un popup avec du text au milieu
-    En vue de la campagne
-    
+    Finir de placer les graphiques de l'interface
+    Bouton accelerer/decelerer le jeu [Effets graphiques]
+    Efface et upgrade universel [Fonctionnement]
+    Implanter les graphiques Radio [le splash de la tourelle radioactive]
+
     [Nic]
     Equilibrer le jeu
     Continuer l'apprentissage

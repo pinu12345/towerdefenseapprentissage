@@ -172,10 +172,10 @@ def main():
                     map.loadFileMap('basicmap')
                 elif mainMenustate == 3:
                     Game.state = STATE_LOADGAME
-                    map.loadFileMap('map1')
+                    Game.level.loadLevel('map1')
                 elif mainMenustate == 4:
                     Game.state = STATE_LOADGAME
-                    map.loadFileMap('map2')
+                    Game.level.loadLevel('map2')
                 elif mainMenustate == 5:
                     Game.state = STATE_LOADGAME
                     Game.level.loadLevel('map3')

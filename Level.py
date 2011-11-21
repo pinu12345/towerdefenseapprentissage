@@ -26,6 +26,7 @@ class Level():
         self.levelTowers = []
         self.levelMap = []
         self.levelMessages = []
+        self.nextLevel = ''
 
     def randomLevel(self):
         #print '\n\n --- Random Level --- \n'
@@ -39,6 +40,7 @@ class Level():
         self.levelWaves = [[enemyType, enemyNumber]]
         self.levelTowers = [0, 1, 2, 3, 4, 5]
         self.levelMessages = []
+        self.nextLevel = ''
         self.levelMap = RandomMap.RandomMap().M
         self.start()
 
@@ -220,7 +222,9 @@ class Level():
             elif (i >= 13) and (i <= 28):
                 if levelMap == 'levelMap':
                     self.levelMap.append(self.levelFile[i])
-            elif i >= 32:
+            elif i == 31:
+                self.nextLevel = (self.levelFile[i].rsplit('\n')[0])
+            elif i >= 34:
                 self.levelMessages.append(self.levelFile[i])
         self.start()
     
@@ -278,5 +282,10 @@ class Level():
                 print '\n Balance test over; quitting.\n'
                 sys.exit()
         else:
-            print '\n Game finished; quitting.\n'
-            sys.exit()
+            if self.nextLevel != '':
+                print 'Starting next level : ', self.nextLevel
+                Game.level.loadLevel(self.nextLevel)
+                Game.state = STATE_LOADGAME
+            else:
+                print '\n Game finished; quitting.\n'
+                sys.exit()

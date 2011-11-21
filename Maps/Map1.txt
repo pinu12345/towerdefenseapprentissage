@@ -1,3 +1,16 @@
+Budget [1]
+100
+
+Towers [3]
+0, 1, 2
+
+Upgrades [7]
+1
+
+Waves [10]
+5 1
+
+Map [13-28]
 ------------------------
 ------------------------
 XXXXXXXXXXXXXXXXX-------
@@ -14,3 +27,12 @@ OOOOOOOOOOOOOOOOX-------
 -------XXXXXXXXXXXXXX---
 ------------------------
 ------------------------
+
+NextLevel[31]
+map2
+
+Messages [34+]
+0:Test
+1:Attention
+2:Wop
+3:GG

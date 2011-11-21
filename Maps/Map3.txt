@@ -2,33 +2,36 @@ Budget [1]
 100
 
 Towers [3]
-0, 1, 2, 4
+0, 1, 2, 3, 4
 
 Upgrades [7]
 1
 
 Waves [10]
-5 1, 1 5, 2 10
+5 1
 
 Map [13-28]
 ------------------------
-------------------------
-XXXXXXXXXXXXXXXXX-------
-OOOOOOOOOOOOOOOOX-------
----------------OX-------
----------------OX-------
--------OOOOOOOOOX-------
--------XXXXXXXXXX-------
--------XOOOOOOOOO-------
--------XO---------------
--------XO----------BX---
--------XO----------OX---
--------XOOOOOOOOOOOOX---
--------XXXXXXXXXXXXXX---
+XXXOO-------XXXXXXXX----
+OOXXXOO-----XOOOOOOX----
+--OOXXXOO---XOOOOOOX----
+----OOXXXOOOXOOOOOOX----
+------OOXXXOXOOOOOOX----
+--------OOXXXOOOOOOX----
+----------OOO------X----
+-------------------X----
+-------------------X----
+-------------------X----
+---OOOOOOOOOOOOOOOOX----
+--BXXXXXXXXXXOOOXXXX----
+-----------OXXXXXO------
 ------------------------
 ------------------------
 
-Messages [32+]
+NextLevel[31]
+
+
+Messages [34+]
 0:Test
 1:Attention
 2:Wop

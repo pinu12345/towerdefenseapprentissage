@@ -23,7 +23,7 @@ class Map:
             self.T.append([])
             for column in range(mapWidth):
                 self.M[row].append(0)
-                self.O[row].append(0)
+                self.O[row].append(-1)
                 self.T[row].append(0)
     
     def reset(self):
@@ -43,7 +43,7 @@ class Map:
             self.T.append([])
             for column in range(mapWidth):
                 self.M[row].append(0)
-                self.O[row].append(0)
+                self.O[row].append(-1)
                 self.T[row].append(0)
     
     def clearTowers(self):

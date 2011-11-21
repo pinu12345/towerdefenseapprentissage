@@ -266,12 +266,12 @@ def main():
                 elif event.type == pygame.MOUSEMOTION:
                     Game.drawMouseOver = 0
                     if towerBar.selectedTower > -1:
-                        pos = pygame.mouse.get_pos()                
+                        pos = pygame.mouse.get_pos()
                         column = pos[0] // tileSize
                         row = pos[1] // tileSize
                         # Inside Map
                         if (column < mapWidth) and (row < mapHeight):
-                            map.O[map.currentOY][map.currentOX] = 0
+                            map.O[map.currentOY][map.currentOX] = -1
                             if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
                                 map.currentOY = row
                                 map.currentOX = column
@@ -468,7 +468,7 @@ def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
     for row in range(mapHeight):
         for column in range(mapWidth):
-            if (map.T[row][column] == 0) and (map.O[row][column] > 0):
+            if (map.T[row][column] == 0) and (map.O[row][column] >= 0):
                 ##  vvv  A MODIFER PAR P-O vvv
                 TowerLEVEL_TEMP = 0
                 ##  ^^^  A MODIFER PAR P-O ^^^

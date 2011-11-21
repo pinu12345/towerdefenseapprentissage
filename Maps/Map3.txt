@@ -12,20 +12,20 @@ Waves [10]
 
 Map [13-28]
 ------------------------
-XXXOO-------XXXXXXXX----
-OOXXXOO-----XOOOOOOX----
---OOXXXOO---XOOOOOOX----
-----OOXXXOOOXOOOOOOX----
-------OOXXXOXOOOOOOX----
---------OOXXXOOOOOOX----
-----------OOO------X----
+XXO---------XXXXXXXX----
+OXXO-O------XOOOOOOX----
+-OXXO--O----XOOOOOOX----
+--OXXO---O-OXOOOOOOX----
+---OXXOO---OXOOOOOOX----
+----OXXOOOOOXOOOOOOX----
+-----OXXXXXXX------X----
 -------------------X----
 -------------------X----
 -------------------X----
----OOOOOOOOOOOOOOOOX----
+--OOOOOOOOOOO----OOX----
 --BXXXXXXXXXXOOOXXXX----
------------OXXXXXO------
-------------------------
+-----------OX-O-XO------
+------------XXXXX-------
 ------------------------
 
 NextLevel[31]

@@ -45,6 +45,10 @@ class Level():
         self.start()
 
     def autoWave(self):
+        #Place et joue
+        self.testWave()
+    
+    def testWave(self):
         print "\n\n --- Automatic Wave Start ---"
         Game.speedModifier = 100000
         self.resetLevel()

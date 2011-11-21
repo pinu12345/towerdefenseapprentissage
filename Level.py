@@ -282,10 +282,15 @@ class Level():
                 print '\n Balance test over; quitting.\n'
                 sys.exit()
         else:
-            if self.nextLevel != '':
+            if self.nextLevel == 'End':
+                print '\n You have finished the game. Congratulations!'
+                Game.state = STATE_PREPARATION
+            elif self.nextLevel != '':
                 print 'Starting next level : ', self.nextLevel
-                Game.level.loadLevel(self.nextLevel)
                 Game.state = STATE_LOADGAME
+                Game.level.loadLevel(self.nextLevel)
             else:
                 print '\n Game finished; quitting.\n'
                 sys.exit()
+                
+                

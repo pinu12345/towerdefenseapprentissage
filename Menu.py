@@ -19,20 +19,20 @@ class Menu():
         ##Next Wave : 790, 460
         currentWave = Game.level.currentWave
         maxWave = Game.level.maxWave - 1
-        screen.blit(Images.InterfaceBGopaque, (790, 460) , (790, 460, tileSize, tileSize), 0)
-        screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave][0]], (790, 460), (0, 0, tileSize, tileSize), 0)
-        
+
         #Redraw the background
         for i in range(0, 5):
             screen.blit(Images.InterfaceBGwashed, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
-
-        #Draw the next waves
-        for i in range(0, maxWave - currentWave):
-            if i <= 4:
-                screen.blit(Images.InterfaceBGopaque, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
-                screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave + i + 1][0]], (790, 376 - i*56), (0, 0, tileSize, tileSize), 0)
-
-        print Game.level.levelWaves[currentWave][0]
+        if currentWave > maxWave:
+            screen.blit(Images.InterfaceBGwashed, (784, 454) , (784, 454, 194, 44), 0)
+        else:
+            #Draw the next waves
+            screen.blit(Images.InterfaceBGopaque, (784, 454) , (784, 454, 194, 44), 0)
+            screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave][0]], (790, 460), (0, 0, tileSize, tileSize), 0)
+            for i in range(0, maxWave - currentWave):
+                if i <= 4:
+                    screen.blit(Images.InterfaceBGopaque, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
+                    screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave + i + 1][0]], (790, 376 - i*56), (0, 0, tileSize, tileSize), 0)
         self.redraw = 0
 
     def onClick(self, pos, map):

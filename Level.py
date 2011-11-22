@@ -244,10 +244,11 @@ class Level():
         self.maxWave = len(self.levelWaves)
         self.menu.redraw = 1
         self.money = self.levelBudget
+        print 'LoadingMap'
         self.map.loadMap(self.levelMap)
+        print 'MapLoaded'
         ## Verify if there is a message at 0
         if self.levelMessages != []:
-            print 'MESSAGE'
             Game.newPopup()
         self.startWave()
 

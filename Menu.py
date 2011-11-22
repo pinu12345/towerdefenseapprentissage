@@ -6,7 +6,7 @@ class Menu():
         self.redraw = 0
         self.redrawSpeed = 0
         Game.redrawSPBtn = 0
-        self.drawSpeed = 0
+        self.drawSpeed = 1
         self.btnPause = BtnPause(875,300)
         self.btnMenu = BtnMenu(775,350)
         self.btnLowerSpeed = BtnLowerSpeed(875,350)

@@ -55,6 +55,8 @@ def init():
                               pygame.image.load(os.path.join ('Images\Interface', 'lv3.png')).convert()]
     for i in range(len(Images.InterfaceLevels)):
         Images.InterfaceLevels[i].set_colorkey(spritepink)
-    Images.InterfaceDI = pygame.image.load(os.path.join ('Images\Interface', 'def_inf.png')).convert()
-    Images.InterfaceDA = pygame.image.load(os.path.join ('Images\Interface', 'def_arm.png')).convert()
-    Images.InterfaceDS = pygame.image.load(os.path.join ('Images\Interface', 'def_shi.png')).convert()
+    Images.InterfaceType = [pygame.image.load(os.path.join ('Images\Interface', 'def_inf.png')).convert(),
+                            pygame.image.load(os.path.join ('Images\Interface', 'def_arm.png')).convert(),
+                            pygame.image.load(os.path.join ('Images\Interface', 'def_shi.png')).convert()]
+    for i in range(len(Images.InterfaceType)):
+        Images.InterfaceType[i].set_colorkey(spritepink)

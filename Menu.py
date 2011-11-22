@@ -28,7 +28,8 @@ class Menu():
         else:
             #Draw the next waves
             screen.blit(Images.InterfaceBGopaque, (784, 454) , (784, 454, 194, 44), 0)
-            screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave][0]], (790, 460), (0, 0, tileSize, tileSize), 0)
+            screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave][0]], (790, 460), None, 0)
+            screen.blit(Images.InterfaceType[EnemyStats[Game.level.levelWaves[currentWave][0]][6]], (918, 480), None, 0)
             for j in range(3):
                 size = EnemyStats[Game.level.levelWaves[currentWave][0]][7+j]
                 screen.fill(barColor, (916 + j*20, 478 - size, 16, size), 0)
@@ -36,8 +37,8 @@ class Menu():
                 if i <= 4:
                     enemyType = Game.level.levelWaves[currentWave + i + 1][0]
                     screen.blit(Images.InterfaceBGopaque, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
-                    screen.blit(Images.EnemyImages[enemyType], (790, 376 - i*56), (0, 0, tileSize, tileSize), 0)
-                    ##BLIT LA PETITE IMAGE
+                    screen.blit(Images.EnemyImages[enemyType], (790, 376 - i*56), None, 0)
+                    screen.blit(Images.InterfaceType[EnemyStats[enemyType][6]], (918, 396 - i*56), None, 0)
                     for j in range(3):
                         size = EnemyStats[enemyType][7+j]
                         screen.fill(barColor, (916 + j*20, 394 - i*56 - size, 16, size), 0)

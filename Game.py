@@ -62,10 +62,11 @@ def main():
     Game.speedModifier = 1
     Game.autoMode = 0
     Game.balanceMode = 0
-    
     drawTick = 0
+    
     Game.state = STATE_INITMENU
-
+    Game.fontObj = pygame.font.Font('freesansbold.ttf', 32)
+    
     # Set the height and width of the screen
     size = [mapWidth*tileSize + rightMenuSize, mapHeight*tileSize + bottomMenuSize]
     screen = pygame.display.set_mode(size)
@@ -80,6 +81,9 @@ def main():
     Game.repaintMap = 0
     Game.placedTower = 0
 
+    # Initialize the Images
+    Images.init()
+    
     # Initialize the MainMenu
     mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Start Automatic Tests', 1, None),
@@ -89,11 +93,10 @@ def main():
                 ('Start Map 3', 5, None),
                 ('Start Test Map', 6, None),
                 ('Start Balance Tests', 7, None),
-                ('Exit', 8, None)])
+                ('Exit', 8, None)], Images.Background)
     gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
-                ('Back to main menu (current progress will be lost!)', 2, None)])
-    Images.init()
+                ('Back to main menu (current progress will be lost!)', 2, None)], Images.Background)
 
     menubackground = Images.Background
     interfaceBGwashed = Images.InterfaceBGwashed

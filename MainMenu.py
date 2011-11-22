@@ -43,7 +43,7 @@ class cMenu:
    #  Initialize the class
    #
    def __init__(self, x, y, h_pad, v_pad, orientation, number, background,
-                buttonList):
+                buttonList, backgroundImg):
       ## menu items
       self.menu_items = []                      # List of menu items
       self.font = pygame.font.Font(None, 32)    # Font to use
@@ -62,7 +62,7 @@ class cMenu:
       self.image_highlight_offset = 2           # Addition padding around image
                                                 # buttons only for the highlight
 
-      self.background = background.copy()       # The unedited background image
+      self.background = backgroundImg           # The unedited background image
       self.draw_surface = background            # Surface to draw to
       self.centered = False                     # True if the menu is centered
       self.centeredOnScreen = False             # True if the menu is centered

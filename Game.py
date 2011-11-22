@@ -63,10 +63,12 @@ def main():
     Game.autoMode = 0
     Game.balanceMode = 0
     drawTick = 0
-    
+
     Game.state = STATE_INITMENU
-    Game.fontObj = pygame.font.Font('freesansbold.ttf', 32)
-    
+    Game.mainMenuFont = pygame.font.Font(None, 32)
+    Game.gameMenuFont = pygame.font.Font(None, 24)
+    Game.enemyCountFont = pygame.font.Font(None, 30)
+
     # Set the height and width of the screen
     size = [mapWidth*tileSize + rightMenuSize, mapHeight*tileSize + bottomMenuSize]
     screen = pygame.display.set_mode(size)

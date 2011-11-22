@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import pygame
+import pygame, Game
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -46,7 +46,7 @@ class cMenu:
                 buttonList, backgroundImg):
       ## menu items
       self.menu_items = []                      # List of menu items
-      self.font = pygame.font.Font(None, 32)    # Font to use
+      self.font = Game.mainMenuFont    # Font to use
 
       self.x = x                                # Top left corner (of surface)
       self.y = y                                # relative to the screen/window

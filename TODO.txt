@@ -5,7 +5,6 @@
     Bouton accelerer/decelerer le jeu [Effets graphiques]
     Efface et upgrade universel [Fonctionnement] + montre en bas le upgrade
     Implanter les graphiques Radio [le splash de la tourelle radioactive]
-    Travailler le noir derriere le text du menu + changer le font si possible...
 
     [Nic]
     Equilibrer le jeu

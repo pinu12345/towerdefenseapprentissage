@@ -24,21 +24,18 @@ class SimpleDialog(gui.Dialog):
         width = 600
         height = 400
         space = title.style.font.size(" ")
-        
         doc = html.HTML(message,width=580)
-
         gui.Dialog.__init__(self,title,gui.ScrollArea(doc,width,height))
 
     def close(self, *args, **kwargs):
-        print "closing"
         Game.state = STATE_LOADGAME
         return super(SimpleDialog, self).close(*args, **kwargs)
 
 def newPopup(message):
     #Create popup
-    dialog = SimpleDialog(message)
+    Game.dialog = SimpleDialog(message)
     Game.popUp = gui.App()
-    Game.popUp.init(dialog)
+    Game.popUp.init(Game.dialog)
     Game.state = STATE_INITPOPUP
 
 def main():
@@ -213,7 +210,6 @@ def main():
 
         ## POP UP
         if Game.state == STATE_INITPOPUP:
-            print 'Popup Init'
             Game.state = STATE_POPUP
             #Add a background or the game behind the text...
             screen.blit(InterfaceBGopaque, (0, 0))
@@ -228,13 +224,13 @@ def main():
                 drawTick = 0
                 Game.popUp.paint(screen)
                 pygame.display.update(167,90,658,465)
-
+                
             for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 3:
-                        dialog.open()
-                    else:
-                        Game.popUp.event(event)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        Game.dialog.close()
+                    elif event.key == pygame.K_RETURN:
+                        Game.dialog.close()
                 elif event.type == pygame.QUIT:
                     sys.exit()
                 else:

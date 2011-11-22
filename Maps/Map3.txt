@@ -34,4 +34,4 @@ End
 Messages [34+]
 <div>Test, map3 etc <br />loll ok :( <br />This map is quite the cool map</div>
 <div>Attention<br />La wave 2 est pas mal dangereuse</div>
-<div>Last level<br />Good luck, have fun!<br />NOOB!</div>
+lol noob!

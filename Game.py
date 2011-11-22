@@ -1,9 +1,11 @@
 import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images, Level
 import pygame.examples.aliens
+from pygame.locals import *
 from Global import *
 from MainMenu import *
 from Shots import *
 from pgu import gui
+from pgu import html
 
 class SiampleDialog(gui.Dialog):
     def __init__(self):
@@ -17,25 +19,13 @@ class SiampleDialog(gui.Dialog):
         return super(SimpleDialog, self).close(*args, **kwargs)
 
 class SimpleDialog(gui.Dialog):
-    def __init__(self,**params):
-        title = gui.Label("Map 3")
-        width = 400
-        height = 200
-        doc = gui.Document(width=width)
+    def __init__(self,message):
+        title = gui.Label(" ")
+        width = 600
+        height = 400
         space = title.style.font.size(" ")
         
-        doc.block(align=0)
-        
-        for word in """Welcome to map 3""".split(" "): 
-            doc.add(gui.Label(word))
-            doc.space(space)
-        doc.br(space[1])
-        
-        doc.block(align=-1)
-        for word in """Good luck, have fun etc.""".split(" "): 
-            doc.add(gui.Label(word))
-            doc.space(space)
-        doc.br(space[1])
+        doc = html.HTML(message,width=580)
 
         gui.Dialog.__init__(self,title,gui.ScrollArea(doc,width,height))
 
@@ -44,9 +34,9 @@ class SimpleDialog(gui.Dialog):
         Game.state = STATE_LOADGAME
         return super(SimpleDialog, self).close(*args, **kwargs)
 
-def newPopup():
+def newPopup(message):
     #Create popup
-    dialog = SimpleDialog()
+    dialog = SimpleDialog(message)
     Game.popUp = gui.App()
     Game.popUp.init(dialog)
     Game.state = STATE_INITPOPUP
@@ -67,7 +57,8 @@ def main():
     Game.state = STATE_INITMENU
     Game.mainMenuFont = pygame.font.Font(None, 32)
     Game.gameMenuFont = pygame.font.Font(None, 24)
-    Game.enemyCountFont = pygame.font.Font(None, 30)
+    Game.enemyCountFont = pygame.font.Font(None, 24)
+    Game.popUpFont = pygame.font.Font(None, 24)
 
     # Set the height and width of the screen
     size = [mapWidth*tileSize + rightMenuSize, mapHeight*tileSize + bottomMenuSize]
@@ -236,7 +227,7 @@ def main():
             if drawTick >= clock.get_fps()/24:
                 drawTick = 0
                 Game.popUp.paint(screen)
-                pygame.display.update(267,190,458,265)
+                pygame.display.update(167,90,658,465)
 
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:

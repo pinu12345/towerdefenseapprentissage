@@ -236,7 +236,7 @@ class Level():
             elif i == 31:
                 self.nextLevel = (self.levelFile[i].rsplit('\n')[0])
             elif i >= 34:
-                self.levelMessages.append(self.levelFile[i])
+                self.levelMessages.append(self.levelFile[i].rsplit('\n')[0])
         self.start()
     
     def start(self):
@@ -249,7 +249,8 @@ class Level():
         print 'MapLoaded'
         ## Verify if there is a message at 0
         if self.levelMessages != []:
-            Game.newPopup()
+            if self.levelMessages[0] != '':
+                Game.newPopup(self.levelMessages[0])
         self.startWave()
 
     def restart(self):
@@ -265,8 +266,8 @@ class Level():
         self.menu.redraw = 1
         ## Verify if there is a message at currentWave
         if self.levelMessages != []:
-            pass
-        #self.logWave(1)
+            if (len(self.levelMessages) > self.currentWave) and (self.levelMessages[self.currentWave] != ''):
+                Game.newPopup(self.levelMessages[self.currentWave])
         self.startWave()
 
     #def logWave(self, success):

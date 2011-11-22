@@ -32,3 +32,6 @@ NextLevel[31]
 map2
 
 Messages [34+]
+<div>Test, map1 etc <br />loll ok :( <br />This map is quite the cool map</div>
+
+<div>Attention<br />La wave 3 est pas mal dangereuse</div>

@@ -8,7 +8,7 @@ Upgrades [7]
 1
 
 Waves [10]
-5 1
+5 1, 0 1, 8 10
 
 Map [13-28]
 ------------------------
@@ -32,7 +32,6 @@ NextLevel[31]
 End
 
 Messages [34+]
-0:Test
-1:Attention
-2:Wop
-3:GG
+<div>Test, map3 etc <br />loll ok :( <br />This map is quite the cool map</div>
+<div>Attention<br />La wave 2 est pas mal dangereuse</div>
+<div>Last level<br />Good luck, have fun!<br />NOOB!</div>

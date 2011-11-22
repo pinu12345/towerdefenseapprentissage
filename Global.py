@@ -18,11 +18,13 @@ STATE_INITPOPUP = 7
 STATE_POPUP = 8
 
 # couleurs
-background    = (   0,   0,   0)
-rangeCircle   = ( 255, 255, 255)
-pink          = ( 255,   0, 255)
-spritepink    = ( 255, 127, 255)
-barColor      = (   0, 128, 153)
+background        = (   0,   0,   0)
+rangeCircle       = ( 255, 255, 255)
+pink              = ( 255,   0, 255)
+spritepink        = ( 255, 127, 255)
+barColor          = (   0, 128, 153)
+menuColor         = ( 255, 255, 255)
+menuSelectedColor = ( 255,   0,   0)
 
 # dimensions de carte
 mapWidth = 24

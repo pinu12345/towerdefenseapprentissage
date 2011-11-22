@@ -1,10 +1,7 @@
 #! /usr/bin/python
 import pygame, Game
+from Global import *
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
 EVENT_CHANGE_STATE = pygame.USEREVENT + 1
@@ -56,8 +53,8 @@ class cMenu:
       self.vertical_padding = v_pad             # See description above
 
       self.selection = 0                        # The currently selected button
-      self.u_color = WHITE                      # Color for unselected text
-      self.s_color = RED                        # Color for selected text
+      self.u_color = menuColor                  # Color for unselected text
+      self.s_color = menuSelectedColor          # Color for selected text
       self.image_highlight_color = BLUE         # Color for the image highlights
       self.image_highlight_offset = 2           # Addition padding around image
                                                 # buttons only for the highlight

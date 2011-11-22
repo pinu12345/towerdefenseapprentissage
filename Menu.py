@@ -4,7 +4,9 @@ from Global import *
 class Menu():
     def __init__(self, map, wave, towers):
         self.redraw = 0
+        self.redrawSpeed = 0
         Game.redrawSPBtn = 0
+        self.drawSpeed = 0
         self.btnPause = BtnPause(875,300)
         self.btnMenu = BtnMenu(775,350)
         self.btnLowerSpeed = BtnLowerSpeed(875,350)
@@ -15,6 +17,12 @@ class Menu():
         self.menu = pygame.sprite.Group()
         #self.menu.add(self.btnStart, self.btnRandom, self.btnBack, self.btnExit, self.btnRandomSpawn)
         #self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
+
+    def drawSpeedArrows(self, screen):
+        screen.blit(Images.InterfaceBGwashed, (850, 62) , (850, 62, 62, 24), 0)
+        for i in range (self.drawSpeed):
+            screen.blit(Images.InterfaceBGopaque, (850 + i*16, 62) , (850 + i*16, 62, 16, 24), 0)
+        self.redrawSpeed = 0
 
     def drawSPBtn(self, screen):
         print Game.redrawSPBtn
@@ -52,6 +60,7 @@ class Menu():
                         screen.fill(barColor, (916 + j*20, 394 - i*56 - size, 16, size), 0)
         screen.blit(Game.gameMenuFont.render('Current wave', 0, (255, 255, 255)), (784, 430), None, 0)
         screen.blit(Game.gameMenuFont.render('Next', 0, (255, 255, 255)), (784, 122), None, 0)
+        self.drawSpeedArrows(screen)
         self.redraw = 0
 
     def onClick(self, pos, map):

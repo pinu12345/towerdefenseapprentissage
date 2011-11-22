@@ -37,6 +37,18 @@ def newPopup(message):
     Game.popUp = gui.App()
     Game.popUp.init(Game.dialog)
     Game.state = STATE_INITPOPUP
+    
+def increaseSpeed(menu):
+    if Game.speedModifier < 16.0:
+        Game.speedModifier *= 2
+        menu.drawSpeed += 1
+        menu.redrawSpeed = 1
+
+def reduceSpeed(menu):
+    if Game.speedModifier > 1:
+        Game.speedModifier /= 2
+        menu.drawSpeed -= 1
+        menu.redrawSpeed = 1
 
 def main():
     # Initialize pygame
@@ -238,6 +250,26 @@ def main():
                     sys.exit()
                 else:
                     Game.popUp.event(event)
+                    
+        ## Wave finished [Draw then restartWave or start next Wave] -> PopUp lorsque level finished?
+        elif Game.state == STATE_ENDWAVE:
+            if not Game.autoMode and not Game.balanceMode:
+                drawTick += 1
+                if drawTick >= clock.get_fps()/24:
+                    Game.EndLevelDraw += 1
+                    drawTick = 0
+                    drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
+                    if Game.EndLevelDraw >= 5:
+                        Game.state = STATE_PREPARATION
+                        Game.EndLevelDraw = 0
+                        if Game.restartWave:
+                            Game.restartWave = 0
+                            Game.level.restartWave()
+                        elif Game.nextWave:
+                            Game.nextWave = 0
+                            Game.level.nextWave()
+                        else:
+                            print 'Confus :('
         else:
             for event in pygame.event.get(): # User did something
                 # If user clicked close
@@ -319,11 +351,9 @@ def main():
                         if 5 in Game.level.levelTowers:
                             towerBar.selectTower(5)
                     elif event.key == pygame.K_EQUALS:
-                        if Game.speedModifier <= 25.0:
-                            Game.speedModifier *= 5
+                        Game.increaseSpeed(menu)
                     elif event.key == pygame.K_MINUS:
-                        if Game.speedModifier >= 0.2:
-                            Game.speedModifier /= 5
+                        Game.reduceSpeed(menu)
                     elif event.key == pygame.K_c:
                         towers.resetCooldowns()
                     elif event.key == pygame.K_r:
@@ -356,25 +386,9 @@ def main():
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
                 pygame.display.flip()
-            
-            ## Wave finished
-            elif Game.state == STATE_ENDWAVE:
-                if not Game.autoMode and not Game.balanceMode:
-                    drawTick += 1
-                    if drawTick >= clock.get_fps()/24:
-                        Game.EndLevelDraw += 1
-                        drawTick = 0
-                        drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
-                        if Game.EndLevelDraw >= 5:
-                            Game.state = STATE_PREPARATION
-                            Game.EndLevelDraw = 0
-                            if Game.restartWave:
-                                Game.level.restartWave()
-                            elif Game.nextWave:
-                                Game.level.nextWave()
 
             ## Game Paused
-            elif Game.state == STATE_PREPARATION:
+            if Game.state == STATE_PREPARATION:
                 if Game.autoMode or Game.balanceMode:
                     Game.redrawSPBtn = 1
                     Game.state = STATE_GAME
@@ -461,7 +475,12 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     if menu.redraw:
         menu.draw(screen)
         pygame.display.update(mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize)
-        
+    
+    # Update the speed arrows
+    if menu.redrawSpeed:
+        menu.drawSpeedArrows(screen)
+        pygame.display.update(850, 62, 62, 24)
+
     # Update the Start Pause button
     if Game.redrawSPBtn:
         menu.drawSPBtn(screen)

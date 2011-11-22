@@ -25,7 +25,10 @@ class Menu():
         self.redrawSpeed = 0
 
     def drawSPBtn(self, screen):
-        print Game.redrawSPBtn
+        if Game.redrawSPBtn == 1:
+            screen.blit(Images.InterfaceStart, (784, 14) , None, 0)
+        elif Game.redrawSPBtn == 2:
+            screen.blit(Images.InterfacePause, (784, 14) , None, 0)
         Game.redrawSPBtn = 0
 
     def draw(self, screen):

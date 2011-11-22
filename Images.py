@@ -47,6 +47,8 @@ def init():
     Images.Background = pygame.image.load(os.path.join ('Images\Menu', 'title.png')).convert()
     
     # Interface
+    Images.InterfaceStart = pygame.image.load(os.path.join ('Images\Interface', 'start.png')).convert()
+    Images.InterfacePause = pygame.image.load(os.path.join ('Images\Interface', 'pause.png')).convert()
     Images.InterfaceBGwashed = pygame.image.load(os.path.join ('Images\Interface', 'bg_washed.png')).convert()
     Images.InterfaceBGopaque = pygame.image.load(os.path.join ('Images\Interface', 'bg_opaque.png')).convert()
     Images.InterfaceBGbright = pygame.image.load(os.path.join ('Images\Interface', 'bg_bright.png')).convert()

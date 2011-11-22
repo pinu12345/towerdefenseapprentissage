@@ -231,6 +231,8 @@ def main():
             screen.blit(InterfaceBGopaque, (0, 0))
             drawMap(map, screen)
             menu.draw(screen)
+            Game.redrawSPBtn = 1
+            menu.drawSPBtn(screen)
             towerBar.draw(screen)
             pygame.display.flip()
 
@@ -382,6 +384,8 @@ def main():
 
                 # Draw the game information menu
                 menu.draw(screen)
+                Game.redrawSPBtn = 1
+                menu.drawSPBtn(screen)
 
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
@@ -484,7 +488,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     # Update the Start Pause button
     if Game.redrawSPBtn:
         menu.drawSPBtn(screen)
-        pygame.display.update(0,0,0,0)
+        pygame.display.update(784, 14, 92, 28)
 
     # Update the towerbar portion of the screen
     if towerBar.redraw:

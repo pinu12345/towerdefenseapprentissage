@@ -23,6 +23,8 @@ rangeCircle       = ( 255, 255, 255)
 pink              = ( 255,   0, 255)
 spritepink        = ( 255, 127, 255)
 barColor          = (   0, 128, 153)
+
+# Font Colors
 menuColor         = ( 255, 255, 255)
 menuSelectedColor = ( 255,   0,   0)
 

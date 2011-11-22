@@ -100,16 +100,16 @@ class Enemy(pygame.sprite.Sprite):
                 return
         ## Fin de la partie
         if Game.state != STATE_PREPARATION:
-            Game.state = STATE_PREPARATION
+            Game.state = STATE_ENDWAVE
+            Game.restartWave = 1
             self.wave.clear()
             #print 'An enemy has passed, restarting level...'
             #Game.level.restart()
-            #Game.level.restartWave()
             #Game.level.logWave(0)
-            if Game.balanceMode:
-                Game.level.balanceWave()
-            else:
-                Game.level.autoWave()
+            #if Game.balanceMode:
+                #Game.level.balanceWave()
+            #else:
+                #Game.level.autoWave()
                 
         
     def setStartPosition(self, x, y, direction):
@@ -132,9 +132,9 @@ class Enemy(pygame.sprite.Sprite):
             Game.enemyCount -= 1
             if Game.enemyCount == 0:
                 #print ' Wave completed'
-                Game.state = STATE_PREPARATION
-                Game.level.nextWave()
-    
+                Game.state = STATE_ENDWAVE
+                Game.nextWave = 1
+
     def draw(self, screen):
         if self.drawDirection != self.direction:
             if self.drawDirection == cardN:

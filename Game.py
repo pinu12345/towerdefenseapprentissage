@@ -70,6 +70,10 @@ def main():
     Game.drawMessage = 0
     Game.repaintMap = 0
     Game.placedTower = 0
+    
+    Game.EndLevelDraw = 0
+    Game.restartWave = 0
+    Game.nextWave = 0
 
     # Initialize the Images
     Images.init()
@@ -224,7 +228,6 @@ def main():
                 drawTick = 0
                 Game.popUp.paint(screen)
                 pygame.display.update(167,90,658,465)
-                
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
@@ -292,8 +295,10 @@ def main():
                         Game.state = STATE_INITGAMEMENU
                     elif event.key == pygame.K_SPACE:
                         if Game.state == STATE_GAME:
+                            Game.redrawSPBtn = 1
                             Game.state = STATE_PREPARATION
                         elif Game.state == STATE_PREPARATION: 
+                            Game.redrawSPBtn = 2
                             Game.state = STATE_GAME
                     elif event.key == pygame.K_1:
                         if 0 in Game.level.levelTowers:
@@ -335,6 +340,7 @@ def main():
             
             ## Init Game
             if Game.state == STATE_LOADGAME:
+                Game.redrawSPBtn = 1
                 Game.state = STATE_PREPARATION
                 screen.blit(InterfaceBGopaque, (0, 0))
                 #screen.fill(background)
@@ -349,12 +355,28 @@ def main():
 
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
-                
                 pygame.display.flip()
             
+            ## Wave finished
+            elif Game.state == STATE_ENDWAVE:
+                if not Game.autoMode and not Game.balanceMode:
+                    drawTick += 1
+                    if drawTick >= clock.get_fps()/24:
+                        Game.EndLevelDraw += 1
+                        drawTick = 0
+                        drawGame(map, towerBar, towers, wave, shots, menu, screen, layer)
+                        if Game.EndLevelDraw >= 5:
+                            Game.state = STATE_PREPARATION
+                            Game.EndLevelDraw = 0
+                            if Game.restartWave:
+                                Game.level.restartWave()
+                            elif Game.nextWave:
+                                Game.level.nextWave()
+
             ## Game Paused
             elif Game.state == STATE_PREPARATION:
                 if Game.autoMode or Game.balanceMode:
+                    Game.redrawSPBtn = 1
                     Game.state = STATE_GAME
                 else:
                     ## Display
@@ -439,6 +461,11 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     if menu.redraw:
         menu.draw(screen)
         pygame.display.update(mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize)
+        
+    # Update the Start Pause button
+    if Game.redrawSPBtn:
+        menu.drawSPBtn(screen)
+        pygame.display.update(0,0,0,0)
 
     # Update the towerbar portion of the screen
     if towerBar.redraw:

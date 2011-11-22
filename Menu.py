@@ -4,6 +4,7 @@ from Global import *
 class Menu():
     def __init__(self, map, wave, towers):
         self.redraw = 0
+        Game.redrawSPBtn = 0
         self.btnPause = BtnPause(875,300)
         self.btnMenu = BtnMenu(775,350)
         self.btnLowerSpeed = BtnLowerSpeed(875,350)
@@ -15,12 +16,15 @@ class Menu():
         #self.menu.add(self.btnStart, self.btnRandom, self.btnBack, self.btnExit, self.btnRandomSpawn)
         #self.menu.add(self.btnDino1, self.btnDino10, self.btnDinoJr2, self.btnDinoJr20, self.btnNinja5, self.btnNinja50, self.btnPirate5, self.btnPirate50, self.btnSinge10, self.btnSinge100)
 
+    def drawSPBtn(self, screen):
+        print Game.redrawSPBtn
+        Game.redrawSPBtn = 0
+
     def draw(self, screen):
         ##Next Wave : 790, 460
         currentWave = Game.level.currentWave
         maxWave = Game.level.maxWave - 1
         
-
         #Redraw the background
         for i in range(0, 5):
             screen.blit(Images.InterfaceBGwashed, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)

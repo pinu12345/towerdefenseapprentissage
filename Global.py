@@ -16,6 +16,7 @@ STATE_GAMEMENU = 5
 STATE_LOADGAME = 6
 STATE_INITPOPUP = 7
 STATE_POPUP = 8
+STATE_ENDWAVE = 9
 
 # couleurs
 background        = (   0,   0,   0)

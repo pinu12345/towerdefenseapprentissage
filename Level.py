@@ -215,7 +215,6 @@ class Level():
             self.levelMap = open(os.path.join('Maps', levelMap + '.txt')).readlines()
         else:
             self.levelFile = open(os.path.join('Maps', levelName + '.txt')).readlines()
-        
         for i in range(len(self.levelFile)):
             if i == 1:
                 self.levelBudget = int(self.levelFile[i])
@@ -244,9 +243,9 @@ class Level():
         self.maxWave = len(self.levelWaves)
         self.menu.redraw = 1
         self.money = self.levelBudget
-        print 'LoadingMap'
+        ##print 'LoadingMap'
         self.map.loadMap(self.levelMap)
-        print 'MapLoaded'
+        ##print 'MapLoaded'
         ## Verify if there is a message at 0
         if self.levelMessages != []:
             if self.levelMessages[0] != '':

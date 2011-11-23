@@ -14,6 +14,7 @@ class Level():
         #self.dataLog = ''
         self.currentWave = 0
         self.menu.redraw = 1
+        self.money = 0
         self.maxWave = 0
         self.BSTEP = 0
         self.BTNUMBER = 1
@@ -242,6 +243,7 @@ class Level():
     
     def start(self):
         self.currentWave = 0
+        self.towerBar.selectedTower = -1
         self.maxWave = len(self.levelWaves)
         self.menu.redraw = 1
         self.money = self.levelBudget[self.currentWave]
@@ -263,11 +265,15 @@ class Level():
     def restartWave(self):
         self.startWave()
     
+    def updateMoney(self, int):
+        self.money += int
+        self.towerBar.updateMoney = 1
+
     def nextWave(self):
         self.currentWave += 1
         if self.currentWave < len(self.levelBudget):
-            self.money += self.levelBudget[self.currentWave]
-        self.towerBar.updateMoney = 1
+            self.updateMoney(self.levelBudget[self.currentWave])
+        
         self.menu.redraw = 1
         ## Verify if there is a message at currentWave
         if self.levelMessages != []:

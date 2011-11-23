@@ -9,21 +9,37 @@ class Towers():
         self.towers = pygame.sprite.Group()
         self.wave = wave
 
-    def placeTower(self, map, towerType, towerLevel, row, column):
+    def placeTower(self, towerType, towerLevel, row, column):
+        #Enleve la valeur de la tour au budget
+        Game.level.updateMoney(-100)
         addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
         self.towers.add(addedTower)
         self.map.T[row][column] = addedTower
 
-    def updateTower(self, map, towerType, towerLevel, row, column):
-        currentTower = map.T[row][column]
-        if towerType == currentTower.type:
+    def eraseTower(self, row, column):
+        #Rembourse 75% de la valeur de la tour
+        Game.level.updateMoney(75)
+        currentTower = self.map.T[row][column]
+        currentTower.resetEmplacement()
+        currentTower.kill()
+        self.map.T[row][column] = 0
+
+    def updateTower(self, towerType, row, column):
+        currentTower = self.map.T[row][column]
+        if (towerType == TowerUPGRADE) or (towerType == currentTower.type):
+            #Enleve la valeur de la tour au budget
+            Game.level.updateMoney(-100)
             currentTower.upgrade()
         else:
+            #Rembourse 75% de la valeur de la tour
+            Game.level.updateMoney(75)
+            #Enleve la valeur de la tour au budget
+            Game.level.updateMoney(-100)
             currentTower.resetEmplacement()
             currentTower.kill()
-            addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
+            addedTower = Tower.Tower(row, column, towerType, 0, self.map)
             self.towers.add(addedTower)
-            map.T[row][column] = addedTower
+            self.map.T[row][column] = addedTower
     
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle
@@ -60,6 +76,11 @@ class Towers():
     def target(self, shots):
         for tower in self.towers:
             tower.target(self.wave.enemies, shots)
+
+    def drawRadioactivity(self, screen):
+        for tower in self.towers:
+            if tower.type == 5:
+                tower.drawRadioactivity(screen)
 
     def draw(self, screen):
         for tower in self.towers:

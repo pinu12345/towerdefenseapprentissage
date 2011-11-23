@@ -2,10 +2,9 @@
 
     [P]
     Travailler la valeur des tours et l'argent apres achat
-    Efface et upgrade universel [Fonctionnement] + montre en bas le upgrade
-    Implanter les graphiques Radio [le splash de la tourelle radioactive]
+    Montre dans la tower bar les stats du upgrade
     #Bug : Quand on change de tour avec un enemy sur la tower bar [Updater toute la tower bar au debut de son draw]
-    
+
     [Nic]
     Equilibrer le jeu
     Continuer l'apprentissage
@@ -20,11 +19,7 @@
 
     [Graphiques]
     AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
-    S'assurer que la TowerBar ne soit pas affectee par le jeu
-    Afficher
-    FAIRE DES FONCTIONS DRAW ET UPDATE POUR CHAQUE CLASSE
-    #EVENT POUR ENTERED MOUSE OVER -> Dessine une fois le cercle vert sur layer
-    #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP
+    #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP (SAUF SI ON UPDATE TLT LA MAP D:)
 
     --Redessiner:
         -Route apres un mouvement d'un enemi

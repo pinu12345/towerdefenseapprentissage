@@ -15,8 +15,10 @@ class TowerBar():
         self.updateMoney = 1
 
     def moneyUpdated(self, screen):
-        screen.blit(Game.gameMenuFont.render('Money', 0, (255, 255, 255)), (294, 569), None, 0)
-        screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (294, 590), None, 0)
+        bgx, bgy, bgw, bgh = 280, 520, 183, 97
+        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
+        screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
+        screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
         self.updateMoney = 0
 
     # Dessine les tours dans la barre

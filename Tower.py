@@ -29,6 +29,9 @@ class Tower(pygame.sprite.Sprite):
     def draw(self, screen):
         self.rect.x = self.x
         self.rect.y = self.y
+        if self.type == 5:
+            print'Je suis une tour radio :)'
+            
         if self.drawDirection != self.direction or self.firing or self.justFired:
             if self.direction == cardN:
                 self.image = pygame.transform.rotate(

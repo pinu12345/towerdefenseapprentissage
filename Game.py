@@ -284,23 +284,27 @@ def main():
                 # User moves over the mouse 
                 elif event.type == pygame.MOUSEMOTION:
                     Game.drawMouseOver = 0
-                    if towerBar.selectedTower > -1:
+                    if Game.state == STATE_PREPARATION:
                         pos = pygame.mouse.get_pos()
                         column = pos[0] // tileSize
                         row = pos[1] // tileSize
                         # Inside Map
                         if (column < mapWidth) and (row < mapHeight):
-                            map.O[map.currentOY][map.currentOX] = -1
-                            if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
-                                map.currentOY = row
-                                map.currentOX = column
-                                map.O[row][column] = towerBar.selectedTower
-                                Game.drawMouseOver = 1
+                            if towerBar.selectedTower > -1:
+                                map.O[map.currentOY][map.currentOX] = -1
+                                if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
+                                    map.currentOY = row
+                                    map.currentOX = column
+                                    map.O[row][column] = towerBar.selectedTower
+                                    Game.drawMouseOver = 1
+                            elif towerBar.selectedTower == TowerUPGRADE:
+                                pass
+                            elif towerBar.selectedTower == TowerERASE:
+                                pass
 
                 # User clicks the mouse. Get the position
-                elif event.type == pygame.MOUSEBUTTONDOWN:
+                elif (event.type == pygame.MOUSEBUTTONDOWN) and (Game.state == STATE_PREPARATION):
                     pos = pygame.mouse.get_pos()
-
                     # Change the x/y screen coordinates to grid coordinates (For the map)
                     column = pos[0] // tileSize
                     row = pos[1] // tileSize
@@ -361,9 +365,9 @@ def main():
                     elif event.key == pygame.K_c:
                         towers.resetCooldowns()
                     elif event.key == pygame.K_r:
-                        towerBar.selectTower(-2)
+                        towerBar.selectTower(TowerUPGRADE)
                     elif event.key == pygame.K_e:
-                        towerBar.selectTower(-3)
+                        towerBar.selectTower(TowerERASE)
                     elif event.key == pygame.K_a:
                         towers.clear()
                         wave.clear()
@@ -409,6 +413,9 @@ def main():
                     
             ## Game Running
             elif Game.state == STATE_GAME:
+                # Remove drawMouseOver if activated
+                if Game.drawMouseOver:
+                    Game.drawMouseOver = 0
                 # Spawn any new enemy in the wave queue
                 wave.spawn()
                 # Move the enemies
@@ -441,15 +448,12 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     
     # Draw On Mouse Over ~ 0
     if Game.drawMouseOver:
-        if towerBar.redraw:
-            drawMap(map, screen)
-        else:
+        if towerBar.redraw == 0:
             drawTowerEmplacements(map, screen)
         drawOnMouseOver(map, towerBar, layer)
         Game.repaintMap = 1
     else:
         if Game.repaintMap:
-            #drawMap(map, screen)
             Game.repaintMap = 0
 
     if Game.placedTower:
@@ -459,12 +463,8 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         else:
             drawTowerEmplacements(map, screen)
         Game.placedTower = 0
-    
-    if Game.drawMessage:
-        pass
-    
+
     # Draw the towers
-    # IF NEW TOWER...
     towers.draw(screen)
 
     # Draw the wave
@@ -474,9 +474,11 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     shots.draw(screen)
     
     # Update the game portion of the screen
-    screen.blit(layer, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
+    if Game.state == STATE_PREPARATION:
+        screen.blit(layer, (0, 0), (0, 0, mapWidth*tileSize, mapHeight*tileSize))
     pygame.display.update(0, 0, mapWidth*tileSize, mapHeight*tileSize)
-    
+
+    ## UPDATE THE INTERFACE ##
     # Update the right menu portion of the screen
     if menu.redraw:
         menu.draw(screen)
@@ -493,10 +495,13 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         pygame.display.update(784, 14, 92, 28)
 
     # Update the towerbar portion of the screen
+    if towerBar.updateMoney:
+        towerBar.moneyUpdated(screen)
+        pygame.display.update(280, 520, 183, 97)
     if towerBar.redraw:
         towerBar.draw(screen)
         pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
-
+        
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
     for row in range(mapHeight):

@@ -1,11 +1,11 @@
 ﻿TODOLIST:
 
     [P]
-    Travailler le menu [budget, valeur, boutons en haut a droite]
-    Bouton accelerer/decelerer le jeu [Effets graphiques]
+    Travailler la valeur des tours et l'argent apres achat
     Efface et upgrade universel [Fonctionnement] + montre en bas le upgrade
     Implanter les graphiques Radio [le splash de la tourelle radioactive]
-
+    #Bug : Quand on change de tour avec un enemy sur la tower bar [Updater toute la tower bar au debut de son draw]
+    
     [Nic]
     Equilibrer le jeu
     Continuer l'apprentissage

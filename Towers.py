@@ -10,11 +10,12 @@ class Towers():
         self.wave = wave
 
     def placeTower(self, towerType, towerLevel, row, column):
-        #Enleve la valeur de la tour au budget
-        Game.level.updateMoney(-100)
-        addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
-        self.towers.add(addedTower)
-        self.map.T[row][column] = addedTower
+        #Enleve la valeur de la tour au budget 
+        ##REMPLACE -100 PAR LE COUT DUNE TOUR ET 75 PAR LE COUT DE REMBOURSEMENT CUMULATIF AVEC UPGRADES
+        if(Game.level.updateMoney(-100)):
+            addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
+            self.towers.add(addedTower)
+            self.map.T[row][column] = addedTower
 
     def eraseTower(self, row, column):
         #Rembourse 75% de la valeur de la tour
@@ -28,18 +29,16 @@ class Towers():
         currentTower = self.map.T[row][column]
         if (towerType == TowerUPGRADE) or (towerType == currentTower.type):
             #Enleve la valeur de la tour au budget
-            Game.level.updateMoney(-100)
-            currentTower.upgrade()
+            if(Game.level.updateMoney(-100)):
+                currentTower.upgrade()
         else:
             #Rembourse 75% de la valeur de la tour
-            Game.level.updateMoney(75)
-            #Enleve la valeur de la tour au budget
-            Game.level.updateMoney(-100)
-            currentTower.resetEmplacement()
-            currentTower.kill()
-            addedTower = Tower.Tower(row, column, towerType, 0, self.map)
-            self.towers.add(addedTower)
-            self.map.T[row][column] = addedTower
+            if(Game.level.updateMoney(75-100)):
+                currentTower.resetEmplacement()
+                currentTower.kill()
+                addedTower = Tower.Tower(row, column, towerType, 0, self.map)
+                self.towers.add(addedTower)
+                self.map.T[row][column] = addedTower
     
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle

@@ -264,10 +264,14 @@ class Level():
     
     def restartWave(self):
         self.startWave()
-    
+
     def updateMoney(self, int):
-        self.money += int
-        self.towerBar.updateMoney = 1
+        if(self.money + int >= 0):
+            self.money += int
+            self.towerBar.updateMoney = 1
+            return 1
+        else:
+            return 0
 
     def nextWave(self):
         self.currentWave += 1

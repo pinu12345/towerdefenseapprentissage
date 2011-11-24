@@ -25,16 +25,23 @@ class Towers():
     def updateTower(self, towerType, row, column):
         currentTower = self.map.T[row][column]
         if (towerType == TowerUPGRADE) or (towerType == currentTower.type):
-            if currentTower.level < currentTower.upgrades:
+            if (currentTower.level < currentTower.upgrades) and (currentTower.level < Game.level.levelUpgrades):
                 if(Game.level.updateMoney(-TowerStats[currentTower.type][currentTower.level+1][TowerPRICE])):
                     currentTower.upgrade()
 
+    def isMaxLevel(self):
+        print 'isMaxLevel ?', map.currentOlevel
+
     def getUpgradedTower(self, row, column):
         currentTower = self.map.T[row][column]
-        if currentTower.level < currentTower.upgrades:
+        if (currentTower.level < currentTower.upgrades) and (currentTower.level < Game.level.levelUpgrades):
             return currentTower.type, currentTower.level+1, 0
         else:
             return currentTower.type, currentTower.level, 1
+
+    def getCurrentTower(self, row, column):
+        currentTower = self.map.T[row][column]
+        return currentTower.type, currentTower.level
 
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle

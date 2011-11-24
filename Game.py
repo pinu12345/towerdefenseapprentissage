@@ -565,21 +565,30 @@ def updateUnderMouse(map, towerBar, towers):
                     if towerBar.selectedTower == towerType:
                         towerBar.displayTower = towerType
                         towerBar.displayTowerLevel = towerLevel
+                        map.currentOLevel = towerLevel
                         if not isMaxLevel:
-                            map.currentOLevel = towerLevel
                             map.O[row][column] = towerBar.selectedTower
                             Game.drawMouseOver = 1
+                        else:
+                            towerBar.updateTowerCost = 2
         elif towerBar.selectedTower == TowerUPGRADE:
             if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
                 towerBar.displayTower, towerBar.displayTowerLevel, isMaxLevel = towers.getUpgradedTower(row, column)
+                map.currentOY = row
+                map.currentOX = column
+                map.currentOLevel = towerBar.displayTowerLevel
                 if not isMaxLevel:
-                    map.currentOY = row
-                    map.currentOX = column
-                    map.currentOLevel = towerBar.displayTowerLevel
                     map.O[row][column] = towerBar.displayTower
                     Game.drawMouseOver = 1
+                else:
+                    towerBar.updateTowerCost = 2
         elif towerBar.selectedTower == TowerERASE:
-            pass
+            if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
+                towerBar.displayTower, towerBar.displayTowerLevel = towers.getCurrentTower(row, column)
+                map.currentOY = row
+                map.currentOX = column
+                map.currentOLevel = towerBar.displayTowerLevel
+                towerBar.updateTowerCost = 3
 
 if __name__ == "__main__":
     main()

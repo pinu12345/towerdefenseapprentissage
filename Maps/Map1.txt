@@ -5,7 +5,7 @@ Towers [3]
 0, 1, 2, 3, 4, 5
 
 Upgrades [7]
-1
+2
 
 Waves [10]
 0 1

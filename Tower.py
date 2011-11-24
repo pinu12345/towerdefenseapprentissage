@@ -26,6 +26,7 @@ class Tower(pygame.sprite.Sprite):
         self.y = row * tileSize
         self.rect.x = self.x
         self.rect.y = self.y
+        self.isMaxLevel = 0
 
     def drawRadioactivity(self, screen):
         screen.blit(self.radioactivity, (self.x - (self.level*32+96)/2, self.y - (self.level*32+96)/2))
@@ -71,7 +72,7 @@ class Tower(pygame.sprite.Sprite):
         self.map.S[self.row][self.column] = Images.MapImages[MAPEMPLACEMENT][0]
 
     def upgrade(self):
-        if self.level < self.upgrades:
+        if not self.isMaxLevel:
             Game.placedTower = 1
             self.level += 1
             self.setParams()
@@ -80,6 +81,10 @@ class Tower(pygame.sprite.Sprite):
         self.value = 0
         for i in range (self.level+1):
             self.value += TowerStats[self.type][i][TowerPRICE]
+        if (self.level == self.upgrade) or (self.level == Game.level.levelUpgrades):
+            self.isMaxLevel = 1
+        else:
+            self.isMaxLevel = 0
         self.damage = TowerStats[self.type][self.level][TowerDAMAGE]
         self.delay = TowerStats[self.type][self.level][TowerDELAY]
         self.range = TowerStats[self.type][self.level][TowerRANGE]

@@ -80,8 +80,17 @@ class TowerBar():
                 size = TowerStats[self.displayTower][self.displayTowerLevel][7+j]
                 screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
             #Show the Price
-            screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
-            screen.blit(Game.gameMenuFont.render(str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
+            if(self.updateTowerCost == 2):
+                screen.blit(Game.gameMenuFont.render('Max level reached', 0, (255, 0, 0)), (294, 552), None, 0)
+            elif(self.updateTowerCost == 3):
+                screen.blit(Game.gameMenuFont.render('Sell', 0, (0, 255, 0)), (294, 552), None, 0)
+                sellPrice = 0
+                for i in range (self.displayTowerLevel+1):
+                    sellPrice += TowerStats[self.displayTower][i][TowerPRICE] * 0.75
+                screen.blit(Game.gameMenuFont.render(str(sellPrice), 0, (255, 255, 255)), (390, 552), None, 0)
+            else:
+                screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
+                screen.blit(Game.gameMenuFont.render(str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
         else:
             self.showWashed(screen)
         self.moneyUpdated(screen)
@@ -105,5 +114,4 @@ class TowerBar():
     def selectTower(self, tower):
         self.selectedTower = tower
         Game.updateUnderMouse(self.map, self, self.towers)
-        self.updateTowerCost = 1
         self.redraw = 1

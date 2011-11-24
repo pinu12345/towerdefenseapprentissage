@@ -1,7 +1,6 @@
 ﻿TODOLIST:
 
     [P]
-    Montrer le nouveau rayon de la tour upgradée
     Montrer le refund associé aux tours vendus ainsi que le montant d'argent a la fin des achats / revente / echange
     Permettre un message en fin de mission?
     Permettre un popup qui offre de recommencer une wave (ou mission) en cas d'echec?

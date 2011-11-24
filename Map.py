@@ -13,6 +13,7 @@ class Map:
         self.P = []
         self.currentOX = 0
         self.currentOY = 0
+        self.currentOLevel = 0
         self.baseX = 0
         self.baseY = 0
 
@@ -33,6 +34,7 @@ class Map:
         self.T = []
         self.currentOX = 0
         self.currentOY = 0
+        self.currentOLevel = 0
         self.baseX = 0
         self.baseY = 0
         

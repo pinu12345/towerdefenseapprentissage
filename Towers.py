@@ -39,9 +39,9 @@ class Towers():
     def getUpgradedTower(self, row, column):
         currentTower = self.map.T[row][column]
         if currentTower.level < currentTower.upgrades:
-            return currentTower.type, currentTower.level+1
+            return currentTower.type, currentTower.level+1, 0
         else:
-            return currentTower.type, currentTower.level
+            return currentTower.type, currentTower.level, 1
 
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle

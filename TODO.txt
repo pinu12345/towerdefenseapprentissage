@@ -1,9 +1,10 @@
 ﻿TODOLIST:
 
     [P]
-    Montre dans la tower bar la valeur des tours et la valeur quand on upgrade
-    Montre dans la tower bar les stats du upgrade
-    #Bug : Quand on change de tour avec un enemy sur la tower bar [Updater toute la tower bar au debut de son draw]
+    Montrer le nouveau rayon de la tour upgradée
+    Montrer le refund associé aux tours vendus ainsi que le montant d'argent a la fin des achats / revente / echange
+    Permettre un message en fin de mission?
+    Permettre un popup qui offre de recommencer une wave (ou mission) en cas d'echec?
 
     [Nic]
     Equilibrer le jeu
@@ -16,17 +17,3 @@
     * La barre de vie ennemie est de taille et position variables
     * Les graphiques aleatoires existent
     * Fonction pour calculer la "valeur" de chaque emplacement avec precision
-
-    [Graphiques]
-    AFFICHER LES STATS DE LA TOUR SELECTIONNE / MOUSEOVER
-    #BUG : Quand on reste en mouse over, mais qu'on change de case -> UPDATE PAS LA MAP (SAUF SI ON UPDATE TLT LA MAP D:)
-
-    --Redessiner:
-        -Route apres un mouvement d'un enemi
-
-    --Gameplay (Urgent)
-    Tours -> disponibilité
-
-    --CAMPAIGN (Optional)
-    Description de mission en début de partie
-        -Separer le spawn de wave pour avoir plusieurs spawn points?!?

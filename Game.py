@@ -438,9 +438,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     
     # Draw On Mouse Over ~ 0
     if Game.drawMouseOver:
-        if towerBar.redraw == 0:
-            drawTowerEmplacements(map, screen)
-        drawOnMouseOver(map, towerBar, layer)
+        drawOnMouseOver(map, layer)
         Game.repaintMap = 1
     else:
         if Game.repaintMap:
@@ -500,21 +498,18 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         towerBar.updateTowerCost = 0
         pygame.display.update(196, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize - 196, bottomMenuSize)
         
-def drawOnMouseOver(map, towerBar, screen):
+def drawOnMouseOver(map, screen):
     # Draw tower on mouse over
     for row in range(mapHeight):
         for column in range(mapWidth):
-            if (map.T[row][column] == 0) and (map.O[row][column] >= 0):
-                ##  vvv  A MODIFER PAR P-O vvv
-                TowerLEVEL_TEMP = 0
-                ##  ^^^  A MODIFER PAR P-O ^^^
-                if TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE] == 0:
-                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerSPLASH], 0)
+            if (map.O[row][column] >= 0):
+                if TowerStats[map.O[row][column]][map.currentOLevel][TowerRANGE] == 0:
+                    pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), TowerStats[map.O[row][column]][map.currentOLevel][TowerSPLASH], 0)
                 else:
                     pygame.draw.circle(screen, rangeCircle, (tileSize*column + tileSize/2,tileSize*row + tileSize/2), 
-                    TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE], 0)
-                pygame.draw.circle(screen, ShotGraphs[towerBar.selectedTower][ShotCOLOR], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerRANGE] + TowerStats[towerBar.selectedTower][TowerLEVEL_TEMP][TowerSPLASH], tileSize/16)
-                screen.blit(Images.TowerImages[towerBar.selectedTower][0], (tileSize*column,tileSize*row), None, 0)
+                    TowerStats[map.O[row][column]][map.currentOLevel][TowerRANGE], 0)
+                pygame.draw.circle(screen, ShotGraphs[map.O[row][column]][ShotCOLOR], (tileSize*column+tileSize/2, tileSize*row+tileSize/2), TowerStats[map.O[row][column]][map.currentOLevel][TowerRANGE] + TowerStats[map.O[row][column]][map.currentOLevel][TowerSPLASH], tileSize/16)
+                screen.blit(Images.TowerImages[map.O[row][column]][0], (tileSize*column,tileSize*row), None, 0)
 
 def drawRoute(map, screen):
     for row in range(mapHeight):
@@ -555,26 +550,40 @@ def updateUnderMouse(map, towerBar, towers):
     towerBar.displayTowerLevel = 0
     # Inside Map
     if (column < mapWidth) and (row < mapHeight):
+        map.O[map.currentOY][map.currentOX] = -1
         towerBar.updateTowerCost = 1
         if towerBar.selectedTower > -1:
-            map.O[map.currentOY][map.currentOX] = -1
             if map.M[row][column] == car_turret:
+                map.currentOY = row
+                map.currentOX = column
                 if map.T[row][column] == 0:
-                    map.currentOY = row
-                    map.currentOX = column
+                    map.currentOLevel = 0
                     map.O[row][column] = towerBar.selectedTower
                     Game.drawMouseOver = 1
                 else:
-                    towerType, towerLevel = towers.getUpgradedTower(row, column)
+                    towerType, towerLevel, isMaxLevel = towers.getUpgradedTower(row, column)
                     if towerBar.selectedTower == towerType:
                         towerBar.displayTower = towerType
                         towerBar.displayTowerLevel = towerLevel
+                        if not isMaxLevel:
+                            map.currentOLevel = towerLevel
+                            map.O[row][column] = towerBar.selectedTower
+                            Game.drawMouseOver = 1
                     else:
                         towerBar.displayTower = towerBar.selectedTower
                         towerBar.displayTowerLevel = 0
+                        map.currentOLevel = 0
+                        map.O[row][column] = towerBar.selectedTower
+                        Game.drawMouseOver = 1
         elif towerBar.selectedTower == TowerUPGRADE:
             if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
-                towerBar.displayTower, towerBar.displayTowerLevel = towers.getUpgradedTower(row, column)
+                towerBar.displayTower, towerBar.displayTowerLevel, isMaxLevel = towers.getUpgradedTower(row, column)
+                if not isMaxLevel:
+                    map.currentOY = row
+                    map.currentOX = column
+                    map.currentOLevel = towerBar.displayTowerLevel
+                    map.O[row][column] = towerBar.displayTower
+                    Game.drawMouseOver = 1
         elif towerBar.selectedTower == TowerERASE:
             pass
 

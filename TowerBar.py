@@ -10,17 +10,28 @@ class TowerBar():
         self.origY = origY
         self.space = 8
         self.towerCount = len(Images.TowerImages)
+        self.updateTowerCost = 0
         self.selectedTower = -1
         self.redraw = 1
         self.updateMoney = 1
 
     def moneyUpdated(self, screen):
-        bgx, bgy, bgw, bgh = 280, 520, 183, 97
+        bgx, bgy, bgw, bgh = 280, 530, 183, 32
         screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
         screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
         screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
         self.updateMoney = 0
 
+    def showTowerPrice(self, screen):
+        bgx, bgy, bgw, bgh = 280, 552, 183, 32
+        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
+        if self.selectedTower > -1:
+            screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
+            screen.blit(Game.gameMenuFont.render(str(TowerStats[self.selectedTower][0][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
+        elif self.selectedTower == TowerUPGRADE:
+            pass
+        self.updateTowerCost = 0
+    
     # Dessine les tours dans la barre
     #  Si une tour est selectionner dessine un arriere plan en or
     #  Sinon dessine un arriere plan noir
@@ -76,7 +87,6 @@ class TowerBar():
             size = TowerStats[tower][level][7+j]
             screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
 
-
     def onClick(self, pos):
         #6 Towers
         x = (pos[0] - self.origX - 16) // (tileSize + self.space)
@@ -94,4 +104,5 @@ class TowerBar():
 
     def selectTower(self, tower):
         self.selectedTower = tower
+        self.updateTowerCost = 1
         self.redraw = 1

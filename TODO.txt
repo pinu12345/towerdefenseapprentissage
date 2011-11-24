@@ -1,7 +1,7 @@
 ﻿TODOLIST:
 
     [P]
-    Travailler la valeur des tours et l'argent apres achat
+    Montre dans la tower bar la valeur des tours et la valeur quand on upgrade
     Montre dans la tower bar les stats du upgrade
     #Bug : Quand on change de tour avec un enemy sur la tower bar [Updater toute la tower bar au debut de son draw]
 

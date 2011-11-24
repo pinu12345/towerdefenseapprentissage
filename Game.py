@@ -506,10 +506,14 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     # Update the towerbar portion of the screen
     if towerBar.updateMoney:
         towerBar.moneyUpdated(screen)
-        pygame.display.update(280, 520, 183, 97)
+        pygame.display.update(280, 520, 183, 32)
     if towerBar.redraw:
         towerBar.draw(screen)
         pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
+    if towerBar.updateTowerCost:
+        towerBar.showTowerPrice(screen)
+        pygame.display.update(280, 552, 183, 32)
+        towerBar.updateTowerCost = 0
         
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over

@@ -1,5 +1,5 @@
 Budget [1]
-100, 200, 300
+100, 200, 700
 
 Towers [3]
 0, 1, 2, 3, 4
@@ -32,6 +32,6 @@ NextLevel[31]
 End
 
 Messages [34+]
-<div>Test, map3 etc <br />loll ok :( <br />This map is quite the cool map</div>
+<div>Test, map3 etc <br /><3 Boulette</div>
 <div>Attention<br />La wave 2 est pas mal dangereuse</div>
-lol noob!
+Good luck :O

@@ -496,10 +496,9 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         towerBar.draw(screen)
         pygame.display.update(0, mapHeight*tileSize, 194, bottomMenuSize)
     if towerBar.updateTowerCost:
-        print 'Redraw TowerPrice'
         towerBar.showTower(screen)
         towerBar.updateTowerCost = 0
-        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
+        pygame.display.update(196, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize - 196, bottomMenuSize)
         
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
@@ -556,20 +555,26 @@ def updateUnderMouse(map, towerBar, towers):
     towerBar.displayTowerLevel = 0
     # Inside Map
     if (column < mapWidth) and (row < mapHeight):
+        towerBar.updateTowerCost = 1
         if towerBar.selectedTower > -1:
             map.O[map.currentOY][map.currentOX] = -1
-            if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
-                map.currentOY = row
-                map.currentOX = column
-                map.O[row][column] = towerBar.selectedTower
-                Game.drawMouseOver = 1
+            if map.M[row][column] == car_turret:
+                if map.T[row][column] == 0:
+                    map.currentOY = row
+                    map.currentOX = column
+                    map.O[row][column] = towerBar.selectedTower
+                    Game.drawMouseOver = 1
+                else:
+                    towerType, towerLevel = towers.getUpgradedTower(row, column)
+                    if towerBar.selectedTower == towerType:
+                        towerBar.displayTower = towerType
+                        towerBar.displayTowerLevel = towerLevel
+                    else:
+                        towerBar.displayTower = towerBar.selectedTower
+                        towerBar.displayTowerLevel = 0
         elif towerBar.selectedTower == TowerUPGRADE:
             if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
-                print 'TOWER UPGRADE PRICE UPDATE'
-                towerBar.updateTowerCost = 1
                 towerBar.displayTower, towerBar.displayTowerLevel = towers.getUpgradedTower(row, column)
-            else:
-                towerBar.updateTowerCost = 1
         elif towerBar.selectedTower == TowerERASE:
             pass
 

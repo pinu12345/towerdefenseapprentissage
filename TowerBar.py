@@ -25,6 +25,7 @@ class TowerBar():
         upgradeY = self.origY + 26
         eraseX = self.origX + 150
         eraseY = self.origY + 64
+        screen.blit(Images.InterfaceBGwashed, (0, mapHeight*tileSize), (0, mapHeight*tileSize, 194, bottomMenuSize))
         if self.selectedTower == TowerUPGRADE:
             screen.blit(Images.InterfaceBGbright, (upgradeX, upgradeY) , (upgradeX, upgradeY, tileSize, tileSize), 0)
             screen.blit(Images.InterfaceBGwashed, (eraseX, eraseY) , (eraseX, eraseY, tileSize, tileSize), 0)
@@ -62,7 +63,6 @@ class TowerBar():
         self.updateMoney = 0
 
     def showTower(self, screen):
-        print 'Show tower : ', self.displayTower, self.displayTowerLevel
         bgx, bgy, bgw, bgh = 280, 552, 183, 24
         screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
         if self.displayTower > -1:

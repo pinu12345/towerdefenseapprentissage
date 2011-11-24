@@ -138,7 +138,6 @@ DataSHOTS = 0
 DataDAMAGE = 0
 BalanceWAVE = 0
 
-
 # [ ShotColor, ShotOffset, Width, ZoneColor1, ZoneColor2 ]
 ShotGraphs = [
     [ (255, 255, 255), 5, 1, 0 ],

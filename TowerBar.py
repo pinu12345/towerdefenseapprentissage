@@ -20,19 +20,15 @@ class TowerBar():
         self.displayTower = -1
 
     # Dessine les tours dans la barre
-    #  Si une tour est selectionner dessine un arriere plan en or
-    #  Sinon dessine un arriere plan noir
     def draw(self, screen):
         upgradeX = self.origX + 150
         upgradeY = self.origY + 26
         eraseX = self.origX + 150
         eraseY = self.origY + 64
         if self.selectedTower == TowerUPGRADE:
-            self.showUpgrade(screen)
             screen.blit(Images.InterfaceBGbright, (upgradeX, upgradeY) , (upgradeX, upgradeY, tileSize, tileSize), 0)
             screen.blit(Images.InterfaceBGwashed, (eraseX, eraseY) , (eraseX, eraseY, tileSize, tileSize), 0)
         elif self.selectedTower == TowerERASE:
-            self.showNothing(screen)
             screen.blit(Images.InterfaceBGwashed, (upgradeX, upgradeY) , (upgradeX, upgradeY, tileSize, tileSize), 0)
             screen.blit(Images.InterfaceBGbright, (eraseX, eraseY) , (eraseX, eraseY, tileSize, tileSize), 0)
         else:
@@ -44,52 +40,52 @@ class TowerBar():
             if i == self.selectedTower:
                 screen.blit(Images.InterfaceBGbright, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
                 screen.blit(Images.TowerImages[i][0], (drawX , drawY), None, 0)
-                self.showTower(screen, i)
             else:
                 if i in Game.level.levelTowers:
                     screen.blit(Images.InterfaceBGwashed, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
                     screen.blit(Images.TowerImages[i][0], (drawX, drawY), None, 0)
                 else:
                     screen.blit(Images.InterfaceBGwashed, (drawX, drawY) , (drawX, drawY, tileSize, tileSize), 0)
-        self.moneyUpdated(screen)
         self.redraw = 0
 
-    def showNothing(self, screen):
+    def showWashed(self, screen):
         screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
-
-    def showUpgrade(self, screen):
-        screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
+    
+    def showOpaque(self, screen):
+        screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
 
     def moneyUpdated(self, screen):
-        bgx, bgy, bgw, bgh = 280, 530, 183, 32
+        bgx, bgy, bgw, bgh = 280, 530, 183, 22
         screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
         screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
         screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
         self.updateMoney = 0
 
-    def showTowerPrice(self, screen):
+    def showTower(self, screen):
         print 'Show tower : ', self.displayTower, self.displayTowerLevel
-        bgx, bgy, bgw, bgh = 280, 552, 183, 32
+        bgx, bgy, bgw, bgh = 280, 552, 183, 24
         screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
         if self.displayTower > -1:
-            self.showTower(screen, self.displayTower, self.displayTowerLevel)
+            #Show the Tower
+            screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
+            x = 206
+            y = 524
+            screen.blit(pygame.transform.scale2x(Images.TowerImages[self.displayTower][0]), (x, y), None, 0)
+            screen.blit(Images.InterfaceLevels[self.displayTowerLevel], (x + 48, y + 68), None, 0)
+            for i in range(len(Images.EnemyImages)):
+                size = TowerStats[self.displayTower][self.displayTowerLevel][11][i]
+                screen.fill(barColor, (654 + i*36, 574 - size, 28, size), 0)
+                screen.blit(Images.EnemyImages[i], (652 + i*36, 576), (0, 0, tileSize, tileSize), 0)
+            for j in range(4):
+                size = TowerStats[self.displayTower][self.displayTowerLevel][7+j]
+                screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
+            #Show the Price
             screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
             screen.blit(Game.gameMenuFont.render(str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
+        else:
+            self.showWashed(screen)
+        self.moneyUpdated(screen)
         self.updateTowerCost = 0
-
-    def showTower(self, screen, tower, level = 0):
-        screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
-        x = 206
-        y = 524
-        screen.blit(pygame.transform.scale2x(Images.TowerImages[tower][0]), (x, y), None, 0)
-        screen.blit(Images.InterfaceLevels[level], (x + 48, y + 68), None, 0)
-        for i in range(len(Images.EnemyImages)):
-            size = TowerStats[tower][level][11][i]
-            screen.fill(barColor, (654 + i*36, 574 - size, 28, size), 0)
-            screen.blit(Images.EnemyImages[i], (652 + i*36, 576), (0, 0, tileSize, tileSize), 0)
-        for j in range(4):
-            size = TowerStats[tower][level][7+j]
-            screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
 
     def onClick(self, pos):
         #6 Towers

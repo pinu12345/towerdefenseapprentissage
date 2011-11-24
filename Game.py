@@ -493,14 +493,13 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         towerBar.moneyUpdated(screen)
         pygame.display.update(280, 520, 183, 32)
     if towerBar.redraw:
-        print 'Redraw TowerBar'
         towerBar.draw(screen)
-        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
+        pygame.display.update(0, mapHeight*tileSize, 194, bottomMenuSize)
     if towerBar.updateTowerCost:
         print 'Redraw TowerPrice'
-        towerBar.showTowerPrice(screen)
+        towerBar.showTower(screen)
         towerBar.updateTowerCost = 0
-        pygame.display.update(280, 552, 183, 32)
+        pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
         
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
@@ -567,7 +566,10 @@ def updateUnderMouse(map, towerBar, towers):
         elif towerBar.selectedTower == TowerUPGRADE:
             if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
                 print 'TOWER UPGRADE PRICE UPDATE'
+                towerBar.updateTowerCost = 1
                 towerBar.displayTower, towerBar.displayTowerLevel = towers.getUpgradedTower(row, column)
+            else:
+                towerBar.updateTowerCost = 1
         elif towerBar.selectedTower == TowerERASE:
             pass
 

@@ -36,6 +36,13 @@ class Towers():
                 self.towers.add(addedTower)
                 self.map.T[row][column] = addedTower
     
+    def getUpgradedTower(self, row, column):
+        currentTower = self.map.T[row][column]
+        if currentTower.level < currentTower.upgrades:
+            return currentTower.type, currentTower.level+1
+        else:
+            return currentTower.type, currentTower.level
+
     def placeTowers(self, M, T):
         # T: dimension 18, contient le nombre a construire de chaque tourelle
         empVal = AemplacementValues(M)

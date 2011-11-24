@@ -5,7 +5,9 @@ from Global import *
 selected = (205, 149, 12)
 
 class TowerBar():
-    def __init__(self, origX, origY):
+    def __init__(self, origX, origY, map, towers):
+        self.towers = towers
+        self.map = map
         self.origX = origX
         self.origY = origY
         self.space = 8
@@ -14,24 +16,9 @@ class TowerBar():
         self.selectedTower = -1
         self.redraw = 1
         self.updateMoney = 1
+        self.displayTowerLevel = -1
+        self.displayTower = -1
 
-    def moneyUpdated(self, screen):
-        bgx, bgy, bgw, bgh = 280, 530, 183, 32
-        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
-        screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
-        screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
-        self.updateMoney = 0
-
-    def showTowerPrice(self, screen):
-        bgx, bgy, bgw, bgh = 280, 552, 183, 32
-        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
-        if self.selectedTower > -1:
-            screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
-            screen.blit(Game.gameMenuFont.render(str(TowerStats[self.selectedTower][0][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
-        elif self.selectedTower == TowerUPGRADE:
-            pass
-        self.updateTowerCost = 0
-    
     # Dessine les tours dans la barre
     #  Si une tour est selectionner dessine un arriere plan en or
     #  Sinon dessine un arriere plan noir
@@ -73,6 +60,23 @@ class TowerBar():
     def showUpgrade(self, screen):
         screen.blit(Images.InterfaceBGwashed, (196, 512) , (196, 512, 796, 116), 0)
 
+    def moneyUpdated(self, screen):
+        bgx, bgy, bgw, bgh = 280, 530, 183, 32
+        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
+        screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
+        screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
+        self.updateMoney = 0
+
+    def showTowerPrice(self, screen):
+        print 'Show tower : ', self.displayTower, self.displayTowerLevel
+        bgx, bgy, bgw, bgh = 280, 552, 183, 32
+        screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
+        if self.displayTower > -1:
+            self.showTower(screen, self.displayTower, self.displayTowerLevel)
+            screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
+            screen.blit(Game.gameMenuFont.render(str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
+        self.updateTowerCost = 0
+
     def showTower(self, screen, tower, level = 0):
         screen.blit(Images.InterfaceBGopaque, (196, 512) , (196, 512, 796, 116), 0)
         x = 206
@@ -104,5 +108,6 @@ class TowerBar():
 
     def selectTower(self, tower):
         self.selectedTower = tower
+        Game.updateUnderMouse(self.map, self, self.towers)
         self.updateTowerCost = 1
         self.redraw = 1

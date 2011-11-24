@@ -123,7 +123,7 @@ def main():
     shots = Shots()
 
     # Initialize the tower bar
-    towerBar = TowerBar.TowerBar(0, mapHeight*tileSize)
+    towerBar = TowerBar.TowerBar(0, mapHeight*tileSize, map, towers)
 
     # Initialize the menu
     menu = Menu.Menu(map, wave, towers)
@@ -283,23 +283,7 @@ def main():
                 ## Mouse Events
                 # User moves over the mouse 
                 elif event.type == pygame.MOUSEMOTION:
-                    Game.drawMouseOver = 0
-                    pos = pygame.mouse.get_pos()
-                    column = pos[0] // tileSize
-                    row = pos[1] // tileSize
-                    # Inside Map
-                    if (column < mapWidth) and (row < mapHeight):
-                        if towerBar.selectedTower > -1:
-                            map.O[map.currentOY][map.currentOX] = -1
-                            if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
-                                map.currentOY = row
-                                map.currentOX = column
-                                map.O[row][column] = towerBar.selectedTower
-                                Game.drawMouseOver = 1
-                        elif towerBar.selectedTower == TowerUPGRADE:
-                            pass
-                        elif towerBar.selectedTower == TowerERASE:
-                            pass
+                    updateUnderMouse(map, towerBar, towers)
 
                 # User clicks the mouse. Get the position
                 elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -328,6 +312,7 @@ def main():
                                 if map.T[row][column] != 0:
                                     towers.eraseTower(row, column)
                                     Game.placedTower = 1
+                        updateUnderMouse(map, towerBar, towers)
 
                     # Inside Menu
                     elif column >= mapWidth:
@@ -508,12 +493,14 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
         towerBar.moneyUpdated(screen)
         pygame.display.update(280, 520, 183, 32)
     if towerBar.redraw:
+        print 'Redraw TowerBar'
         towerBar.draw(screen)
         pygame.display.update(0, mapHeight*tileSize, mapWidth*tileSize + rightMenuSize, bottomMenuSize)
     if towerBar.updateTowerCost:
+        print 'Redraw TowerPrice'
         towerBar.showTowerPrice(screen)
-        pygame.display.update(280, 552, 183, 32)
         towerBar.updateTowerCost = 0
+        pygame.display.update(280, 552, 183, 32)
         
 def drawOnMouseOver(map, towerBar, screen):
     # Draw tower on mouse over
@@ -560,6 +547,29 @@ def drawMap(map, screen):
     for row in range(mapHeight):
         for column in range(mapWidth):
              screen.blit(map.S[row][column], (column*tileSize, row*tileSize))
+
+def updateUnderMouse(map, towerBar, towers):
+    Game.drawMouseOver = 0
+    pos = pygame.mouse.get_pos()
+    column = pos[0] // tileSize
+    row = pos[1] // tileSize
+    towerBar.displayTower = towerBar.selectedTower
+    towerBar.displayTowerLevel = 0
+    # Inside Map
+    if (column < mapWidth) and (row < mapHeight):
+        if towerBar.selectedTower > -1:
+            map.O[map.currentOY][map.currentOX] = -1
+            if (map.M[row][column] == car_turret) and (map.T[row][column] == 0):
+                map.currentOY = row
+                map.currentOX = column
+                map.O[row][column] = towerBar.selectedTower
+                Game.drawMouseOver = 1
+        elif towerBar.selectedTower == TowerUPGRADE:
+            if (map.M[row][column] == car_turret) and (map.T[row][column] != 0):
+                print 'TOWER UPGRADE PRICE UPDATE'
+                towerBar.displayTower, towerBar.displayTowerLevel = towers.getUpgradedTower(row, column)
+        elif towerBar.selectedTower == TowerERASE:
+            pass
 
 if __name__ == "__main__":
     main()

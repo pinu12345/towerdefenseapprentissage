@@ -136,7 +136,7 @@ class Map:
         random.seed()
         
         #print '\n Generating precise path map...'
-        self.P = precisePathMap(self.M)
+        #self.P = precisePathMap(self.M)
         #print ' Done.\n'
         #print len(P), len(P[0])
         #print

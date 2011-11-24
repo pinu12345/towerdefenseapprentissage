@@ -2,6 +2,7 @@ import pygame, os, Game, Shot, Images, Global
 from Global import *
 from Util import *
 from numpy import *
+from random import *
 
 class Tower(pygame.sprite.Sprite):
     def __init__(self, row, column, type, level, map):
@@ -25,6 +26,9 @@ class Tower(pygame.sprite.Sprite):
         self.y = row * tileSize
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def drawRadioactivity(self, screen):
+        screen.blit(self.radioactivity, (self.x - (self.level*32+96)/2, self.y - (self.level*32+96)/2))
 
     def draw(self, screen):
         self.rect.x = self.x
@@ -83,6 +87,8 @@ class Tower(pygame.sprite.Sprite):
         #print self.row, self.column
         self.map.S[self.row][self.column] = Images.MapImages[MAPEMPLACEMENT][self.level]
         self.image = Images.TowerImages[self.type][0]
+        if self.type == 5:
+            self.radioactivity = pygame.transform.rotate(Images.TowerRadio[self.level], randint(0, 3)*90)
     
     def getFacing(self, target):
         dx, dy = target.x-self.x, target.y-self.y
@@ -135,7 +141,7 @@ class Tower(pygame.sprite.Sprite):
                     self.firing = 1
                     self.cooldown += self.delay
                     Global.DataSHOTS += 1
-                    shots.newShot(self.x, self.y, self.x, self.y, self.type, self.level, self.direction)
+                    #shots.newShot(self.x, self.y, self.x, self.y, self.type, self.level, self.direction)
                     for enemy in enemies:
                         distEnemy = distPixel(self.x, self.y, enemy.x, enemy.y)
                         if distEnemy <= self.splash:

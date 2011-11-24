@@ -28,14 +28,7 @@ class Towers():
             if currentTower.level < currentTower.upgrades:
                 if(Game.level.updateMoney(-TowerStats[currentTower.type][currentTower.level+1][TowerPRICE])):
                     currentTower.upgrade()
-        else:
-            if(Game.level.updateMoney(currentTower.value * 0.75 - TowerStats[towerType][0][TowerPRICE])):
-                currentTower.resetEmplacement()
-                currentTower.kill()
-                addedTower = Tower.Tower(row, column, towerType, 0, self.map)
-                self.towers.add(addedTower)
-                self.map.T[row][column] = addedTower
-    
+
     def getUpgradedTower(self, row, column):
         currentTower = self.map.T[row][column]
         if currentTower.level < currentTower.upgrades:

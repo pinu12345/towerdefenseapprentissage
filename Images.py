@@ -23,11 +23,6 @@ def init():
             tmpImg.set_colorkey(spritepink)
             tmpImg.blit(Images.spriteSheet, (0, 0), (towerOffsets[i][j], (tileSize, tileSize)))
             Images.TowerImages[i].append(tmpImg)
-    Images.TowerRadio = [pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash1.png')).convert(),
-                         pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash2.png')).convert(),
-                         pygame.image.load(os.path.join ('Images\Towers', 'RadioSplash3.png')).convert()]
-    for i in range(len(Images.TowerRadio)):
-        Images.TowerRadio[i].set_colorkey(spritepink)
 
     # Radio splash
     # Niveau 1: 128x128

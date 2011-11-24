@@ -118,8 +118,6 @@ TowerRANGE = 3
 TowerDELAY = 4
 TowerSPLASH = 5
 TowerDAMAGE = 6
-TowerUPGRADE = -2
-TowerERASE = -3
 
 TowerTYPES = len(TowerStats)*len(TowerStats[0]) # en pratique: 18
 TowerPlaceImportance = numpy.zeros(TowerTYPES)

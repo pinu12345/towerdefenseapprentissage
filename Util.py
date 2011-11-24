@@ -2,6 +2,35 @@ from numpy import *
 from Global import *
 import Game
 
+def ind(a):
+	return range(len(a))
+
+def iter(a, b, c = -1):
+    # a, b, c nombres: itere de 0 aux nombres
+    # a, b, c listes: itere de 0 a la longueur des listes
+    # c optionnel
+    if not hasattr(a, '__iter__'):
+        a = range(a)
+    else:
+        a = ind(a)
+    if not hasattr(b, '__iter__'):
+        b = range(b)
+    else:
+        b = ind(b)
+    if not hasattr(c, '__iter__') and c != -1:
+        c = range(c)
+    elif c != -1:
+        c = ind(c)
+    toReturn = []
+    for i in a:
+        for j in b:
+            if hasattr(c, '__iter__'):
+                for k in c:
+                    toReturn.append((a[i], b[j], c[k]))
+            else:
+                toReturn.append((a[i], b[j]))
+    return toReturn
+	
 def mapToPixel(y, x = -1):
     # accepte nombre, deux nombres ou vecteurs de deux nombres
     if x < 0:
@@ -186,7 +215,7 @@ def AsingleTowerEmpValue(M, y, x, tower, level):
             if M[ty][tx] == car_path:
                 dM = distMap(x, y, tx, ty)
                 if dM <= tower_range:
-                    tower_reach += 1
+                    tower_reach += tileSize
                 elif dM <= tower_splash:
-                    tower_reach += (tower_splash-dM)/tower_splash
+                    tower_reach += 1.0*tileSize*(tower_splash-dM)/tower_splash
     return tower_reach

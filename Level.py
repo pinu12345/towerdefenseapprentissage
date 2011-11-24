@@ -14,7 +14,6 @@ class Level():
         #self.dataLog = ''
         self.currentWave = 0
         self.menu.redraw = 1
-        self.money = 0
         self.maxWave = 0
         self.BSTEP = 0
         self.BTNUMBER = 1
@@ -28,7 +27,7 @@ class Level():
         self.currentWave = 0
         self.menu.redraw = 1
         self.maxWave = 0
-        self.levelBudget = []
+        self.levelBudget = 0
         self.levelUpgrades = 0
         self.levelWaves = []
         self.levelTowers = []
@@ -40,7 +39,7 @@ class Level():
         #print '\n\n --- Random Level --- \n'
         self.resetLevel()
         # Comment ca, levelBudget? Ca devrait pas etre waveBudget?
-        self.levelBudget[0] = 1000000
+        self.levelBudget = 1000000
         self.levelUpgrades = randint(0, 2)
         enemyType = randint(0, len(EnemyStats)-1)
         #print "\n Random enemy type:", enemyType
@@ -60,7 +59,7 @@ class Level():
         print "\n\n --- Automatic Wave Start ---"
         Game.speedModifier = 100000
         self.resetLevel()
-        self.levelBudget[0] = 1000000
+        self.levelBudget = 1000000
         self.levelMap = RandomMap.RandomMap().M
         M = self.levelMap
         P = precisePathMap(M)
@@ -133,7 +132,7 @@ class Level():
         print '\n Balance Wave ', Global.BalanceWAVE
         Game.speedModifier = 2500
         self.resetLevel()
-        self.levelBudget[0] = 1000000
+        self.levelBudget = 1000000
         #self.levelMap = open(os.path.join('Maps', 'BalanceMap.txt')).readlines()
         #self.levelMap = open(os.path.join('Maps', 'testmap.txt')).readlines()
         self.levelMap = RandomMap.RandomMap().M
@@ -218,9 +217,7 @@ class Level():
             self.levelFile = open(os.path.join('Maps', levelName + '.txt')).readlines()
         for i in range(len(self.levelFile)):
             if i == 1:
-                self.levelBudget
-                for waveBudget in self.levelFile[i].rsplit(','):
-                    self.levelBudget.append(int(waveBudget))
+                self.levelBudget = int(self.levelFile[i])
             elif i == 4:
                 for tower in self.levelFile[i].rsplit(','):
                     type = int(tower.strip())
@@ -243,11 +240,9 @@ class Level():
     
     def start(self):
         self.currentWave = 0
-        self.towerBar.selectedTower = -1
         self.maxWave = len(self.levelWaves)
         self.menu.redraw = 1
-        self.money = self.levelBudget[self.currentWave]
-        self.towerBar.updateMoney = 1
+        self.money = self.levelBudget
         ##print 'LoadingMap'
         self.map.loadMap(self.levelMap)
         ##print 'MapLoaded'
@@ -264,20 +259,9 @@ class Level():
     
     def restartWave(self):
         self.startWave()
-
-    def updateMoney(self, int):
-        if(self.money + int >= 0):
-            self.money += int
-            self.towerBar.updateMoney = 1
-            return 1
-        else:
-            return 0
-
+    
     def nextWave(self):
         self.currentWave += 1
-        if self.currentWave < len(self.levelBudget):
-            self.updateMoney(self.levelBudget[self.currentWave])
-        
         self.menu.redraw = 1
         ## Verify if there is a message at currentWave
         if self.levelMessages != []:

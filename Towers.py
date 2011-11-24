@@ -10,17 +10,14 @@ class Towers():
         self.wave = wave
 
     def placeTower(self, towerType, towerLevel, row, column):
-        #Enleve la valeur de la tour au budget 
-        ##REMPLACE -100 PAR LE COUT DUNE TOUR ET 75 PAR LE COUT DE REMBOURSEMENT CUMULATIF AVEC UPGRADES
-        if(Game.level.updateMoney(-100)):
+        if(Game.level.updateMoney(-TowerStats[towerType][towerLevel][TowerPRICE])):
             addedTower = Tower.Tower(row, column, towerType, towerLevel, self.map)
             self.towers.add(addedTower)
             self.map.T[row][column] = addedTower
 
     def eraseTower(self, row, column):
-        #Rembourse 75% de la valeur de la tour
-        Game.level.updateMoney(75)
         currentTower = self.map.T[row][column]
+        Game.level.updateMoney(currentTower.value * 0.75)
         currentTower.resetEmplacement()
         currentTower.kill()
         self.map.T[row][column] = 0
@@ -28,12 +25,11 @@ class Towers():
     def updateTower(self, towerType, row, column):
         currentTower = self.map.T[row][column]
         if (towerType == TowerUPGRADE) or (towerType == currentTower.type):
-            #Enleve la valeur de la tour au budget
-            if(Game.level.updateMoney(-100)):
-                currentTower.upgrade()
+            if currentTower.level < currentTower.upgrades:
+                if(Game.level.updateMoney(-TowerStats[currentTower.type][currentTower.level+1][TowerPRICE])):
+                    currentTower.upgrade()
         else:
-            #Rembourse 75% de la valeur de la tour
-            if(Game.level.updateMoney(75-100)):
+            if(Game.level.updateMoney(currentTower.value * 0.75 - TowerStats[towerType][0][TowerPRICE])):
                 currentTower.resetEmplacement()
                 currentTower.kill()
                 addedTower = Tower.Tower(row, column, towerType, 0, self.map)

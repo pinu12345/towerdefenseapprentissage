@@ -77,7 +77,9 @@ class Tower(pygame.sprite.Sprite):
             self.setParams()
 
     def setParams(self):
-        self.value = TowerStats[self.type][self.level][TowerPRICE]
+        self.value = 0
+        for i in range (self.level+1):
+            self.value += TowerStats[self.type][i][TowerPRICE]
         self.damage = TowerStats[self.type][self.level][TowerDAMAGE]
         self.delay = TowerStats[self.type][self.level][TowerDELAY]
         self.range = TowerStats[self.type][self.level][TowerRANGE]

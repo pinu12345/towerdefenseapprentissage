@@ -94,9 +94,10 @@ def prog(placedTowers = Game.level.towers):
     # on choisit comment?
     
     nbKeptSolutions = max(len(testPositions), 2*log(nbTestPositions))
-    best
-    for n in range(nbKeptSolutions):
-        
+    bestSolutions = []
+    while len(bestSolutions) < (nbKeptSolutions):
+        best
+        for
         
             
     # choisir et evaluer les tourelles selon les waves a venir aussi?

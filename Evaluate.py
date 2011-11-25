@@ -23,8 +23,7 @@ def eval(chosenTowers):
     totalDamage = 0
     for chosenTower in chosenTowers:
         towerData = map(int, chosenTower.split(','))
-        t, u = towerData[0], towerData[1]
-        y, x = towerData[2], towerData[3]
+        t, u, y, x = towerData[0], towerData[1], towerData[2], towerData[3]
         reach = AsingleTowerEmpValue(Game.level.map.M, y, x, t, u)
         delay = TowerStats[t][u][TowerDELAY]
         nbShots = ceil((1.0*(number-1)*spread+reach) / (speed*delay))

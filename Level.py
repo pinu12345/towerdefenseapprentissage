@@ -205,8 +205,8 @@ class Level():
         T = [0] * TowerTYPES
         T[3*bTower+bLevel] = int(randTowerNumber)
         #T[3*bTower+bLevel] = int(ceil(usableBudget/TowerStats[bTower][bLevel][TowerPRICE]))
-        T = self.towers.placeTowers(M, T)
-        self.dataLog.extend([bTower, bLevel, T[3*bTower+bLevel]])
+        #T = self.towers.placeTowers(M, T)
+        #self.dataLog.extend([bTower, bLevel, T[3*bTower+bLevel]])
         self.start()
         #self.dataLog = ','.join(self.dataLog)
     

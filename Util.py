@@ -219,3 +219,45 @@ def AsingleTowerEmpValue(M, y, x, tower, level):
                 elif dM <= tower_splash:
                     tower_reach += 1.0*tileSize*(tower_splash-dM)/tower_splash
     return tower_reach
+    
+def placeTowers(M, T, beenPlaced = [], forProg = 0):
+        # T: dimension 18, contient le nombre a construire de chaque tourelle
+        # aP: liste de [t, u, y, x]
+        empVal = AemplacementValues(M)
+        emp_available = len(empVal)
+        nbPlaced = 0
+        toPlace = []
+        for bpTower in beenPlaced:
+            t, u, y, x = bpTower[0], bpTower[1], bpTower[2], bpTower[3]
+            for emp in empVal:
+                if y == emp[0] and x == emp[1]:
+                    if not forProg:
+                        Game.level.towers.placeTower(M, t, u, y, x)
+                    emp_available -= 1
+                    empVal.remove(emp)
+        for i in range(len(T)):
+            iOrder = TowerPlaceOrder[i]
+            iToPlace = T[iOrder]
+            for n in range(iToPlace):
+                toPlace.append(iOrder)
+        for num in toPlace:
+            t = num / 3
+            u = num % 3
+            if emp_available:
+                bestEmpValue = 0
+                for emp in empVal:
+                    if emp[2][t][u] > bestEmpValue:
+                        bestEmp = emp
+                        bestEmpValue = emp[2][t][u]
+                if bestEmpValue:
+                    emp = bestEmp
+                    emp_available -= 1
+                    empVal.remove(emp)
+                    if not forProg:
+                        Game.level.towers.placeTower(M, t, u, emp[0], emp[1])
+                    beenPlaced.append(t, u, emp[0], emp[1])
+        #Tplaced = [0 for i in range(len(T))]
+        #for num in beenPlaced:
+        #    Tplaced[num] += 1
+        #return Tplaced
+    

@@ -234,6 +234,9 @@ def main():
             Game.redrawSPBtn = 1
             menu.drawSPBtn(screen)
             towerBar.draw(screen)
+            towerBar.moneyUpdated(screen)
+            towerBar.showTower(screen)
+            towerBar.updateTowerCost = 0
             pygame.display.flip()
 
         elif Game.state == STATE_POPUP:
@@ -385,9 +388,15 @@ def main():
                 menu.draw(screen)
                 Game.redrawSPBtn = 1
                 menu.drawSPBtn(screen)
+                
+                towerBar.moneyUpdated(screen)
+                towerBar.showTower(screen)
+                towerBar.updateTowerCost = 0
 
                 # Draw the tower bar ~ 0
                 towerBar.draw(screen)
+                
+                
                 pygame.display.flip()
 
             ## Game Paused

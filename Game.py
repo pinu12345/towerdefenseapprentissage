@@ -1,4 +1,4 @@
-import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images, Level
+import sys, os, pygame, Map, Menu, TowerBar, Wave, Towers, Shot, Global, Game, Images, Level, Evaluate, Progress
 import pygame.examples.aliens
 from pygame.locals import *
 from Global import *
@@ -371,6 +371,10 @@ def main():
                     elif event.key == pygame.K_t:
                         towers.clear()
                         shots.clear()
+                    elif event.key == pygame.K_v:
+                        Evaluate.evalPlayerPosition()
+                    elif event.key == pygame.K_b:
+                        Progress.prog()
             
             ## Init Game
             if Game.state == STATE_LOADGAME:

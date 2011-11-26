@@ -4,26 +4,26 @@ from math import *
 from numpy import *
 from numpy.random import *
 from Util import *
-from DataTreatment import *
+#from DataTreatment import *
 
 
 method_average = 0
 method_histogram = 1
 method_neighbor = 2
-best_method = 2
+best_method = 1
 
 
-def eval(chosenTowers):
+def eval(chosenTowers, method = best_method):
     ## une des trois fonctions majeures
     # chosenTowers est une liste dont chaque element
     # est une tourelle [tower, upgrade, y, x]
-    enemy = Game.level.waves[currentWave][0]
-    number = Game.level.waves[currentWave][0]    
+    currentWave = Game.level.currentWave
+    enemy = Game.level.levelWaves[currentWave][0]
+    number = Game.level.levelWaves[currentWave][1]
     speed = EnemyStats[enemy][EnemySPEED]
     spread = EnemyStats[enemy][EnemySPREAD]
     totalDamage = 0
-    for chosenTower in chosenTowers:
-        towerData = map(int, chosenTower.split(','))
+    for towerData in chosenTowers:
         t, u, y, x = towerData[0], towerData[1], towerData[2], towerData[3]
         reach = AsingleTowerEmpValue(Game.level.map.M, y, x, t, u)
         delay = TowerStats[t][u][TowerDELAY]
@@ -33,27 +33,44 @@ def eval(chosenTowers):
             * damageAdjustment(TowerDA, enemy, number, t, u, method)
         totalDamage += nbShots * damageA
     killProp = 1.0*totalDamage / number
+    print 'killProp:', killProp
     #killProp = 1.0*totalDamage / number * enemyAdjustment(enemy, number, method)
-    victChan = evalVictoryChances(chosenTowers, killProp)
+    victChan = evalVictoryChances(killProp)
+    print 'victChan:', victChan
     printComment(victChan)
     return victChan
     
 
-def evalVictoryChances(chosenTowers, killProp):
-    ## transforme la proportion de kills en chances concretes de victoire
-    # chaque tourelle introduit une incertitude positive ou negative
-    
-    pass
+def evalVictoryChances(killProp):
+    ## transforme la proportion de kills en garantie concrete de non-defaite
+    # presentement, simple conversion tanh basee sur resultats empiriques
+    return tanh(1.7 * killProp ** 1.6)
 
     
-def score(chosenTowers, killProp, budgetLeft, needToWin, targetVictoryChance):
+def posScore(victChan, budgetLeft, targetVictoryChance, needToWin = 1):
     ## plus needToWin est eleve, plus on maximise les chances de victoire
-    ## si la victoire est improbable, on penche vers killProp
-    # victoryChances vient d'eval
+    ## si la victoire est improbable, on penche vers victChan
+    # victChan vient d'eval et est parmi [0, 1]
     # budgetLeft est calcule dans prog
-    # needToWin depend de la progression
-    pass
+    # needToWin depend eventuellement de l'etape de progression et est parmi [0, 1]
+    # targetVictoryChance est un hyperparametre de prog
+    if victChan >= targetVictoryChance:
+        return 1 + budgetLeft
+    else:
+        return victChan
 
+
+def evalPlayerPosition():
+    playerTowers = Game.level.towers.towers
+    if len(playerTowers) == 0:
+        print "\n You can't win with no tower, that's for sure.\n"
+    else:
+        alreadyPlaced = []
+        for playerTower in playerTowers:
+            alreadyPlaced.append([playerTower.type, playerTower.level,
+                playerTower.y, playerTower.x])
+        eval(alreadyPlaced)
+        
 
 def printComment(victChan):
     if victChan > 0.99:
@@ -71,26 +88,26 @@ def printComment(victChan):
             "\n You're kidding me, right?\n"]
         print victoryTexts[randint(0, 3)]
     elif victChan > 0.6:
-        textChance = '%.2f'%(killProp)
+        textChance = '%.2f'%(victChan*100)
         victoryTexts = [
-            "\n There's a", textChance, "% chance you'll win.\n",
-            "\n I evaluate your chances of winning at", textChance, "%.\n",
-            "\n You might win; there's a", textChance, "% chance of it.\n",
-            "\n Chances of winning are evaluated at", textChance, "%.\n"]
+            ' '.join(["\n There's a", textChance, "% chance you'll win.\n"]),
+            ' '.join(["\n I evaluate your chances of winning at", textChance, "%.\n"]),
+            ' '.join(["\n You might win; there's a", textChance, "% chance of it.\n"]),
+            ' '.join(["\n Chances of winning are evaluated at", textChance, "%.\n"])]
         print victoryTexts[randint(0, 3)]
     elif victChan < 0.4:
-        textChance = '%.2f'%(1-killProp)
+        textChance = '%.2f'%(victChan*100)
         victoryTexts = [
-            "\n There's a", textChance, "% chance you'll lose.\n",
-            "\n I evaluate your chances of losing at", textChance, "%.\n",
-            "\n You'll probably lose; there's a", textChance, "% chance of it.\n",
-            "\n Chances of losing are evaluated at", textChance, "%.\n"]
+            ' '.join(["\n There's a paltry", textChance, "% chance you'll win.\n"]),
+            ' '.join(["\n I evaluate your chances of winning at barely", textChance, "%.\n"]),
+            ' '.join(["\n You'll probably lose; there's only a", textChance, "% chance you'll win.\n"]),
+            ' '.join(["\n Chances of winning are evaluated at a puny", textChance, "%.\n"])]
         print victoryTexts[randint(0, 3)]
     else:
-        textChance = '%.2f'%(killProp)
+        textChance = '%.2f'%(victChan*100)
         victoryTexts = [
-            "\n There's barely a", textChance, "% chance you'll win.\n",
-            "\n I evaluate your chances of winning at", textChance, "%.\n",
+            ' '.join(["\n There's barely a", textChance, "% chance you'll win.\n"]),
+            ' '.join(["\n I evaluate your chances of winning at", textChance, "%.\n"]),
             "\n You might win, you might lose.\n",
             "\n Winning and losing seem equally probable.\n"]
         print victoryTexts[randint(0, 3)]
@@ -265,4 +282,4 @@ def getDamageAdjustmentTable(method = best_method):
     return lines
     
     
-TowerDA = getDamageAdjustmentTable(method)
+TowerDA = getDamageAdjustmentTable(best_method)

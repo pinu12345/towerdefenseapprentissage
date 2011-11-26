@@ -204,6 +204,7 @@ def AsingleEmpValue(M, y, x):
     return empTV
 
 def AsingleTowerEmpValue(M, y, x, tower, level):
+    y, x, = y/tileSize, x/tileSize
     tower_range = TowerStats[tower][level][TowerRANGE] // tileSize
     tower_splash = TowerStats[tower][level][TowerSPLASH] // tileSize
     offset = max(tower_range, tower_splash)
@@ -212,7 +213,7 @@ def AsingleTowerEmpValue(M, y, x, tower, level):
         min(mapHeight-1, y+offset+1)):
         for tx in range(max(0, x-offset), \
             min(mapWidth-1, x+offset+1)):
-            if M[ty][tx] == car_path:
+            if M[ty][tx] in [car_path, car_base]:
                 dM = distMap(x, y, tx, ty)
                 if dM <= tower_range:
                     tower_reach += tileSize
@@ -255,9 +256,11 @@ def placeTowers(M, T, beenPlaced = [], forProg = 0):
                     empVal.remove(emp)
                     if not forProg:
                         Game.level.towers.placeTower(M, t, u, emp[0], emp[1])
-                    beenPlaced.append(t, u, emp[0], emp[1])
+                    beenPlaced.append(t, u, emp[0], emp[1], 1)
+        
+        return beenPlaced
         #Tplaced = [0 for i in range(len(T))]
         #for num in beenPlaced:
         #    Tplaced[num] += 1
         #return Tplaced
-    
+        

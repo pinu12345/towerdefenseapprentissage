@@ -2,6 +2,7 @@ import os, Game
 from Global import *
 from math import *
 from numpy import *
+from numpy.random import *
 from Util import *
 from DataTreatment import *
 
@@ -31,14 +32,68 @@ def eval(chosenTowers):
         damageA = 1.0*damage / 10000 \
             * damageAdjustment(TowerDA, enemy, number, t, u, method)
         totalDamage += nbShots * damageA
-    killProp = 1.0*totalDamage / number * enemyAdjustment(enemy, number, method)
-    sucGuess = 0 if killProp < 1 else 1
-    if sucGuess:
-        print "\n I think you'll win.\n"
-    else:
-        print "\n I think you'll lose.\n"
-    return sucGuess
+    killProp = 1.0*totalDamage / number
+    #killProp = 1.0*totalDamage / number * enemyAdjustment(enemy, number, method)
+    victChan = evalVictoryChances(chosenTowers, killProp)
+    printComment(victChan)
+    return victChan
     
+
+def evalVictoryChances(chosenTowers, killProp):
+    ## transforme la proportion de kills en chances concretes de victoire
+    # chaque tourelle introduit une incertitude positive ou negative
+    
+    pass
+
+    
+def score(chosenTowers, killProp, budgetLeft, needToWin, targetVictoryChance):
+    ## plus needToWin est eleve, plus on maximise les chances de victoire
+    ## si la victoire est improbable, on penche vers killProp
+    # victoryChances vient d'eval
+    # budgetLeft est calcule dans prog
+    # needToWin depend de la progression
+    pass
+
+
+def printComment(victChan):
+    if victChan > 0.99:
+        victoryTexts = [
+            "\n That's a guranteed win!\n",
+            "\n I'm totally sure you'll win.\n",
+            "\n You can't lose with that!\n",
+            "\n I'm 100% sure you'll win.\n"]
+        print victoryTexts[randint(0, 3)]
+    elif victChan < 0.01:
+        victoryTexts = [
+            "\n That's a definite loss.\n",
+            "\n I'm totally sure you'll lose.\n",
+            "\n No way you can win with that!\n",
+            "\n You're kidding me, right?\n"]
+        print victoryTexts[randint(0, 3)]
+    elif victChan > 0.6:
+        textChance = '%.2f'%(killProp)
+        victoryTexts = [
+            "\n There's a", textChance, "% chance you'll win.\n",
+            "\n I evaluate your chances of winning at", textChance, "%.\n",
+            "\n You might win; there's a", textChance, "% chance of it.\n",
+            "\n Chances of winning are evaluated at", textChance, "%.\n"]
+        print victoryTexts[randint(0, 3)]
+    elif victChan < 0.4:
+        textChance = '%.2f'%(1-killProp)
+        victoryTexts = [
+            "\n There's a", textChance, "% chance you'll lose.\n",
+            "\n I evaluate your chances of losing at", textChance, "%.\n",
+            "\n You'll probably lose; there's a", textChance, "% chance of it.\n",
+            "\n Chances of losing are evaluated at", textChance, "%.\n"]
+        print victoryTexts[randint(0, 3)]
+    else:
+        textChance = '%.2f'%(killProp)
+        victoryTexts = [
+            "\n There's barely a", textChance, "% chance you'll win.\n",
+            "\n I evaluate your chances of winning at", textChance, "%.\n",
+            "\n You might win, you might lose.\n",
+            "\n Winning and losing seem equally probable.\n"]
+        print victoryTexts[randint(0, 3)]
     
 def evalTest(method = best_method):
     TowerDA = getDamageAdjustmentTable(method)
@@ -166,11 +221,7 @@ def damageAdjustment(TowerDA, e, n, t, u, method = best_method):
                 totalWeight += weight
                 totalDamageAdj += weight * (neighbor[3] / neighbor[2] / normalDamage)
         damageAdj = 1.0 * totalDamageAdj / totalWeight
-        return damageAdj
-    
-    elif method == method_parzen:
-        pass
-        
+        return damageAdj    
 
 
 def getDamageAdjustmentTable(method = best_method):

@@ -2,15 +2,19 @@ import os, Game
 from Global import *
 from math import *
 from numpy import *
+from numpy.random import *
 from Util import *
 from DataTreatment import *
 from Evaluate import *
 
 
-def prog(placedTowers = Game.level.towers):
+def prog(placedTowers = Game.level.towers, targetVictoryChance = 0.99,
+    progSteps = 3):
     ## une des trois fonctions majeures
     # utilise l'info dans Game.level et Global
     # pour progresser vers une position optimale
+    progStep = 
+    
     M = Game.level.map.M
     waves = Game.level.waves
     curWave = Game.level.currentWave

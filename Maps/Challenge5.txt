@@ -32,6 +32,3 @@ NextLevel[31]
 End
 
 Messages [34+]
-<div>Test, map3 etc</div>
-<div>Attention<br />La wave 2 est pas mal dangereuse</div>
-Good luck :O

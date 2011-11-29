@@ -20,41 +20,48 @@ def prog():
     propOfKeepingAll = 0.2 # chance de garder les tourelles deja en place
     
     M = Game.level.map.M
-    waves = Game.level.waves
+    waves = Game.level.levelWaves
     curWave = Game.level.currentWave
     maxWave = Game.level.maxWave
     budgetList = Game.level.levelBudget
     
+    print budgetList
+    
     totalBudget = 0
     for w in range(curWave):
         totalBudget += budgetList[w]
+    
+    print totalBudget
     
     enemy = waves[curWave][0]
     number = waves[curWave][1]
     
     empVal = AemplacementValues(M)
     nbAvEmp = len(empVal)
-    avTowers = [0, 1, 2, 3, 4, 5] # a changer
+    avTowers = []
+    for avTower in Game.level.levelTowers:
+        avTowers.append([avTower])
+        
     nbAvTowers = len(avTowers)
     maxUpgrade = 2 # a changer
     nbPossiblePositions = (nbAvTowers * (maxUpgrade+1) + 1) ** nbAvEmp
     # nbPP: facilement des millions
-    nbTestPositions = 5 * int(nbPossiblePositions**.25)
+    nbTestPositions = min(2, 100 * int((nbPossiblePositions)**.1))
     testPositions = []
     #towerValues = zeros(6, 3)
     
     ## chances de base de choisir une tourelle
     totalChance = 0
-    for tower in avTowers:
-        tower.append([])
+    for i in ind(avTowers):
+        avTowers[i].append([])
         for u in range(maxUpgrade):
-            chance = TowerStats[tower][u][12] ** efficiencyInsistence
+            chance = TowerStats[avTowers[i][0]][u][12][enemy] ** efficiencyInsistence
             totalChance += chance
-            tower[1].append(chance)
+            avTowers[i][1].append(chance)
     cumChance = 0
     for tower in avTowers:
         for u in range(maxUpgrade):
-            tower[1][u] /= totalChances + cumChance
+            tower[1][u] /= totalChance + cumChance
             cumChance += tower[1][u]
             
     ## positions de depart (juste une, pour tout de suite)
@@ -62,11 +69,10 @@ def prog():
     avBudget = totalBudget
     
     ## tourelles deja placees
-    placedTowers = Game.level.towers
     alreadyPlaced = []
-    for placedTower in Game.level.towers:
+    for placedTower in Game.level.towers.towers:
         alreadyPlaced.append(placedTower.type, placedTower.level,
-            placedTower.y, placedTower.x, 0.75)
+            placedTower[0], placedTower.x, 0.75)
         avBudget -= TowerStats[placedTower.type][placedTower.level][TowerPRICE]
     startPositions.append([avBudget, alreadyPlaced])
     
@@ -79,35 +85,42 @@ def prog():
         for n in range(nbTestPositions):
             
             ## on choisit une des positions de depart
-            randPosNum = randint(0, len(startPositions)-1)
+            randPosNum = randint(0, len(startPositions)-1) \
+                if len(startPositions) >= 2 else 0
             avBudget = startPositions[randPosNum][0]
+            print 'Available Budget:', avBudget
             alreadyPlaced = startPositions[randPosNum][1]
+            print '', alreadyPlaced
             
             ## on garde ou non des tourelles deja placees
-            if random() < probOfKeepingAll:
-                nbToKeep = randint(0, len(alreadyPlaced)-1)
+            if rand() < propOfKeepingAll:
+                nbToKeep = randint(0, len(alreadyPlaced)-1) \
+                    if len(startPositions) >= 2 else 0
                 while len(alreadyPlaced) > nbToKeep:
-                    indToRemove = randint(0, len(alreadyPlaced)-1)
+                    indToRemove = randint(0, len(alreadyPlaced)-1) \
+                        if len(startPositions) >= 2 else 0
                     t, u = alreadyPlaced[indToRemove][0], alreadyPlaced[indToRemove][1]
                     chance = 1 - ((1 - TowerStats[t][u][12]) ** (5 * efficiencyInsistence))
-                    if random() > chance:
+                    if rand() > chance:
                         avBudget += TowerStats[t][u][TowerPRICE] \
                             * alreadyPlaced[indToRemove][4]
                         alreadyPlaced.pop(indToRemove)
             
-            budgetLimit = avBudget*random()
+            budgetLimit = avBudget*rand()
             
             T = [0 for i in range(TowerTYPES)]
+            budgetSpent = 0
             while budgetSpent <= budgetLimit and patience and nbAvEmp:
                 # on essaie d'ajouter une tourelle, preferant les plus efficaces
-                towerChooser = 1.0*random()
+                towerChooser = 1.0*rand()
                 t, u = -1, -1
                 for tposs, uposs in iter(avTowers, maxUpgrade):
                     if towerChooser < tower[1][u]:
                         t, u = avTowers[tposs][0], uposs
+                
+                choiceMade = 0
                 if t >= 0 and u >= 0:
                     # on verifie si cette option a un minimum de sens
-                    choiceMade = 0
                     for emp in empVal:
                         if emp[2][t][u]:
                             choiceMade = 1

@@ -256,9 +256,9 @@ def getDamageAdjustmentTable(method = best_method):
         lines = open(doc).readlines()
         #numTowerDA = TowerTYPES*len(EnemyStats)
         #TowerDA = [0] * (numTowerDA)
-        for i in ind(lines):
+        for i in range(len(lines)):
             lines[i] = lines[i].rstrip().split(' ')
-            for j in ind(lines[i]):
+            for j in range(len(lines[i])):
                 lines[i][j] = map(float, lines[i][j].split('|'))
     
     elif method == method_neighbor:

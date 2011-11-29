@@ -7,11 +7,12 @@ from Evaluate import *
 
 def executeTheFollowing():
     #print ' Executing...'
-    treatBalanceData(1) # 1: efface tout et remplace
-    damageAdjustmentTable_average()
+    #treatBalanceData(1) # 1: efface tout et remplace
+    #damageAdjustmentTable_average()
     #damageAdjustmentTable_histogram(20)
     #damageAdjustmentTable_neighbor()
     #evalTest()
+    damageAdjustmentDataForAnalyticRegression()
     pass
 
     
@@ -81,6 +82,30 @@ def damageAdjustmentTable_histogram(k = 3):
             f.write(''.join([line, "\n"]))
     return TowerDamageAdj
 
+    
+def damageAdjustmentDataForAnalyticRegression():
+    ## prepare des fichiers pour la regression analytique
+    ## chaque ligne comprend le nombre d'ennemis et l'ajustement de degats
+    for e, t, u in iter(EnemyStats, TowerStats, TowerStats[0]):
+        doc = os.path.join('Learning Data', ''.join(map(str, [e, t, u, '.txt'])))
+        lines = open(doc).readlines()
+        towerBaseDamage = TowerStats[t][u][TowerDAMAGE][e]
+        data = []
+        for i in ind(lines):
+            line = lines[i].split(' ')
+            success = line[4]
+            if success:
+                enemyNum = int(line[0])
+                realShots = int(line[2])
+                realDamage = float(line[3])
+                estimDamage = 1.0 * realShots * towerBaseDamage
+                adjDamage = 1.0 * realDamage / estimDamage
+                data.append(' '.join([str(enemyNum), str(adjDamage)]))
+        doc = os.path.join('Learning Data', ''.join(map(str, [e, t, u, 'a.txt'])))
+        with open(doc, 'w') as f:
+            for line in data:
+                f.write(''.join([line, "\n"]))
+    
     
 def damageAdjustmentTable_average():
     ## renvoie une unique valeur d'ajustement pour chaque combo

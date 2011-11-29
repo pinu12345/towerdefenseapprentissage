@@ -93,14 +93,16 @@ def damageAdjustmentDataForAnalyticRegression():
         data = []
         for i in ind(lines):
             line = lines[i].split(' ')
-            success = line[4]
-            #if success:
-            if 1:
+            success = int(line[4].rstrip())
+            if success:
+            #if 1:
                 enemyNum = int(line[0])
                 realShots = int(line[2])
                 realDamage = float(line[3])
                 estimDamage = 1.0 * realShots * towerBaseDamage
                 adjDamage = 1.0 * realDamage / estimDamage
+                if e == 0 and t == 0 and u == 0:
+                    print '', realDamage, estimDamage
                 data.append(' '.join([str(enemyNum), str(adjDamage)]))
         doc = os.path.join('Learning Data', ''.join(map(str, [e, t, u, 'a.txt'])))
         with open(doc, 'w') as f:

@@ -238,7 +238,11 @@ def damageAdjustment(TowerDA, e, n, t, u, method = best_method):
                 totalWeight += weight
                 totalDamageAdj += weight * (neighbor[3] / neighbor[2] / normalDamage)
         damageAdj = 1.0 * totalDamageAdj / totalWeight
-        return damageAdj    
+        return damageAdj
+    
+    elif method == method_analytic:
+        bias, weight = TowerDA[numAdj][0], TowerDA[numAdj][1]
+        return bias + weight * log(1.0*n)
 
 
 def getDamageAdjustmentTable(method = best_method):
@@ -278,6 +282,10 @@ def getDamageAdjustmentTable(method = best_method):
             #if numAdj == 1:
                 #print TowerDamageAdj[numAdj]
         lines = TowerDamageAdj
+    
+    elif method == method_analytic:
+        ## va chercher ce qui a ete produit par la regression analytique
+        lines = DAanalytic.Array
     
     return lines
     

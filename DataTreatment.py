@@ -94,7 +94,8 @@ def damageAdjustmentDataForAnalyticRegression():
         for i in ind(lines):
             line = lines[i].split(' ')
             success = line[4]
-            if success:
+            #if success:
+            if 1:
                 enemyNum = int(line[0])
                 realShots = int(line[2])
                 realDamage = float(line[3])
@@ -105,6 +106,7 @@ def damageAdjustmentDataForAnalyticRegression():
         with open(doc, 'w') as f:
             for line in data:
                 f.write(''.join([line, "\n"]))
+    print '\n All done!\n'
     
     
 def damageAdjustmentTable_average():

@@ -25,13 +25,9 @@ def prog():
     maxWave = Game.level.maxWave
     budgetList = Game.level.levelBudget
     
-    print budgetList
-    
     totalBudget = 0
-    for w in range(curWave):
+    for w in range(curWave+1):
         totalBudget += budgetList[w]
-    
-    print totalBudget
     
     enemy = waves[curWave][0]
     number = waves[curWave][1]

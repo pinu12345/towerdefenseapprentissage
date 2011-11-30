@@ -1,0 +1,18 @@
+﻿TODOLIST:
+
+    [P]
+    Montrer le montant d'argent a la fin des achats / revente
+    Permettre un message en fin de mission?
+    Permettre un popup qui offre de recommencer une wave (ou mission) en cas d'echec?
+
+    [Nic]
+    Equilibrer le jeu
+    Continuer l'apprentissage
+    Regrouper les tuiles random
+    * Excel produit automatiquement les tableaux de stats en Python
+    * Les nouvelles stats de tourelles et d'ennemis sont implantees
+    * Les degats sont calcules de la nouvelle maniere (et splash graduel)
+    * Les ennemis se deplacent fichtre vite
+    * La barre de vie ennemie est de taille et position variables
+    * Les graphiques aleatoires existent
+    * Fonction pour calculer la "valeur" de chaque emplacement avec precision

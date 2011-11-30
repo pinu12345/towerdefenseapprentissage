@@ -1,0 +1,34 @@
+Budget [1]
+100, 200, 700
+
+T-wers [3]
+0, 1, 2, 3, 4
+
+Upgrades [7]
+1
+
+Waves [10]
+5 1, 0 1, 8 10
+
+Map [13-28]
+-X----------------------
+-XXXXXXXXXXXXXXXXXXXXX--
+--O---------O-----O-OX--
+-XXXXXXXXXXX--XXXXXXXX--
+-XO-O-----OX-OX---------
+-XXXXXX----X--X---------
+---O-OX----X--X---XXXXX-
+-XXXXXX----X--X---X-O-X-
+-X---------XO-XXXXXO-OX-
+-X-XXX-----X----O-----X-
+-XOXOX-----XXXXXXXXXXXX-
+-X-X-X------------------
+-XOX-XXXXXXXXXXXX-------
+-XXX------------X-------
+----------------B-------
+------------------------
+
+NextLevel[31]
+End
+
+Messages [34+]

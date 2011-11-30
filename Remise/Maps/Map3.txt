@@ -1,0 +1,37 @@
+Budget [1]
+100, 200, 700
+
+Towers [3]
+0, 1, 2, 3, 4
+
+Upgrades [7]
+1
+
+Waves [10]
+5 1, 0 1, 8 10
+
+Map [13-28]
+------------------------
+XXO---------XXXXXXXX----
+OXXO-O------XOOOOOOX----
+-OXXO--O----XOOOOOOX----
+--OXXO---O-OXOOOOOOX----
+---OXXOO---OXOOOOOOX----
+----OXXOOOOOXOOOOOOX----
+-----OXXXXXXX------X----
+-------------------X----
+-------------------X----
+-------------------X----
+--OOOOOOOOOOO----OOX----
+--BXXXXXXXXXXOOOXXXX----
+-----------OX-O-XO------
+------------XXXXX-------
+------------------------
+
+NextLevel[31]
+End
+
+Messages [34+]
+<div>Test, map3 etc</div>
+<div>Attention<br />La wave 2 est pas mal dangereuse</div>
+Good luck :O

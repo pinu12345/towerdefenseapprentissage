@@ -1,0 +1,35 @@
+Budget [1]
+50000
+
+Towers [3]
+0, 1, 2, 3, 4, 5
+
+Upgrades [7]
+2
+
+Waves [10]
+0 1
+
+Map [13-28]
+------------------------
+------------------------
+XXXXXXXXXXXXXXXXX-------
+OOOOOOOOOOOOOOOOX-------
+---------------OX-------
+---------------OX-------
+-------OOOOOOOOOX-------
+-------XXXXXXXXXX-------
+-------XOOOOOOOOO-------
+-------XO---------------
+-------XO----------BX---
+-------XO----------OX---
+-------XOOOOOOOOOOOOX---
+-------XXXXXXXXXXXXXX---
+------------------------
+------------------------
+
+NextLevel[31]
+map2
+
+Messages [34+]
+<BODY><CENTER>Welcome to the first Challenge</CENTER><BR /><BR />Good luck!</BODY>

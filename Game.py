@@ -92,13 +92,13 @@ def main():
     
     # Initialize the MainMenu
     mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
-               [('Start Automatic Tests', 1, None),
-                ('Start Basic Map', 2, None),
-                ('Start Map 1', 3, None),
-                ('Start Map 2', 4, None),
-                ('Start Map 3', 5, None),
-                ('Start Test Map', 6, None),
-                ('Start Balance Tests', 7, None),
+               [('Campaign', 1, None),
+                ('Challenge 1', 2, None),
+                ('Challenge 2', 3, None),
+                ('Challenge 3', 4, None),
+                ('Challenge 4', 5, None),
+                ('Challenge 5', 6, None),
+                ('Random Level', 7, None),
                 ('Exit', 8, None)], Images.Background)
     gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
@@ -160,29 +160,31 @@ def main():
             if e.type == pygame.KEYDOWN or e.type == EVENT_CHANGE_STATE:
                 if mainMenustate == 0:
                     rect_list, mainMenustate = mainMenu.update(e, mainMenustate)
+                #Campagin
                 elif mainMenustate == 1:
                     Game.state = STATE_LOADGAME
-                    Game.autoMode = 1
-                    Game.level.autoWave()
+                    Game.level.loadLevel('Campaign1')
+                #Challenges
                 elif mainMenustate == 2:
                     Game.state = STATE_LOADGAME
-                    map.loadFileMap('basicmap')
+                    Game.level.loadLevel('Challenge1')
                 elif mainMenustate == 3:
                     Game.state = STATE_LOADGAME
-                    Game.level.loadLevel('map1')
+                    Game.level.loadLevel('Challenge2')
                 elif mainMenustate == 4:
                     Game.state = STATE_LOADGAME
-                    Game.level.loadLevel('map2')
+                    Game.level.loadLevel('Challenge3')
                 elif mainMenustate == 5:
                     Game.state = STATE_LOADGAME
-                    Game.level.loadLevel('map3')
+                    Game.level.loadLevel('Challenge4')
                 elif mainMenustate == 6:
                     Game.state = STATE_LOADGAME
-                    map.loadFileMap('testmap')
+                    Game.level.loadLevel('Challenge5')
+                #Random Level
                 elif mainMenustate == 7:
                     Game.state = STATE_LOADGAME
-                    Game.balanceMode = 1
-                    Game.level.balanceWave()
+                    Game.level.loadLevel('Campaign1')
+                #Quit
                 else:
                     pygame.quit()
                     sys.exit()

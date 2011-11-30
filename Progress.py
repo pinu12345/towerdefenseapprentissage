@@ -169,7 +169,7 @@ def prog():
             bestPosition = 0
             for position in testPositions:
                 if position != []:
-                    print ' Verifying position:', position
+                    #print ' Verifying position:', position
                     score = position[2]
                     if score > bestScore:
                         bestScore = score

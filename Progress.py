@@ -154,9 +154,8 @@ def prog():
             if budgetSpent <= avBudget:
                 # on place cette position le mieux possible
                 testTowers = placeTowers(M, T, alreadyPlaced, 1)
-                testPositions.append([])
-                testPositions[n] = [avBudget, testTowers,
-                    posScore(eval(testTowers), avBudget-budgetSpent, targetVictoryChance)]
+                testPositions.append([avBudget, testTowers,
+                    posScore(eval(testTowers), avBudget-budgetSpent, targetVictoryChance)])
             print
         
         if testPositions[-1] == []:

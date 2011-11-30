@@ -48,32 +48,39 @@ class Level():
         waveCounts = 1
         self.levelWaves = []
         self.levelBudget = []
+        self.levelTowers = []
+        nbAvTowers = int(1+2.5*(rand()+rand()))
+        while len(self.levelTowers) < nbAvTowers:
+            towerNum = randint(0, 5)
+            if towerNum not in self.levelTowers:
+                self.levelTowers.append(towerNum)
         for i in range(waveCounts):
             enemyType = randint(0, len(EnemyStats)-1)
-            enemyNumber = max(int(200**(0.75+rand()/2.0)/EnemyStats[enemyType][EnemyVALUE]), 1)
+            enemyValue = 200**(0.75+rand()/2.0)
+            enemyNumber = max(int(enemyValue/EnemyStats[enemyType][EnemyVALUE]), 1)
             enemyValue = enemyNumber * EnemyStats[enemyType][EnemyVALUE]
             ##Tour la plus efficace vs l'enemy 8()!!
             bestTower = 0
             bestLevel = 0
             bestValue = 0
             averageValue = 0
-            for j in range(len(TowerStats)):
-                for k in range(len(TowerStats[j])):
-                    currentValue = TowerStats[j][k][12][enemyType]
+            for j in range(nbAvTowers):
+                t = self.levelTowers[j]
+                for u in range(self.levelUpgrades+1):
+                    currentValue = TowerStats[t][u][12][enemyType]
                     averageValue += currentValue
                     if currentValue > bestValue:
-                        bestTower = j
-                        bestLevel = k
+                        bestTower = t
+                        bestLevel = u
                         bestValue = currentValue
-            averageValue = averageValue / 18.0
-            print 'Best tower against this wave is ', bestTower, bestLevel, bestValue
+            averageValue = averageValue / (nbAvTowers * (self.levelUpgrades+1))
+            #print 'Best tower against this wave is ', bestTower, bestLevel, bestValue
             print 'Average Value :', (averageValue*20)
-            self.levelBudget.append(enemyValue*1.2/(20*averageValue))
+            self.levelBudget.append(enemyValue*0.1/bestValue)
             self.levelWaves.append([enemyType, enemyNumber])
-        self.levelTowers = [0, 1, 2, 3, 4, 5]
         self.levelMessages = []
         self.nextLevel = ''
-        turretsEmplacements = randint(6, 10)
+        turretsEmplacements = int( 10*(1+rand()+rand()) / (2+self.levelUpgrades) )
         pathLength = randint(50,115)
         #self.levelMap = RandomMap.RandomMap().M
         self.levelMap = RandomMap.RandomMap(empl=turretsEmplacements, len=pathLength).M

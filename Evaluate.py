@@ -34,11 +34,11 @@ def eval(chosenTowers, method = best_method):
             * damageAdjustment(TowerDA, enemy, number, t, u, method)
         totalDamage += nbShots * damageA
     killProp = 1.0*totalDamage / number
-    print 'killProp:', killProp
+    print ' Estimated kill proportion:', killProp
     #killProp = 1.0*totalDamage / number * enemyAdjustment(enemy, number, method)
     victChan = evalVictoryChances(killProp)
-    print 'victChan:', victChan
-    printComment(victChan)
+    #print 'victChan:', victChan
+    #printComment(victChan)
     return victChan
     
 

@@ -7,8 +7,8 @@ from Images import *
 type = 0
 
 # Colors
-red    = ( 255,  20,  20)
-green  = (   0, 255,   0)
+red    = ( 255,  40,  20)
+green  = (   0, 255,  20)
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, type, wave, x, y, direction, id):

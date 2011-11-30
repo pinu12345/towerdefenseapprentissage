@@ -14,7 +14,7 @@ def prog():
     # pour progresser vers une position optimale
     
     ## hyperparametres
-    maxFalsePositiveRisk = 0.02 # risque empirique qu'un negatif soit declare positif
+    maxFalsePositiveRisk = 0.01 # risque empirique qu'un negatif soit declare positif
     efficiencyInsistence = 5.0 # insistance vers les meilleures tourelles
     probOfKeepingAll = 0.5 # chance de garder toutes les tourelles deja en place
     

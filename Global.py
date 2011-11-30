@@ -26,8 +26,12 @@ spritepink        = ( 255, 127, 255)
 barColor          = (   0, 128, 153)
 
 # Font Colors
-menuColor         = ( 255, 255, 255)
-menuSelectedColor = ( 255,   0,   0)
+menuColor         = ( 207, 222, 229 )
+menuSelectedColor = ( 255, 255, 255 )
+#menuBaseColor     = ( 229, 247, 255 )
+menuBaseColor     = ( 138, 199, 229 )
+menuSellColor     = ( 128, 255, 128 )
+menuMaxLevelColor = ( 255, 170, 128 )
 
 # dimensions de carte
 mapWidth = 24

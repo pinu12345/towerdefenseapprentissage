@@ -64,15 +64,15 @@ def posScore(victChan, budgetLeft, targetVictoryChance, needToWin = 1):
 
 def evalPlayerPosition():
     playerTowers = Game.level.towers.towers
-    for tower in playerTowers:
-        print tower
+    #for tower in playerTowers:
+    #    print '', tower.type, tower.level, tower.row, tower.column
     if len(playerTowers) == 0:
         print "\n You can't win with no tower, that's for sure.\n"
     else:
         alreadyPlaced = []
         for playerTower in playerTowers:
             alreadyPlaced.append([playerTower.type, playerTower.level,
-                playerTower.y, playerTower.x])
+                playerTower.row, playerTower.column])
         eval(alreadyPlaced)
         
 

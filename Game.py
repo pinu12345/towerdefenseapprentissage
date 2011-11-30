@@ -64,10 +64,10 @@ def main():
     drawTick = 0
 
     Game.state = STATE_INITMENU
-    Game.mainMenuFont = pygame.font.Font(None, 32)
-    Game.gameMenuFont = pygame.font.Font(None, 24)
-    Game.enemyCountFont = pygame.font.Font(None, 24)
-    Game.popUpFont = pygame.font.Font(None, 24)
+    Game.mainMenuFont = pygame.font.SysFont('Courier New', 28, 1)
+    Game.gameMenuFont = pygame.font.SysFont('Courier New', 26, 1)
+    Game.enemyCountFont = pygame.font.SysFont('Courier New', 22, 1)
+    Game.popUpFont = pygame.font.SysFont('Courier New', 16, 1)
 
     # Set the height and width of the screen
     size = [mapWidth*tileSize + rightMenuSize, mapHeight*tileSize + bottomMenuSize]
@@ -101,7 +101,7 @@ def main():
                 ('Exit', 8, None)], Images.Background)
     gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
                [('Resume', 1, None),
-                ('Back to main menu (current progress will be lost!)', 2, None)], Images.Background)
+                ('Back to main menu (progress will be lost!)', 2, None)], Images.Background)
 
     menubackground = Images.Background
     interfaceBGwashed = Images.InterfaceBGwashed
@@ -363,7 +363,7 @@ def main():
                         towers.resetCooldowns()
                     elif event.key == pygame.K_r:
                         towerBar.selectTower(TowerUPGRADE)
-                    elif event.key == pygame.K_e:
+                    elif event.key == pygame.K_e or event.key == pygame.K_x:
                         towerBar.selectTower(TowerERASE)
                     elif event.key == pygame.K_a:
                         towers.clear()

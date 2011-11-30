@@ -1,4 +1,4 @@
-import pygame, Map, os, Images, Game, random
+import pygame, Map, os, Images, Game, random, Util
 from Global import *
 
 # Colors
@@ -58,8 +58,10 @@ class TowerBar():
     def moneyUpdated(self, screen):
         bgx, bgy, bgw, bgh = 280, 530, 183, 22
         screen.blit(Images.InterfaceBGopaque, (bgx, bgy) , (bgx, bgy, bgw, bgh), 0)
-        screen.blit(Game.gameMenuFont.render('Materials :', 0, (255, 255, 255)), (294, 530), None, 0)
-        screen.blit(Game.gameMenuFont.render(str(Game.level.money), 0, (255, 255, 255)), (390, 530), None, 0)
+        screen.blit(Game.gameMenuFont.render('Materials:', \
+            0, menuBaseColor), (296, 527), None, 0)
+        screen.blit(Game.gameMenuFont.render(str(int(Game.level.money)), \
+            0, menuBaseColor), (318, 553), None, 0)
         self.updateMoney = 0
 
     def showTower(self, screen):
@@ -81,16 +83,17 @@ class TowerBar():
                 screen.fill(barColor, (478 + j*40, 574 - size, 28, size), 0)
             #Show the Price
             if(self.updateTowerCost == 2):
-                screen.blit(Game.gameMenuFont.render('Max level reached', 0, (255, 0, 0)), (294, 552), None, 0)
+                screen.blit(Game.gameMenuFont.render('Max level', \
+                    0, menuMaxLevelColor), (294, 587), None, 0)
             elif(self.updateTowerCost == 3):
-                screen.blit(Game.gameMenuFont.render('Sell', 0, (0, 255, 0)), (294, 552), None, 0)
-                sellPrice = 0
-                for i in range (self.displayTowerLevel+1):
-                    sellPrice += TowerStats[self.displayTower][i][TowerPRICE] * 0.75
-                screen.blit(Game.gameMenuFont.render(str(sellPrice), 0, (255, 255, 255)), (390, 552), None, 0)
+                sellInfo = ' '.join(['Sell:', str(int(0.75 * Util.calcTowerPrice( \
+                    self.displayTower, self.displayTowerLevel)))])
+                screen.blit(Game.gameMenuFont.render(sellInfo, \
+                    0, menuSellColor), (294, 587), None, 0)
             else:
-                screen.blit(Game.gameMenuFont.render('Price :', 0, (255, 255, 255)), (294, 552), None, 0)
-                screen.blit(Game.gameMenuFont.render(str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE]), 0, (255, 255, 255)), (390, 552), None, 0)
+                priceInfo = ' '.join(['Price:', str(TowerStats[self.displayTower][self.displayTowerLevel][TowerPRICE])])
+                screen.blit(Game.gameMenuFont.render(priceInfo, \
+                    0, menuBaseColor), (294, 587), None, 0)
         else:
             self.showWashed(screen)
         self.moneyUpdated(screen)

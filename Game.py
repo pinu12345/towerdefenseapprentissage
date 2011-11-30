@@ -39,14 +39,14 @@ def newPopup(message):
     Game.state = STATE_INITPOPUP
     
 def increaseSpeed(menu):
-    if Game.speedModifier < 8.0:
-        Game.speedModifier *= 2.0
+    if Game.speedModifier < 20.0:
+        Game.speedModifier *= 3.0
         menu.drawSpeed += 1
         menu.redrawSpeed = 1
 
 def reduceSpeed(menu):
     if Game.speedModifier > 0.5:
-        Game.speedModifier /= 2.0
+        Game.speedModifier /= 3.0
         menu.drawSpeed -= 1
         menu.redrawSpeed = 1
 

@@ -314,7 +314,7 @@ class Level():
                 sys.exit()
         else:
             if self.nextLevel == 'End':
-                print '\n You have finished the game. Congratulations!'
+                print '\n You have finished the level. Congratulations!'
                 Game.state = STATE_PREPARATION
             elif self.nextLevel != '':
                 print 'Starting next level : ', self.nextLevel

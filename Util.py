@@ -2,6 +2,12 @@ from numpy import *
 from Global import *
 import Game
 
+def calcTowerPrice(t, umax):
+    totalPrice = 0
+    for u in range(umax+1):
+        totalPrice += TowerStats[t][u][TowerPRICE]
+    return totalPrice
+
 def ind(a):
 	return range(len(a))
 
@@ -197,16 +203,15 @@ def AsingleEmpValue(M, y, x):
     empTV = []
     for tower in range(len(TowerStats)):
         empTV.append([])
-        for level in range(len(TowerStats[tower])):
+        for upgrade in range(len(TowerStats[tower])):
             empTV[tower].append([])
-            tower_reach = AsingleTowerEmpValue(M, y, x, tower, level)
-            empTV[tower][level] = int(round(tower_reach))
+            tower_reach = AsingleTowerEmpValue(M, y, x, tower, upgrade)
+            empTV[tower][upgrade] = int(round(tower_reach))
     return empTV
 
-def AsingleTowerEmpValue(M, y, x, tower, level):
-    y, x, = y/tileSize, x/tileSize
-    tower_range = TowerStats[tower][level][TowerRANGE] // tileSize
-    tower_splash = TowerStats[tower][level][TowerSPLASH] // tileSize
+def AsingleTowerEmpValue(M, y, x, tower, upgrade):
+    tower_range = TowerStats[tower][upgrade][TowerRANGE] // tileSize
+    tower_splash = TowerStats[tower][upgrade][TowerSPLASH] // tileSize
     offset = max(tower_range, tower_splash)
     tower_reach = 0
     for ty in range(max(0, y-offset), \

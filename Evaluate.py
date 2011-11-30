@@ -14,7 +14,7 @@ method_analytic = 3
 best_method = 3
 
 
-def eval(chosenTowers, method = best_method):
+def eval(chosenTowers, consoleComment = 1, method = best_method):
     ## une des trois fonctions majeures
     # chosenTowers est une liste dont chaque element
     # est une tourelle [tower, upgrade, y, x]
@@ -34,7 +34,8 @@ def eval(chosenTowers, method = best_method):
             * damageAdjustment(TowerDA, enemy, number, t, u, method)
         totalDamage += nbShots * damageA
     killProp = 1.0*totalDamage / number
-    print ' Estimated kill proportion:', killProp
+    if consoleComment:
+        print '\n Estimated kill proportion:', killProp
     #killProp = 1.0*totalDamage / number * enemyAdjustment(enemy, number, method)
     victChan = evalVictoryChances(killProp)
     #print 'victChan:', victChan
@@ -56,13 +57,15 @@ def posScore(victChan, budgetLeft, targetVictoryChance, needToWin = 1):
     # needToWin depend eventuellement de l'etape de progression et est parmi [0, 1]
     # targetVictoryChance est un hyperparametre de prog
     if victChan >= targetVictoryChance:
-        return 1 + budgetLeft
+        return 1 + log(1 + budgetLeft)
     else:
         return victChan
 
 
 def evalPlayerPosition():
     playerTowers = Game.level.towers.towers
+    for tower in playerTowers:
+        print tower
     if len(playerTowers) == 0:
         print "\n You can't win with no tower, that's for sure.\n"
     else:

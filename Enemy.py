@@ -100,11 +100,12 @@ class Enemy(pygame.sprite.Sprite):
                 return
         ## Fin de la partie
         if Game.state != STATE_PREPARATION:
+            if Game.state != STATE_ENDWAVE:
+                print '\n An enemy got through!'
             Game.state = STATE_ENDWAVE
             Game.restartWave = 1
             Game.redrawSPBtn = 1
             self.wave.clear()
-            #print 'An enemy has passed, restarting level...'
             #Game.level.restart()
             #Game.level.logWave(0)
             #if Game.balanceMode:

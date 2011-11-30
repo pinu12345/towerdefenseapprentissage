@@ -182,7 +182,7 @@ def main():
                 #Random Level
                 elif mainMenustate == 7:
                     Game.state = STATE_LOADGAME
-                    Game.level.loadLevel('Campaign1')
+                    Game.level.randomLevel()
                 #Quit
                 else:
                     pygame.quit()

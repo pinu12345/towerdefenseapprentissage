@@ -3,6 +3,8 @@ from Global import *
 from Util import *
 from random import *
 from math import *
+from numpy import *
+from numpy.random import *
 
 class Level():
     def __init__(self, map, waves, towers, towerBar, menu):
@@ -40,16 +42,25 @@ class Level():
         #print '\n\n --- Random Level --- \n'
         self.resetLevel()
         # Comment ca, levelBudget? Ca devrait pas etre waveBudget?
-        self.levelBudget[0] = 1000000
         self.levelUpgrades = randint(0, 2)
-        enemyType = randint(0, len(EnemyStats)-1)
         #print "\n Random enemy type:", enemyType
-        enemyNumber = randint(1, int(1000/EnemyStats[enemyType][EnemyVALUE]))
-        self.levelWaves = [[enemyType, enemyNumber]]
+        waveCounts = randint(1,6)
+        self.levelWaves = []
+        self.levelBudget = []
+        for i in range(waveCounts):
+            enemyType = randint(0, len(EnemyStats)-1)
+            enemyNumber = max(int(200**(0.75+rand()/2.0)/EnemyStats[enemyType][EnemyVALUE]), 1)
+            enemyValue = enemyNumber * EnemyStats[enemyType][EnemyVALUE] * 1.2
+            self.levelBudget.append(enemyValue)
+            self.levelWaves.append([enemyType, enemyNumber])
         self.levelTowers = [0, 1, 2, 3, 4, 5]
+        self.levelUpgrades = 2
         self.levelMessages = []
         self.nextLevel = ''
-        self.levelMap = RandomMap.RandomMap().M
+        #self.levelMap = RandomMap.RandomMap().M
+        turretsEmplacements = randint(5, 10)
+        pathLength = randint(50,115)
+        self.levelMap = RandomMap.RandomMap(empl=turretsEmplacements, len=pathLength).M
         self.start()
 
     def autoWave(self):

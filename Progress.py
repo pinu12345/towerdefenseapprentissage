@@ -42,15 +42,14 @@ def prog():
     maxUpgrade = Game.level.levelUpgrades
     nbPossiblePositions = (nbAvTowers * (maxUpgrade+1) + 1) ** nbAvEmp
     print '\n Number of possible positions:', nbPossiblePositions
-    #progSteps = int(1+log(nbPossiblePositions)/5) # nombre de generations
-    progSteps = int(1+log(nbPossiblePositions)/5) # nombre de generations
+    progSteps = int(1+log(nbPossiblePositions * 1.0)/5) # nombre de generations
     # nbPP: facilement des millions
     #nbTestPositions = min(10, 100 * int((nbPossiblePositions)**.1))
     #nbTestPositions = max(100, 10 * int((nbPossiblePositions)**.1))
     #nbTestPositions = 10 + progSteps
     nbTestPositions = 20 + progSteps
     print ' Number of spawns per generation:', nbTestPositions
-    print ' Number of survivors per generation:', int((2*log(nbTestPositions))), '\n'
+    print ' Number of survivors per generation:', int((2*log(nbTestPositions * 1.0))), '\n'
     
     testPositions = []
     #towerValues = zeros(6, 3)
@@ -131,7 +130,7 @@ def prog():
                         if len(alreadyPlaced) >= 2 else 0
                     t, u = alreadyPlaced[indToRemove][0], alreadyPlaced[indToRemove][1]
                     chanceOfStaying = 1 - ((1 - TowerStats[t][u][12][enemy] \
-                        * alreadyPlaced[indToRemove][4] ** 2 / (1+log(1+nbAvEmp))) \
+                        * alreadyPlaced[indToRemove][4] ** 2 / (1+log(1+nbAvEmp*1.0))) \
                         ** (10 * efficiencyInsistence / progSteps)) \
                         if len(alreadyPlaced) >= 2 else 0
                     #print " Should we remove tower number", indToRemove, "?"
@@ -151,7 +150,7 @@ def prog():
                     if tower[1] < maxUpgrade:
                         t, u = tower[0], tower[1]
                         chanceOfUpgrading = 1 - ((1 - TowerStats[t][u][12][enemy] \
-                            / (1+log(1+nbAvEmp))) \
+                            / (1+log(1+nbAvEmp*1.0))) \
                             ** (efficiencyInsistence * progSteps))
                         #print " Chance of upgrading:", chanceOfUpgrading
                         tower[0]
@@ -212,7 +211,7 @@ def prog():
         
         ## on garde les meilleures positions selon leur score
         nbKeptPositions = 1 if progStep == progSteps-1 \
-            else min(len(testPositions), int(2*log(len(testPositions))))
+            else min(len(testPositions), int(2*log(len(testPositions)*1.0)))
         startPositions = []
         while len(startPositions) < (nbKeptPositions):
             bestScore = 0

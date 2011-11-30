@@ -44,22 +44,34 @@ class Level():
         # Comment ca, levelBudget? Ca devrait pas etre waveBudget?
         self.levelUpgrades = randint(0, 2)
         #print "\n Random enemy type:", enemyType
-        waveCounts = randint(1,6)
+        #waveCounts = randint(1,6)
+        waveCounts = 1
         self.levelWaves = []
         self.levelBudget = []
         for i in range(waveCounts):
             enemyType = randint(0, len(EnemyStats)-1)
             enemyNumber = max(int(200**(0.75+rand()/2.0)/EnemyStats[enemyType][EnemyVALUE]), 1)
             enemyValue = enemyNumber * EnemyStats[enemyType][EnemyVALUE] * 1.2
+            ##Tour la plus efficace vs l'enemy 8()!!
+            bestTower = 0
+            bestLevel = 0
+            bestValue = 0
+            for j in range(len(TowerStats)):
+                for k in range(len(TowerStats[j])):
+                    if TowerStats[j][k][12][enemyType] > bestValue:
+                        bestTower = j
+                        bestLevel = k
+                        bestValue = TowerStats[j][k][12][enemyType]
+            print 'Best tower against this wave is ', bestTower, bestLevel, bestValue
             self.levelBudget.append(enemyValue)
             self.levelWaves.append([enemyType, enemyNumber])
         self.levelTowers = [0, 1, 2, 3, 4, 5]
         self.levelUpgrades = 2
         self.levelMessages = []
         self.nextLevel = ''
-        #self.levelMap = RandomMap.RandomMap().M
-        turretsEmplacements = randint(5, 10)
+        turretsEmplacements = randint(6, 10)
         pathLength = randint(50,115)
+        #self.levelMap = RandomMap.RandomMap().M
         self.levelMap = RandomMap.RandomMap(empl=turretsEmplacements, len=pathLength).M
         self.start()
 

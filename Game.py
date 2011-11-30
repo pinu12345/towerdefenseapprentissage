@@ -92,8 +92,7 @@ def main():
     
     # Initialize the MainMenu
     mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
-               [('Campaign', 1, None),
-                ('Challenge 1', 2, None),
+               [('Challenge 1', 2, None),
                 ('Challenge 2', 3, None),
                 ('Challenge 3', 4, None),
                 ('Challenge 4', 5, None),
@@ -161,9 +160,9 @@ def main():
                 if mainMenustate == 0:
                     rect_list, mainMenustate = mainMenu.update(e, mainMenustate)
                 #Campagin
-                elif mainMenustate == 1:
-                    Game.state = STATE_LOADGAME
-                    Game.level.loadLevel('Campaign1')
+                #elif mainMenustate == 1:
+                    #Game.state = STATE_LOADGAME
+                    #Game.level.loadLevel('Campaign1')
                 #Challenges
                 elif mainMenustate == 2:
                     Game.state = STATE_LOADGAME

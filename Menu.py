@@ -46,7 +46,7 @@ class Menu():
             screen.blit(Images.InterfaceBGopaque, (784, 454) , (784, 454, 194, 44), 0)
             screen.blit(Images.EnemyImages[Game.level.levelWaves[currentWave][0]], (790, 460), None, 0)
             screen.blit(Images.InterfaceType[EnemyStats[Game.level.levelWaves[currentWave][0]][6]], (918, 480), None, 0)
-            screen.blit(Game.enemyCountFont.render('x ' + str(Game.level.levelWaves[currentWave][1]), 0, (0, 128, 153)), (836, 464), None, 0)
+            screen.blit(Game.enemyCountFont.render('x ' + str(Game.level.levelWaves[currentWave][1]), 0, (0, 128, 153)), (835, 464), None, 0)
             for j in range(3):
                 size = EnemyStats[Game.level.levelWaves[currentWave][0]][7+j]
                 screen.fill(barColor, (916 + j*20, 478 - size, 16, size), 0)
@@ -57,7 +57,7 @@ class Menu():
                     screen.blit(Images.InterfaceBGopaque, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
                     screen.blit(Images.EnemyImages[enemyType], (790, 376 - i*56), None, 0)
                     screen.blit(Images.InterfaceType[EnemyStats[enemyType][6]], (918, 396 - i*56), None, 0)
-                    screen.blit(Game.enemyCountFont.render(enemyCount, 0, (0, 128, 153)), (836, 380 - i*56), None, 0)
+                    screen.blit(Game.enemyCountFont.render(enemyCount, 0, (0, 128, 153)), (835, 380 - i*56), None, 0)
                     for j in range(3):
                         size = EnemyStats[enemyType][7+j]
                         screen.fill(barColor, (916 + j*20, 394 - i*56 - size, 16, size), 0)

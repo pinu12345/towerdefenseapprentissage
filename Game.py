@@ -64,7 +64,7 @@ def main():
     drawTick = 0
 
     Game.state = STATE_INITMENU
-    Game.mainMenuFont = pygame.font.SysFont('Courier New', 28, 1)
+    Game.mainMenuFont = pygame.font.SysFont('Impact', 32, 0)
     Game.gameMenuFont = pygame.font.SysFont('Courier New', 26, 1)
     Game.enemyCountFont = pygame.font.SysFont('Courier New', 22, 1)
     Game.popUpFont = pygame.font.SysFont('Courier New', 16, 1)
@@ -91,7 +91,7 @@ def main():
     Images.init()
     
     # Initialize the MainMenu
-    mainMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
+    mainMenu = cMenu(120, 280, 20, -2, 'vertical', 100, screen,
                [('Challenge 1', 2, None),
                 ('Challenge 2', 3, None),
                 ('Challenge 3', 4, None),
@@ -99,7 +99,7 @@ def main():
                 ('Challenge 5', 6, None),
                 ('Random Level', 7, None),
                 ('Exit', 8, None)], Images.Background)
-    gameMenu = cMenu(128, 320, 20, 5, 'vertical', 100, screen,
+    gameMenu = cMenu(120, 280, 20, -2, 'vertical', 100, screen,
                [('Resume', 1, None),
                 ('Back to main menu (progress will be lost!)', 2, None)], Images.Background)
 

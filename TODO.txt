@@ -6,9 +6,12 @@
     Permettre un popup qui offre de recommencer une wave (ou mission) en cas d'echec?
 
     [Nic]
-    Equilibrer le jeu
-    Continuer l'apprentissage
     Regrouper les tuiles random
+    Generateur de niveau pour la presentation
+    * Implanter les upgrades de tourelles dans prog
+    * Ameliorer le look des menus
+    * Equilibrer le jeu
+    * Continuer l'apprentissage
     * Excel produit automatiquement les tableaux de stats en Python
     * Les nouvelles stats de tourelles et d'ennemis sont implantees
     * Les degats sont calcules de la nouvelle maniere (et splash graduel)

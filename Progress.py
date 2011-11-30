@@ -16,7 +16,7 @@ def prog():
     ## hyperparametres
     maxFalsePositiveRisk = 0.01 # risque empirique qu'un negatif soit declare positif
     efficiencyInsistence = 5.0 # insistance vers les meilleures tourelles
-    probOfKeepingAll = 0.5 # chance de garder toutes les tourelles deja en place
+    probOfKeepingAll = 0.2 # chance de garder toutes les tourelles deja en place
     
     targetVictoryChance = 1 - maxFalsePositiveRisk
     
@@ -42,12 +42,14 @@ def prog():
     maxUpgrade = Game.level.levelUpgrades
     nbPossiblePositions = (nbAvTowers * (maxUpgrade+1) + 1) ** nbAvEmp
     print '\n Number of possible positions:', nbPossiblePositions
+    #progSteps = int(1+log(nbPossiblePositions)/5) # nombre de generations
     progSteps = int(1+log(nbPossiblePositions)/5) # nombre de generations
     # nbPP: facilement des millions
     #nbTestPositions = min(10, 100 * int((nbPossiblePositions)**.1))
     #nbTestPositions = max(100, 10 * int((nbPossiblePositions)**.1))
-    nbTestPositions = 10 + progSteps
-    print ' Number of spawned positions per generation:', nbTestPositions
+    #nbTestPositions = 10 + progSteps
+    nbTestPositions = 20 + progSteps
+    print ' Number of spawns per generation:', nbTestPositions
     print ' Number of survivors per generation:', int((2*log(nbTestPositions))), '\n'
     
     testPositions = []
@@ -97,6 +99,7 @@ def prog():
         #for position in startPositions:
         #    print ' ', position
         #print
+        nbTestPositions -= 1
         patience = nbTestPositions
         for n in range(nbTestPositions):
             
@@ -128,17 +131,36 @@ def prog():
                         if len(alreadyPlaced) >= 2 else 0
                     t, u = alreadyPlaced[indToRemove][0], alreadyPlaced[indToRemove][1]
                     chanceOfStaying = 1 - ((1 - TowerStats[t][u][12][enemy] \
-                        * alreadyPlaced[indToRemove][4] ** 2) \
+                        * alreadyPlaced[indToRemove][4] ** 2 / (1+log(1+nbAvEmp))) \
                         ** (10 * efficiencyInsistence / progSteps)) \
                         if len(alreadyPlaced) >= 2 else 0
                     #print " Should we remove tower number", indToRemove, "?"
                     #print "  Its chances of staying is", chanceOfStaying, "."
-                    if rand() > chance:
+                    if rand() > chanceOfStaying:
                         #print "  It's removed!"
+                        nbAvEmp += 1
                         avBudget += calcTowerPrice(t, u) \
                             * alreadyPlaced[indToRemove][4]
                         #print '  New available budget:', avBudget
                         alreadyPlaced.pop(indToRemove)
+            
+            ## on ameliore peut-etre des tourelles deja placees
+            if alreadyPlaced and maxUpgrade:
+                #print " Let's try upgrading existing towers."
+                for tower in alreadyPlaced:
+                    if tower[1] < maxUpgrade:
+                        t, u = tower[0], tower[1]
+                        chanceOfUpgrading = 1 - ((1 - TowerStats[t][u][12][enemy] \
+                            / (1+log(1+nbAvEmp))) \
+                            ** (efficiencyInsistence * progSteps))
+                        #print " Chance of upgrading:", chanceOfUpgrading
+                        tower[0]
+                        for upgrTry in range(maxUpgrade-tower[1]):
+                            if rand() < chanceOfUpgrading:
+                                uPrice = TowerStats[t][tower[1]][TowerPRICE]
+                                if uPrice <= avBudget:
+                                    tower[1] += 1
+                                    avBudget -= uPrice
             
             budgetLimit = avBudget*(1-rand()**2)
             #print ' Budget limit:', budgetLimit

@@ -57,7 +57,7 @@ def posScore(victChan, budgetLeft, targetVictoryChance, needToWin = 1):
     # needToWin depend eventuellement de l'etape de progression et est parmi [0, 1]
     # targetVictoryChance est un hyperparametre de prog
     if victChan >= targetVictoryChance:
-        return 1 + log(1 + budgetLeft)
+        return victChan + log(1 + budgetLeft)
     else:
         return victChan
 

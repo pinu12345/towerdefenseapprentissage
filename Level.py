@@ -71,7 +71,6 @@ class Level():
             self.levelBudget.append(enemyValue*1.2/(20*averageValue))
             self.levelWaves.append([enemyType, enemyNumber])
         self.levelTowers = [0, 1, 2, 3, 4, 5]
-        self.levelUpgrades = 2
         self.levelMessages = []
         self.nextLevel = ''
         turretsEmplacements = randint(6, 10)

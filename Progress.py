@@ -51,15 +51,16 @@ def prog():
     for i in ind(avTowers):
         avTowers[i].append([])
         for u in range(maxUpgrade):
-            chance = TowerStats[avTowers[i][0]][u][12][enemy] ** efficiencyInsistence
+            chance = 1.0 * TowerStats[avTowers[i][0]][u][12][enemy] ** efficiencyInsistence
             totalChance += chance
             avTowers[i][1].append(chance)
     cumChance = 0
     for tower in avTowers:
         for u in range(maxUpgrade):
-            tower[1][u] /= totalChance + cumChance
+            tower[1][u] = 1.0 * tower[1][u] / totalChance
             cumChance += tower[1][u]
-            
+            tower[1][u] = cumChance
+    
     ## positions de depart (juste une, pour tout de suite)
     startPositions = []
     avBudget = totalBudget
@@ -67,6 +68,7 @@ def prog():
     ## tourelles deja placees
     alreadyPlaced = []
     for placedTower in Game.level.towers.towers:
+        print '', placedTower.type, placedTower.level
         alreadyPlaced.append(placedTower.type, placedTower.level,
             placedTower[0], placedTower.x, 0.75)
         avBudget -= TowerStats[placedTower.type][placedTower.level][TowerPRICE]
@@ -103,6 +105,7 @@ def prog():
                         alreadyPlaced.pop(indToRemove)
             
             budgetLimit = avBudget*rand()
+            print ' Budget limit:', budgetLimit
             
             T = [0 for i in range(TowerTYPES)]
             budgetSpent = 0
@@ -111,12 +114,14 @@ def prog():
                 towerChooser = 1.0*rand()
                 t, u = -1, -1
                 for tposs, uposs in iter(avTowers, maxUpgrade):
-                    if towerChooser < tower[1][u]:
+                    #print ' Possible:', tposs, uposs
+                    #print '', tower[1]
+                    if towerChooser < tower[1][uposs]:
                         t, u = avTowers[tposs][0], uposs
-                
                 choiceMade = 0
                 if t >= 0 and u >= 0:
                     # on verifie si cette option a un minimum de sens
+                    print ' Trying to place a tower... '
                     for emp in empVal:
                         if emp[2][t][u]:
                             choiceMade = 1
@@ -139,6 +144,7 @@ def prog():
         ## on garde les meilleures positions selon leur score
         nbKeptPositions = min(len(testPositions), 2*log(len(testPositions)))
         startPositions = []
+        bestPosition = 0
         while len(startPositions) < (nbKeptPositions):
             bestScore = 0
             for position in testPositions:
@@ -146,8 +152,11 @@ def prog():
                 if score > bestScore:
                     bestScore = score
                     bestPosition = position
-            startPositions.append(bestPosition)
-            testPositions.remove(bestPosition)
+            if bestPosition:
+                startPositions.append(bestPosition)
+                testPositions.remove(bestPosition)
+            else:
+                break
     
     #########################
     ##  FIN LOOP EVOLUTIF  ##

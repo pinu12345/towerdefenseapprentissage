@@ -1,4 +1,4 @@
-import os, Game
+import os, Game, DAanalytic
 from Global import *
 from math import *
 from numpy import *
@@ -10,7 +10,8 @@ from Util import *
 method_average = 0
 method_histogram = 1
 method_neighbor = 2
-best_method = 1
+method_analytic = 3
+best_method = 3
 
 
 def eval(chosenTowers, method = best_method):

@@ -256,7 +256,7 @@ def placeTowers(M, T, beenPlaced = [], forProg = 0):
                     empVal.remove(emp)
                     if not forProg:
                         Game.level.towers.placeTower(M, t, u, emp[0], emp[1])
-                    beenPlaced.append(t, u, emp[0], emp[1], 1)
+                    beenPlaced.append([t, u, emp[0], emp[1], 1])
         
         return beenPlaced
         #Tplaced = [0 for i in range(len(T))]

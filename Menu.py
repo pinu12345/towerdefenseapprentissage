@@ -36,7 +36,10 @@ class Menu():
         currentWave = Game.level.currentWave
         maxWave = Game.level.maxWave - 1
         
+        
         #Redraw the background
+        screen.blit(Images.InterfaceBGwashed, (768, 0), (768, 0, 224, 514))
+        
         for i in range(0, 5):
             screen.blit(Images.InterfaceBGwashed, (784, 370 - i*56) , (784, 370 - i*56, 194, 44), 0)
         if currentWave > maxWave:
@@ -66,6 +69,7 @@ class Menu():
         screen.blit(Game.gameMenuFont.render('Next waves', 0, menuBaseColor), \
             (784, 117), None, 0)
         self.drawSpeedArrows(screen)
+        self.drawSPBtn(screen)
         self.redraw = 0
 
     def onClick(self, pos, map):

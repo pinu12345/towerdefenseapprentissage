@@ -11,15 +11,15 @@ Waves [10]
 5 3, 4 10, 0 30, 8 3
 
 Map [13-28]
--X----------------------
--XXXXXXXXXXXXXXXXXXXXX--
---O---------O-----O-OX--
+------------------------
+---------------------XXX
+--------------------OX--
 -XXXXXXXXXXX--XXXXXXXX--
--XO-O-----OX-OX---------
+-XO-O-----OX--X---------
 -XXXXXX----X--X---------
 ---O-OX----X--X---XXXXX-
 -XXXXXX----X--X---X-O-X-
--X---------XO-XXXXXO-OX-
+-X---------XO-XXXXXO--X-
 -X-XXX-----X----O-----X-
 -XOXOX-----XXXXXXXXXXXX-
 -X-X-X------------------

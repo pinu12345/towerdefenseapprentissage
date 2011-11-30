@@ -489,7 +489,7 @@ def drawGame(map, towerBar, towers, wave, shots, menu, screen, layer):
     if menu.redraw:
         menu.draw(screen)
         pygame.display.update(mapWidth*tileSize, 0, rightMenuSize, mapHeight*tileSize + bottomMenuSize)
-    
+
     # Update the speed arrows
     if menu.redrawSpeed:
         menu.drawSpeedArrows(screen)

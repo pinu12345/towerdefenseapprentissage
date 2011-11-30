@@ -259,8 +259,9 @@ def prog():
             chosenTower[2], chosenTower[3])
     print ' Position score:', bestPosition[2]
     # on update le budget
-    Game.level.money = bestPosition[0]
-    
+    Game.level.money = bestPosition[0] * 1.0
+    Game.level.towerBar.updateMoney = 1
+    Game.level.towerBar.updateTowerCost = 1
     
     # choisir et evaluer les tourelles selon les waves a venir aussi?
     # a condition que la wave actuelle reussisse!

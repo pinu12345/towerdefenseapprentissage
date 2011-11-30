@@ -51,19 +51,24 @@ class Level():
         for i in range(waveCounts):
             enemyType = randint(0, len(EnemyStats)-1)
             enemyNumber = max(int(200**(0.75+rand()/2.0)/EnemyStats[enemyType][EnemyVALUE]), 1)
-            enemyValue = enemyNumber * EnemyStats[enemyType][EnemyVALUE] * 1.2
+            enemyValue = enemyNumber * EnemyStats[enemyType][EnemyVALUE]
             ##Tour la plus efficace vs l'enemy 8()!!
             bestTower = 0
             bestLevel = 0
             bestValue = 0
+            averageValue = 0
             for j in range(len(TowerStats)):
                 for k in range(len(TowerStats[j])):
-                    if TowerStats[j][k][12][enemyType] > bestValue:
+                    currentValue = TowerStats[j][k][12][enemyType]
+                    averageValue += currentValue
+                    if currentValue > bestValue:
                         bestTower = j
                         bestLevel = k
-                        bestValue = TowerStats[j][k][12][enemyType]
+                        bestValue = currentValue
+            averageValue = averageValue / 18.0
             print 'Best tower against this wave is ', bestTower, bestLevel, bestValue
-            self.levelBudget.append(enemyValue)
+            print 'Average Value :', (averageValue*20)
+            self.levelBudget.append(enemyValue*1.2/(20*averageValue))
             self.levelWaves.append([enemyType, enemyNumber])
         self.levelTowers = [0, 1, 2, 3, 4, 5]
         self.levelUpgrades = 2
@@ -290,8 +295,9 @@ class Level():
 
     def updateMoney(self, int):
         if(self.money + int >= 0):
-            self.money += int
+            self.money += int*1.0
             self.towerBar.updateMoney = 1
+            self.towerBar.updateTowerCost = 1
             return 1
         else:
             return 0
@@ -344,7 +350,7 @@ class Level():
                 Game.state = STATE_LOADGAME
                 Game.level.loadLevel(self.nextLevel)
             else:
-                print '\n Game finished; quitting.\n'
-                sys.exit()
+                print '\n New Random Level.\n'
+                Game.level.randomLevel()
                 
                 

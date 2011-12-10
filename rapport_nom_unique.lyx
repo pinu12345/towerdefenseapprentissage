@@ -1,0 +1,947 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman Bitstream Vera Serif
+\font_sans Bitstream Vera Sans
+\font_typewriter Bitstream Vera Sans Mono
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+IFT6390 - Devoir 3
+\end_layout
+
+\begin_layout Author
+Pierre-Olivier Brosseau
+\end_layout
+
+\begin_layout Author
+Nicolas Daoust
+\end_layout
+
+\begin_layout Section
+Calcul du gradient
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+bgroup
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+theenumi{(
+\backslash
+alph{enumi})} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+labelenumi{
+\backslash
+theenumi}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle b}^{(1)}$
+\end_inset
+
+: dimension 
+\begin_inset Formula ${\displaystyle d_{h}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle h^{a}=W^{(1)}x+b^{(1)}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle h_{j}^{a}=\left(\sum_{k=1..d}w_{jk}^{(1)}x_{k}^{(j)}\right)+b_{j}^{(1)}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $h^{s}=\tanh\left(h^{a}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $W^{(2)}$
+\end_inset
+
+: dimensions 
+\begin_inset Formula $m\times d_{h}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $b^{(2)}$
+\end_inset
+
+: dimension 
+\begin_inset Formula $m$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $o^{a}=W^{(2)}h^{s}+b^{(2)}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $o_{k}^{a}=\left(\sum_{l=1..d_{h}}w_{kl}^{(2)}h_{l}^{s(k)}\right)+b_{j}^{(1)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Dans 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $o_{k}^{s}=\frac{\exp\left(o_{k}^{a}\right)}{\sum_{k'=1..m}\exp\left(o_{k'}^{a}\right)}$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, 
+\begin_inset Formula $\exp\left(o_{k}^{a}\right)$
+\end_inset
+
+ est nécessairement positif peu importe 
+\begin_inset Formula $k$
+\end_inset
+
+, donc 
+\begin_inset Formula $\sum_{k'=1..m}\exp\left(o_{k'}^{a}\right)$
+\end_inset
+
+ est également positif et 
+\begin_inset Formula $o_{k}^{s}$
+\end_inset
+
+ aussi.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle \sum_{k=1..m}o_{k}^{s}=\sum_{k=1..m}\frac{\exp\left(o_{k}^{a}\right)}{\sum_{k'=1..m}\exp\left(o_{k'}^{a}\right)}=\frac{\sum_{k=1..m}\exp\left(o_{k}^{a}\right)}{\sum_{k'=1..m}\exp\left(o_{k'}^{a}\right)}=1}$
+\end_inset
+
+; c'est important car chaque 
+\begin_inset Formula $o_{k}^{s}$
+\end_inset
+
+ est la probabilité estimée d'obtenir la classe 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{R}=\frac{1}{n}\sum_{i=1..n}L\left(x,y\right)=\frac{-1}{n}\sum_{i=1..n}\log\left(o_{y^{(i)}}^{s}\left(x^{(i)}\right)\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Theta=\left\{ W^{(2)},b^{(2)},W^{(1)},b^{(1)}\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Problème d'optimisation: trouver 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ qui minimise 
+\begin_inset Formula $\hat{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Pseudo-code:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+DescenteGradient(epoques, N, theta0):
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+theta = theta0, epoque = 0
+\end_layout
+
+\begin_layout LyX-Code
+while epoque <= epoques:
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+theta = theta - N * gradient(theta)
+\end_layout
+
+\begin_layout LyX-Code
+epoque += 1
+\end_layout
+
+\end_deeper
+\begin_layout LyX-Code
+return theta
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial o^{s}}=\frac{\partial-\log o_{y}^{s}}{\partial o_{k}^{s}}=\begin{cases}
+\frac{-1}{o_{y}^{s}} & k=y\\
+0 & k\neq y
+\end{cases}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial o_{k}^{a}}=\frac{\partial L}{\partial o_{y}^{s}}\frac{\partial o_{y}^{s}}{\partial o_{k}^{a}}=\begin{cases}
+o_{y}^{s}-1 & k=y\\
+o_{k}^{s} & k\neq y
+\end{cases}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial o^{a}}=o^{s}-\mathrm{onehot}(y)}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+onehot = zeros(m)
+\end_layout
+
+\begin_layout LyX-Code
+onehot[y] = 1
+\end_layout
+
+\begin_layout LyX-Code
+grad_oa = os - onehot
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial b_{k}^{(2)}}=\frac{\partial L}{\partial o_{k}^{a}}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial W_{kj}^{(2)}}=\frac{\partial L}{\partial o_{k}^{a}}h_{j}^{s}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial b^{(2)}}=\frac{\partial L}{\partial o^{a}}}$
+\end_inset
+
+ : dimension 
+\begin_inset Formula $m$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial W^{(2)}}=\frac{\partial L}{\partial o^{a}}\left(h^{s}\right)^{T}}$
+\end_inset
+
+ : dimension 
+\begin_inset Formula $m\times d_{h}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+grad_b2 = grad_oa
+\end_layout
+
+\begin_layout LyX-Code
+grad_W2 = matrix(grad_oa) * matrix(hs).getT()
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial h_{j}^{s}}=\sum_{k=1..m}\frac{\partial L}{\partial o_{k}^{a}}W_{kj}^{(2)}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial h^{s}}=\left(W^{(2)}\right)^{T}\frac{\partial L}{\partial o^{a}}}$
+\end_inset
+
+ : dimension 
+\begin_inset Formula $d_{h}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+grad_hs = W2.getT() * matrix(grad_oa)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula ${\displaystyle {\displaystyle \frac{\partial L}{\partial h_{j}^{a}}=\frac{\partial L}{\partial h_{j}^{s}}\frac{\partial\tanh h_{j}^{a}}{\partial h_{j}^{a}}}{\displaystyle =\frac{\partial L}{\partial h_{j}^{s}}\left(1-\tanh^{2}h_{j}^{a}\right)}=\frac{\partial L}{\partial h_{j}^{s}}\left(1-\left(h_{j}^{s}\right)^{2}\right)}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+On a utilisé le résultat suivant:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\tanh'z=\left(\frac{\sinh z}{\cosh z}\right)'=\frac{\sinh'z\times\cosh z-\cosh'z\times\sinh z}{\cosh^{2}z}=\frac{\cosh^{2}z-\sinh^{2}z}{\cosh^{2}z}=1-\frac{\sinh^{2}z}{\cosh^{2}z}=1-\tanh^{2}z$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Ce résultat a lui-même utilisé les résultats suivants:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\sinh'z=\left(e^{z}-e^{-z}\right)'=e^{z}+e^{-z}=\cosh z$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\cosh'z=\left(e^{z}+e^{-z}\right)'=e^{z}-e^{-z}=\sinh z$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+[ajouter expression matricielle]
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+grad_ha = multiply(grad_hs, (ones(dh) - multiply(hs, hs)))
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle {\displaystyle \frac{\partial L}{\partial b_{j}^{(1)}}=\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial h_{j}^{a}}{\partial b_{j}^{(1)}}}=\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial}{\partial b_{j}^{(1)}}\sum_{i'}W_{ji'}^{(1)}x^{(i')}+b_{j}^{(1)}=\frac{\partial L}{\partial h_{j}^{a}}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle {\displaystyle \frac{\partial L}{\partial W_{ji}^{(1)}}=\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial h_{j}^{a}}{\partial W_{ji}^{(1)}}}=\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial}{\partial W_{ji}^{(1)}}\sum_{i'}W_{ji'}^{(1)}x^{(i')}+b_{j}^{(1)}=\frac{\partial L}{\partial h_{j}^{a}}x^{(i')}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $h^{a}$
+\end_inset
+
+ et son gradient: dimension 
+\begin_inset Formula $d_{h}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $b^{(1)}$
+\end_inset
+
+ et son gradient: dimension 
+\begin_inset Formula $d_{h}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $W^{(1)}$
+\end_inset
+
+ et son gradient: dimensions 
+\begin_inset Formula $d_{h}\times d$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $x$
+\end_inset
+
+ : dimension 
+\begin_inset Formula $d$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial b^{(1)}}=\frac{\partial L}{\partial h^{a}}}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula ${\displaystyle {\displaystyle \frac{\partial L}{\partial W^{(1)}}=\frac{\partial L}{\partial h^{a}}x^{T}}}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout LyX-Code
+grad_b1 = grad_oa
+\begin_inset Newline newline
+\end_inset
+
+grad_W1 = matrix(grad_oa) * matrix(x).getT
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial x}}{\displaystyle =\sum_{j=1..d_{h}}\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial h_{j}^{a}}{\partial x}=\sum_{j=1..d_{h}}\frac{\partial L}{\partial h_{j}^{a}}\frac{\partial}{\partial x}\sum W_{ji'}^{(1)}x+b_{j}^{(1)}=\sum_{j=1..d_{h}}\frac{\partial L}{\partial h_{j}^{a}}W_{ji}^{(1)}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Les gradients 
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial W^{(2)}}}$
+\end_inset
+
+ et 
+\begin_inset Formula ${\displaystyle \frac{\partial L}{\partial W^{(1)}}}$
+\end_inset
+
+ tendront plus vers des grandes valeurs de leurs poids.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+bgroup
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Implémentation
+\end_layout
+
+\begin_layout Enumerate
+OK!
+\end_layout
+
+\begin_layout Enumerate
+Affichage de la vérification du gradient:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/affichage2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+OK!
+\end_layout
+
+\begin_layout Enumerate
+Affichage de la vérification du gradient:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/affichage4.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Weight decay 0:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de weight decay/5 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Weight decay 0.00001:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de weight decay/5 neurones 500 epoques weightDecay 0,00001 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Weight decay 0.0001:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de weight decay/5 neurones 500 epoques weightDecay 0,0001 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Weight decay 0.00015:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de weight decay/5 neurones 500 epoques weightDecay 0,00015 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+2 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/2 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+3 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/3 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+4 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/4 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+5 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/5 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+7 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/7 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+10 neurones:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation de neurones/10 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+5 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 5 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+50 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 50 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+100 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 100 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+200 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 200 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+300 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 300 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+500 époques:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename Images/Variation d'époques/5 neurones 500 epoques weightDecay 0 N 0,3.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Plus de temps.
+ :-(
+\end_layout
+
+\end_body
+\end_document

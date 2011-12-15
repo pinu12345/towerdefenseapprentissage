@@ -6,7 +6,8 @@ dictfr2tx = open('lex.2.fr2tx').readlines()
 dicttx2fr = open('lex.2.tx2fr').readlines()
 ori = open('originaltexto.txt').readline()
 addX = 0.0001
-lam = 2.0
+lam = 4
+phi = 0.0
 
 def main():
     logprobs = open('logprobs.txt').readlines()
@@ -20,7 +21,7 @@ def main():
             logprob = logprobs[i].split('logprob= ')[1].split(' ppl')[0]
             probT = probTrad(trad, ori, dictfr2tx)
             probP = probTrad(ori, trad, dicttx2fr)
-            prob = float(logprob) + numpy.log10(probT) + lam * numpy.log10(probP)
+            prob = float(logprob) * lam + numpy.log10(probT) + phi * numpy.log10(probP)
             #print trad, prob
             if prob > bestprob:
                 bestprob = float(prob)

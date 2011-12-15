@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from editDistance import *
 from evalDistance import *
+from spellCorr import *
 import string, types, numpy, sys, getopt
 
 def depth(list):
@@ -52,6 +53,7 @@ def toList(list):
     return result
 
 def main():
+    spellCheckCount = 0
     try:
         opts, args = getopt.getopt(sys.argv[1:], "h", ["help"])
     except getopt.error.msg:
@@ -119,6 +121,9 @@ def main():
             else:
                 #print 'Word Not Found :', word
                 candidats = addAll(candidats, word, 2*w)
+                if spellCheckCount < 2:
+                    spellCheckCount += 1
+                    candidats = addAll(candidats, correct(word), 2*w)
 
         results = toList(candidats)
         write = ''

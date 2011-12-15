@@ -1,0 +1,5 @@
+ngram -unk -lm sms.3g.lm -ppl translations.txt
+[logprob de tout, ppl, ppl1]
+
+ngram -unk -lm sms.3g.lm -ppl translations.txt -debug 1
+[logprob pour chaque phrase]

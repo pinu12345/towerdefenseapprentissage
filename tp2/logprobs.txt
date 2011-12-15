@@ -1,0 +1,6 @@
+salut vieux , ça va ?
+1 sentences, 6 words, 0 OOVs
+0 zeroprobs, logprob= -12.4503 ppl= 60.0636 ppl1= 118.863
+
+file translations.txt: 1 sentences, 6 words, 0 OOVs
+0 zeroprobs, logprob= -12.4503 ppl= 60.0636 ppl1= 118.863
